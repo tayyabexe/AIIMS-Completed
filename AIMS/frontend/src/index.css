@@ -1,0 +1,732 @@
+@import "tailwindcss";
+/*
+ * The new admin screens' palette. Imported here rather than pasted in
+ * because it is a self-contained design direction ("indigo glass" — the
+ * same one the Ask the Data page established) with its own reasoning, and
+ * because the shadcn semantic tokens it defines have to land in the same
+ * CSS bundle Tailwind processes.
+ *
+ * @import must precede every rule but @charset and @layer, so it sits
+ * directly under the Tailwind import.
+ */
+@import "./styles/indigo-glass.css";
+/*
+ * The access surfaces (portal chooser, sign-in, recovery) run on the Lumina
+ * design system instead, scoped to .aims-auth. Imported here so Tailwind
+ * emits it into the same bundle.
+ */
+@import "./styles/auth.css";
+/*
+ * The enter/exit keyframes the registry components reference by class
+ * (animate-in, fade-in-0, zoom-in-95, slide-in-from-top-2). Tailwind v4
+ * dropped tailwindcss-animate; this is its replacement, and without it a
+ * dialog or select simply appears with no transition at all.
+ */
+@import "tw-animate-css";
+
+@theme {
+  --color-navy-900: #0f172a;
+  --color-navy-800: #1e293b;
+  --color-navy-700: #334155;
+  --color-navy-600: #475569;
+  --color-navy-500: #64748b;
+  --color-navy-400: #94a3b8;
+  --color-navy-300: #cbd5e1;
+  --color-navy-200: #e2e8f0;
+  --color-navy-100: #f1f5f9;
+  --color-navy-50: #f8fafc;
+
+  --color-red-accent: #991b1b;
+  --color-red-accent-hover: #7f1d1d;
+  --color-red-accent-light: #fee2e2;
+  --color-red-accent-border: #fca5a5;
+  --color-red-accent-50: #fef2f2;
+
+  --color-faculty: #2563eb;
+  --color-faculty-light: #eff6ff;
+  --color-faculty-border: #93c5fd;
+  --color-faculty-hover: #1d4ed8;
+
+  --color-student: #10b981;
+  --color-student-light: #ecfdf5;
+  --color-student-border: #6ee7b7;
+  --color-student-hover: #059669;
+
+  --color-parent: #d97706;
+  --color-parent-light: #fef3c7;
+  --color-parent-border: #fcd34d;
+  --color-parent-hover: #b45309;
+
+  --font-family-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-family-heading: 'Outfit', 'Inter', system-ui, sans-serif;
+}
+
+:root {
+  --navy-900: #0f172a;
+  --navy-800: #1e293b;
+  --navy-700: #334155;
+  --navy-600: #475569;
+  --navy-500: #64748b;
+  --navy-400: #94a3b8;
+  --navy-300: #cbd5e1;
+  --navy-200: #e2e8f0;
+  --navy-100: #f1f5f9;
+  --navy-50: #f8fafc;
+
+  --red-accent: #991b1b;
+  --red-accent-hover: #7f1d1d;
+  --red-accent-light: #fee2e2;
+  --red-accent-border: #fca5a5;
+
+  --faculty-blue: #2563eb;
+  --faculty-blue-light: #eff6ff;
+  --faculty-blue-border: #93c5fd;
+  --faculty-blue-hover: #1d4ed8;
+
+  --student-green: #10b981;
+  --student-green-light: #ecfdf5;
+  --student-green-border: #6ee7b7;
+  --student-green-hover: #059669;
+
+  --parent-orange: #d97706;
+  --parent-orange-light: #fef3c7;
+  --parent-orange-border: #fcd34d;
+  --parent-orange-hover: #b45309;
+
+  --bg-gray: #f8fafc;
+  --text-dark: #0f172a;
+  --text-muted: #64748b;
+  --text-light: #94a3b8;
+  --border-light: #e2e8f0;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/*
+ * The legacy reset, in @layer base rather than unlayered.
+ *
+ * WHY THE LAYER MATTERS: unlayered CSS beats *every* layered rule regardless
+ * of specificity, and Tailwind v4 emits its utilities into @layer utilities.
+ * Unlayered, this one line silently zeroed `p-*`, `px-*` and `m-*` on every
+ * Tailwind-styled component in the app — padding computed to 0px and text
+ * spilled out of its own buttons. In @layer base it still resets the UA
+ * defaults the legacy inline-styled screens were built against, but it no
+ * longer outranks a utility that explicitly asks for padding.
+ */
+@layer base {
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--navy-50);
+  color: var(--text-dark);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; font-weight: 700; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--navy-300); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--navy-400); }
+
+/* Animations */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideIn { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+@keyframes pulse-soft { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+/* Busy indicator on buttons that are mid-request. */
+.spin { animation: spin 0.9s linear infinite; }
+.animate-fadeIn { animation: fadeIn 0.4s ease-out forwards; }
+.animate-slideIn { animation: slideIn 0.3s ease-out forwards; }
+.animate-scaleIn { animation: scaleIn 0.3s ease-out forwards; }
+.animate-pulse-soft { animation: pulse-soft 2s infinite; }
+
+/* Card hover */
+.card-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.card-hover:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08); }
+
+/* Sidebar nav items */
+.sidebar-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.7rem 1rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--navy-300);
+  transition: all var(--transition-fast);
+  position: relative;
+}
+.sidebar-nav-item:hover { background-color: rgba(255,255,255,0.08); color: white; }
+.sidebar-nav-item.active { background-color: var(--red-accent); color: white; font-weight: 600; }
+.sidebar-nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: -16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 20px;
+  background: var(--red-accent);
+  border-radius: 0 3px 3px 0;
+}
+
+/* Table */
+.table-custom th {
+  font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--navy-500); padding: 12px 16px; text-align: left;
+  border-bottom: 1px solid var(--border-light); background-color: var(--navy-50);
+}
+.table-custom td { padding: 12px 16px; border-bottom: 1px solid #f1f5f9; font-size: 0.875rem; }
+.table-custom tr:hover td { background-color: var(--navy-50); }
+
+/* Stat card */
+.stat-card { padding: 20px 24px; border-radius: 14px; background: white; border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); transition: all 0.3s ease; }
+.stat-card:hover { border-color: var(--red-accent-border); box-shadow: var(--shadow-md); }
+
+/* Input */
+.input-custom { width: 100%; padding: 10px 14px; border: 1px solid var(--border-light); border-radius: 10px; font-size: 0.875rem; color: var(--text-dark); background: white; transition: all 0.2s ease; outline: none; }
+.input-custom:focus { border-color: var(--red-accent-border); box-shadow: 0 0 0 3px var(--red-accent-light); }
+.input-custom::placeholder { color: var(--navy-400); }
+
+/* Buttons */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px;
+  background: var(--red-accent); color: white; border: none; border-radius: 10px;
+  font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease;
+}
+.btn-primary:hover { background: var(--red-accent-hover); transform: translateY(-1px); box-shadow: 0 4px 15px rgba(153, 27, 27, 0.3); }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px;
+  background: white; color: var(--navy-700); border: 1px solid var(--border-light); border-radius: 10px;
+  font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease;
+}
+.btn-secondary:hover { border-color: var(--red-accent-border); color: var(--red-accent); background: var(--navy-50); }
+
+/* Badges */
+.badge { display: inline-flex; align-items: center; padding: 2px 10px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.025em; }
+.badge-success { background: var(--student-green-light); color: var(--student-green-hover); }
+.badge-warning { background: var(--parent-orange-light); color: var(--parent-orange-hover); }
+.badge-danger { background: var(--red-accent-light); color: var(--red-accent-hover); }
+.badge-info { background: var(--faculty-blue-light); color: var(--faculty-blue-hover); }
+.badge-neutral { background: var(--navy-100); color: var(--navy-600); }
+
+/* Chart container */
+.chart-container { padding: 20px; border-radius: 16px; background: white; border: 1px solid var(--border-light); }
+
+/* ========== DARK MODE ========== */
+body.dark-mode {
+  --navy-900: #0b1120;
+  --navy-800: #131c31;
+  --navy-700: #1a2744;
+  --navy-600: #2a3f66;
+  --navy-500: #6b8aaf;
+  --navy-400: #8ba9cc;
+  --navy-300: #b0c8e0;
+  --navy-200: #d0e0f0;
+  --navy-100: #e8f0f8;
+  --navy-50: #0f172a;
+
+  --red-accent: #b91c1c;
+  --red-accent-hover: #991b1b;
+  --red-accent-light: #3b1515;
+  --red-accent-border: #7f1d1d;
+
+  --bg-gray: #0b1120;
+  --text-dark: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-light: #64748b;
+  --border-light: #1e293b;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.3);
+}
+
+body.dark-mode {
+  background-color: var(--bg-gray);
+  color: var(--text-dark);
+}
+
+body.dark-mode .stat-card,
+body.dark-mode .chart-container,
+body.dark-mode .input-custom,
+body.dark-mode .btn-secondary,
+body.dark-mode .card-hover {
+  background-color: #131c31;
+  border-color: #1e293b;
+  color: var(--text-dark);
+}
+
+body.dark-mode .input-custom {
+  color: var(--text-dark);
+}
+
+body.dark-mode .input-custom::placeholder {
+  color: var(--navy-500);
+}
+
+body.dark-mode .btn-secondary {
+  color: var(--navy-300);
+}
+
+body.dark-mode .btn-secondary:hover {
+  background-color: #1a2744;
+  border-color: var(--red-accent-border);
+}
+
+body.dark-mode .table-custom th {
+  background-color: #0b1120;
+  color: var(--navy-400);
+}
+
+body.dark-mode .table-custom td {
+  border-bottom-color: #1e293b;
+}
+
+body.dark-mode .table-custom tr:hover td {
+  background-color: #131c31;
+}
+
+body.dark-mode .badge-neutral {
+  background: #1a2744;
+  color: var(--navy-300);
+}
+
+body.dark-mode .badge-success {
+  background: #0a2e1a;
+  color: #34d399;
+}
+
+body.dark-mode .badge-warning {
+  background: #2e1f0a;
+  color: #fbbf24;
+}
+
+body.dark-mode .badge-danger {
+  background: #2e0a0a;
+  color: #fca5a5;
+}
+
+body.dark-mode .badge-info {
+  background: #0a1a2e;
+  color: #93c5fd;
+}
+
+body.dark-mode footer {
+  background-color: #0b1120 !important;
+  border-top-color: #1e293b !important;
+  color: var(--navy-500) !important;
+}
+
+body.dark-mode [style*="background-color: #FFFFFF" i] {
+  background-color: #131c31 !important;
+}
+
+body.dark-mode [style*="background: white" i] {
+  background: #131c31 !important;
+}
+
+body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode h4,
+body.dark-mode h5, body.dark-mode h6 {
+  color: var(--text-dark);
+}
+
+body.dark-mode .sidebar-nav-item.active {
+  background-color: var(--red-accent) !important;
+}
+
+/* Dark mode scrollbar */
+body.dark-mode ::-webkit-scrollbar-thumb {
+  background: #2a3f66;
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb:hover {
+  background: #3a4f76;
+}
+
+/* ==========================================================================
+   ADMIN DASHBOARD
+   ==========================================================================
+   The token values behind src/styles/adminTheme.js, plus the states that
+   belong in CSS rather than in JS.
+
+   The states used to be onMouseEnter/onMouseLeave handlers writing to
+   element.style. That gave a card a hover but no focus state, which means a
+   keyboard user tabbing through four linked stat tiles got no indication of
+   where they were. :hover and :focus-visible cost nothing and cover both.
+
+   Scoped to .aims-dash so nothing here leaks into the other portals.
+   ========================================================================== */
+.aims-dash {
+  --ad-canvas: #f7f6f4;   /* paper: warm, so white cards read as sheets on it */
+  --ad-card: #ffffff;
+  --ad-inset: #f1efec;    /* the unfilled part of a meter — recessed */
+  --ad-hover: #faf9f7;
+
+  --ad-ink: #14161a;      /* figures, headings */
+  --ad-ink-2: #3f444d;    /* body copy */
+  --ad-ink-3: #6b7280;    /* labels, supporting lines */
+  --ad-ink-4: #9ca3af;    /* timestamps, metadata */
+
+  --ad-rule: rgba(20, 22, 26, 0.08);
+  --ad-rule-soft: rgba(20, 22, 26, 0.05);
+  --ad-rule-strong: rgba(20, 22, 26, 0.16);
+
+  --ad-accent: #991b1b;   /* the institute's seal — the only accent */
+  --ad-accent-hover: #7f1d1d;
+  --ad-accent-wash: #fbf1f0;
+  --ad-accent-edge: rgba(153, 27, 27, 0.22);
+
+  --ad-positive: #0f766e; /* teal rather than green: sits with warm neutrals */
+  --ad-warning: #b45309;
+  --ad-critical: #b91c1c;
+
+  --ad-t-audit: #4c5461;
+  --ad-t-payment: #0f766e;
+  --ad-t-result: #6d28d9;
+  --ad-t-enrolment: #1d4ed8;
+  --ad-t-announcement: #b45309;
+}
+/* Declaring the variables and painting the canvas are kept separate on
+   purpose. The class sits on the whole admin shell so the tokens are in scope
+   for anything inside it, but only the dashboard route paints the warm ground
+   — repainting every admin screen is a change nobody asked for. */
+
+/* Dark mode is the same twenty variables at different values — same hierarchy,
+   inverted. Shadows barely read on a dark ground, so the rules carry more of
+   the structure and the semantic colours are desaturated a step so they do not
+   glow. */
+body.dark-mode .aims-dash {
+  --ad-canvas: #0f1113;
+  --ad-card: #17191c;
+  --ad-inset: #202327;
+  --ad-hover: #1d2024;
+
+  --ad-ink: #ecedef;
+  --ad-ink-2: #b9bcc2;
+  --ad-ink-3: #8b9099;
+  --ad-ink-4: #6b7078;
+
+  --ad-rule: rgba(255, 255, 255, 0.09);
+  --ad-rule-soft: rgba(255, 255, 255, 0.06);
+  --ad-rule-strong: rgba(255, 255, 255, 0.2);
+
+  --ad-accent: #d24b4b;
+  --ad-accent-hover: #e06a6a;
+  --ad-accent-wash: rgba(210, 75, 75, 0.12);
+  --ad-accent-edge: rgba(210, 75, 75, 0.34);
+
+  --ad-positive: #2dab9e;
+  --ad-warning: #d2913f;
+  --ad-critical: #e06a6a;
+
+  --ad-t-audit: #9aa2ad;
+  --ad-t-payment: #2dab9e;
+  --ad-t-result: #a78bfa;
+  --ad-t-enrolment: #7ba3f5;
+  --ad-t-announcement: #d2913f;
+}
+
+/* --- Cards ---------------------------------------------------------------
+   Depth is borders, committed. The only shadow on the screen is the lift an
+   INTERACTIVE card gets under the cursor — a 1px ring plus two soft depths, so
+   it reads as "this is clickable" rather than as a drop shadow left on. */
+.ad-card { transition: border-color 140ms cubic-bezier(0.23, 1, 0.32, 1),
+                       box-shadow 140ms cubic-bezier(0.23, 1, 0.32, 1); }
+
+.ad-card--link { display: block; text-decoration: none; height: 100%; }
+.ad-card--link:hover .ad-card,
+.ad-card--interactive:hover {
+  border-color: var(--ad-rule-strong);
+  box-shadow: 0 0 0 1px rgba(20, 22, 26, 0.04),
+              0 1px 2px -1px rgba(20, 22, 26, 0.08),
+              0 4px 8px -4px rgba(20, 22, 26, 0.06);
+}
+body.dark-mode .ad-card--link:hover .ad-card,
+body.dark-mode .ad-card--interactive:hover {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* A visible focus ring for every interactive thing on the screen. */
+.ad-card--link:focus-visible,
+.ad-focusable:focus-visible {
+  outline: 2px solid var(--ad-accent);
+  outline-offset: 2px;
+  border-radius: 12px;
+}
+
+/* --- Filter chips -------------------------------------------------------- */
+.ad-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  /* 30px tall with the 7px padding: below the 44px WCAG target on its own, so
+     the row that holds these gives them 44px of vertical hit area via padding
+     on the container rather than growing the chips themselves. */
+  padding: 7px 11px;
+  border-radius: 6px;
+  border: 1px solid var(--ad-rule);
+  background: var(--ad-card);
+  color: var(--ad-ink-3);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px; font-weight: 550;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 140ms cubic-bezier(0.23, 1, 0.32, 1),
+              border-color 140ms cubic-bezier(0.23, 1, 0.32, 1),
+              background-color 140ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.ad-chip:hover { color: var(--ad-ink); border-color: var(--ad-rule-strong); }
+.ad-chip[aria-pressed='true'] {
+  background: var(--ad-accent-wash);
+  border-color: var(--ad-accent-edge);
+  color: var(--ad-accent);
+}
+/* Tactile confirmation the click was heard. Nothing here goes below 0.97. */
+.ad-chip:active { transform: scale(0.97); }
+
+/* --- Feed rows ----------------------------------------------------------- */
+.ad-row { transition: background-color 140ms cubic-bezier(0.23, 1, 0.32, 1); }
+.ad-row:hover { background-color: var(--ad-hover); }
+
+/* --- Entrance ------------------------------------------------------------
+   The one animation on the screen. Cards fade up 6px, staggered 40ms apart via
+   the --i custom property, and only on first mount — a dashboard opened twenty
+   times a day must not replay a cascade every time. Transform and opacity
+   only, so it composites on the GPU and never triggers layout. */
+@keyframes ad-rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+.ad-rise {
+  animation: ad-rise 220ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  animation-delay: calc(var(--i, 0) * 40ms);
+}
+
+/* Movement is the part that causes trouble; the fade is not. */
+@media (prefers-reduced-motion: reduce) {
+  .ad-rise { animation: none; opacity: 1; transform: none; }
+  .ad-chip:active { transform: none; }
+  .ad-card, .ad-chip, .ad-row { transition-duration: 1ms; }
+}
+
+/* --- Meters --------------------------------------------------------------
+   A segmented bar: each segment is a real proportion of a real total, so the
+   bar carries data rather than decorating a number that is already printed
+   beside it. */
+.ad-meter {
+  display: flex; width: 100%; height: 8px;
+  background: var(--ad-inset);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.ad-meter > span { display: block; height: 100%; }
+.ad-meter > span + span { box-shadow: inset 1px 0 0 var(--ad-card); }
+
+/* The feed row's trailing detail column — the actor's role, the payment
+   method, the record count. Dropped on narrow windows rather than wrapped: it
+   is the least important part of the row, and a wrapping fourth column is
+   exactly what turns a one-line row back into a three-line one. */
+@media (max-width: 720px) {
+  .ad-row__meta { display: none; }
+}
+
+/* The feed's scroll region. Capped so the card cannot grow to twice the height
+   of everything it summarises — the whole record is one click away at /audit. */
+.ad-scroll { overflow-y: auto; overscroll-behavior: contain; }
+.ad-scroll::-webkit-scrollbar { width: 8px; }
+.ad-scroll::-webkit-scrollbar-thumb {
+  background: var(--ad-rule-strong); border-radius: 4px;
+  border: 2px solid var(--ad-card); background-clip: padding-box;
+}
+
+/* ==========================================================================
+   People directories — Parents / Guardians and Faculty
+   ==========================================================================
+   Both screens list PEOPLE rather than records, so they share one card
+   treatment: a portrait, the name at reading size, and the two or three facts
+   an administrator is actually looking someone up to find.
+
+   The motion follows .ad-rise above — a 6px fade-up staggered by --i, on first
+   mount only, transform and opacity exclusively so nothing here can trigger
+   layout. The stagger is capped by the callers at ~12 cards; beyond that the
+   last row of a 25-row page would sit visibly waiting for its turn. */
+
+@keyframes people-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.person-card {
+  animation: people-rise 260ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  animation-delay: calc(var(--i, 0) * 45ms);
+  border-radius: 14px;
+  border: 1px solid var(--border-light, #E2E8F0);
+  background: #FFFFFF;
+  overflow: hidden;
+  transition:
+    border-color 180ms cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 180ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 180ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.person-card:hover {
+  border-color: var(--red-accent-border, #FCA5A5);
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.07);
+  transform: translateY(-2px);
+}
+.person-card:focus-within {
+  border-color: var(--red-accent-border, #FCA5A5);
+  box-shadow: 0 0 0 3px rgba(153, 27, 27, 0.12);
+}
+.person-card[data-expanded='true'] {
+  border-color: var(--red-accent-border, #FCA5A5);
+  box-shadow: 0 10px 26px rgba(153, 27, 27, 0.10);
+  transform: none;
+}
+
+/* The row actions stay out of the way until the card is under the pointer or
+   holds focus. Opacity only — reserving the space at all times means the name
+   beside them never reflows when they appear. */
+.person-card__actions {
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+.person-card:hover .person-card__actions,
+.person-card:focus-within .person-card__actions,
+.person-card[data-expanded='true'] .person-card__actions {
+  opacity: 1;
+}
+
+/* The disclosure panel. Grid-rows 0fr→1fr animates to the panel's real
+   height without anyone having to measure it in JS, and without the jump a
+   max-height guess produces when the content is shorter or taller than the
+   guess. */
+.person-card__panel {
+  display: grid;
+  grid-template-rows: 1fr;
+  animation: people-open 240ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+@keyframes people-open {
+  from { grid-template-rows: 0fr; opacity: 0; }
+  to   { grid-template-rows: 1fr; opacity: 1; }
+}
+.person-card__panel > * { min-height: 0; }
+
+.person-chevron { transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1); }
+.person-card[data-expanded='true'] .person-chevron { transform: rotate(90deg); }
+
+/* Child / subject rows inside an expanded card, cascading after it opens. */
+.person-subrow {
+  animation: people-rise 220ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  animation-delay: calc(60ms + var(--i, 0) * 40ms);
+  transition: background-color 140ms ease, border-color 140ms ease;
+}
+.person-subrow:hover {
+  background-color: #F8FAFC !important;
+  border-color: #E2E8F0;
+}
+
+/* Exam cards on the Examination screen, same entrance. */
+.exam-card {
+  animation: people-rise 240ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+.exam-card:hover {
+  border-color: #C7D2FE;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   Display preferences — density and font size
+   ==========================================================================
+   Set as data-attributes on <html> by PreferencesContext from the account's
+   stored preferences, so the choice follows the user to another machine.
+
+   These two controls existed on the admin Settings screen for a long time and
+   did nothing at all: they were written to localStorage and no rule, component
+   or context ever read them back. The rules below are what makes them real.
+
+   Both work by scaling one variable rather than by restyling components, so a
+   screen written after this still honours them. */
+
+:root {
+  --ui-density: 1;      /* multiplies list/table padding */
+  --ui-font-scale: 1;   /* multiplies the base type size */
+}
+
+:root[data-density='compact']    { --ui-density: 0.72; }
+:root[data-density='comfortable'] { --ui-density: 1; }
+:root[data-density='spacious']   { --ui-density: 1.32; }
+
+:root[data-font-size='small']  { --ui-font-scale: 0.925; }
+:root[data-font-size='medium'] { --ui-font-scale: 1; }
+:root[data-font-size='large']  { --ui-font-scale: 1.08; }
+
+/* Type scales from the root, so every rem-based size in the app follows.
+   Kept modest deliberately: past about 110% the fixed-width table columns in
+   the portal start to wrap, which costs more readability than the larger text
+   gains. */
+html { font-size: calc(100% * var(--ui-font-scale)); }
+
+/* Density touches the repeated rows where vertical space is actually spent —
+   table cells and the list rows — and not headers, cards or modals, whose
+   padding is structural. */
+:root[data-density='compact'] table :is(td, th),
+:root[data-density='spacious'] table :is(td, th) {
+  padding-top: calc(0.7rem * var(--ui-density));
+  padding-bottom: calc(0.7rem * var(--ui-density));
+}
+:root[data-density='compact'] .person-subrow,
+:root[data-density='spacious'] .person-subrow {
+  padding-top: calc(0.85rem * var(--ui-density));
+  padding-bottom: calc(0.85rem * var(--ui-density));
+}
+
+/* The account detail drawer on User Management.
+   Slides in from the edge it is anchored to, which is what tells the reader it
+   is a panel over the table rather than a new screen — a fade would read as a
+   navigation. */
+@keyframes drawer-in {
+  from { transform: translateX(100%); }
+  to   { transform: none; }
+}
+.user-drawer { animation: drawer-in 260ms cubic-bezier(0.23, 1, 0.32, 1); }
+
+/* Movement is the part that causes trouble; the fade is not. Matches the
+   policy set for .ad-rise above. */
+@media (prefers-reduced-motion: reduce) {
+  .user-drawer { animation: none; }
+  .person-card,
+  .person-subrow,
+  .exam-card { animation: none; opacity: 1; transform: none; }
+  .person-card__panel { animation: none; }
+  .person-card:hover,
+  .exam-card:hover { transform: none; }
+  .person-chevron { transition: none; }
+  .person-card__actions { opacity: 1; }
+}
+
+/* Settings responsive layout */
+@media (max-width: 820px) {
+  .settings-layout {
+    flex-direction: column !important;
+  }
+  .settings-layout > div:first-child {
+    width: 100% !important;
+    position: static !important;
+  }
+}

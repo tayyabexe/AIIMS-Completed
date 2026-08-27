@@ -1,0 +1,304 @@
+.notif-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.notif-tabs {
+  display: flex;
+  gap: 6px;
+  background: var(--page-bg);
+  border: 1px solid var(--border);
+  padding: 4px;
+  border-radius: 10px;
+}
+
+.notif-tab {
+  border: none;
+  background: transparent;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.notif-tab.active {
+  background: var(--card-bg);
+  color: var(--text-primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.mark-read-link {
+  border: none;
+  background: none;
+  color: var(--brand-red);
+  font-weight: 700;
+  font-size: 13.5px;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background 0.15s ease;
+}
+
+.mark-read-link:hover:not(:disabled) {
+  background: rgba(209, 55, 63, 0.08);
+}
+
+/* Success banner after “Mark all as read” */
+.notif-success {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: #e7f7ee;
+  border: 1px solid #86d3a8;
+  color: #1f7a43;
+  font-size: 13.5px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  animation: notif-fade 0.18s ease-out;
+}
+
+@keyframes notif-fade {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.notif-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  display: flex;
+  gap: 16px;
+  margin-bottom: 14px;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: box-shadow 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+}
+
+.notif-card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.notif-card.unread {
+  background: var(--card-bg);
+  box-shadow: 0 2px 10px rgba(209, 55, 63, 0.06);
+}
+
+.notif-card.read {
+  opacity: 0.68;
+}
+
+.notif-card.read:hover {
+  opacity: 1;
+}
+
+.notif-icon-box {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.notif-card-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.notif-card-title-row h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.notif-card-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.notif-card-body {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 6px 0 10px;
+  line-height: 1.5;
+}
+
+.notif-card-foot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.notif-status-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.notif-status-badge.unread {
+  background: #fdeaea;
+  color: #d1373f;
+}
+
+.notif-status-badge.read {
+  background: #eef0f2;
+  color: #6b7078;
+}
+
+.notif-open-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--brand-red);
+}
+
+.notif-unread-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--brand-red, #d1373f);
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 6px;
+  box-shadow: 0 0 0 3px rgba(209, 55, 63, 0.15);
+}
+
+.notif-empty {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 60px 0;
+  font-size: 14px;
+}
+
+.mark-read-link:disabled {
+  color: var(--text-muted);
+  cursor: default;
+}
+
+/* Notification detail modal */
+.notif-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.notif-detail-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notif-detail-message {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin: 0;
+  white-space: pre-line;
+}
+
+.notif-detail-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.notif-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border-radius: 10px;
+  border: none;
+  background: var(--brand-red);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s ease;
+}
+
+.notif-back-btn:hover {
+  background: #b32a30;
+}
+
+/*
+ * "Go to Attendance" / "Go to Result" — the screen a notification is about.
+ *
+ * Secondary to the back button rather than a second filled button beside it:
+ * dismissing is the action every notification supports, following the link is
+ * the one only some of them do, and two equal-weight buttons would make the
+ * pair read as a choice rather than as an action and an escape.
+ */
+.notif-go-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--brand-red);
+  background: transparent;
+  color: var(--brand-red);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.notif-go-btn:hover {
+  background: var(--brand-red);
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .notif-card-foot {
+    gap: 8px;
+  }
+
+  .notif-open-label {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .notif-top-row { flex-direction: column; align-items: stretch; gap: 12px; }
+  .notif-card { padding: 14px; gap: 12px; }
+  .notif-card-title-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .notif-card-time { white-space: normal; }
+}

@@ -1,0 +1,761 @@
+/*
+ * The Ask the Data canvas, for both portals.
+ *
+ * ONE LAYOUT, TWO PALETTES
+ * ------------------------
+ * This stylesheet dresses a single component that the admin portal and the
+ * faculty portal both render. The structure below — hero, ask box, chips,
+ * result canvas — is identical in both. Only the colour tokens differ, and
+ * they are all declared in the two blocks at the top: `.aa` carries the admin
+ * values, `.aa--faculty` overrides them.
+ *
+ * That split is the whole reason the page can be redesigned once instead of
+ * twice. Anything hard-coded below this header would have to be duplicated and
+ * would then drift, so there are no raw colours past the token blocks except
+ * where a value is genuinely universal (the red of an error, the amber of a
+ * warning — those mean the same thing in every portal).
+ *
+ * WHY THE FACULTY PALETTE IS DECLARED HERE AND NOT IN THE FACULTY PORTAL
+ * ---------------------------------------------------------------------
+ * Because the component lives here. A theme defined next to the page that
+ * imports it would be a second file to keep in step with this one, and the
+ * pair would disagree the first time either changed.
+ *
+ * A NOTE ON MOTION
+ * ----------------
+ * There is a fair amount of it: drifting hero light, shimmering skeletons,
+ * lifting chips. Every piece is switched off wholesale by the reduced-motion
+ * block at the end of this file, and none of it conveys information that is
+ * not also conveyed statically. Motion here is texture, never a message.
+ */
+
+.aa {
+  /* ---- shape, shared by both portals ---- */
+  --aa-r: 12px;
+  --aa-r-lg: 18px;
+  --aa-r-pill: 999px;
+  --aa-ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --aa-fast: 140ms;
+  --aa-slow: 260ms;
+
+  /* ---- admin palette: defers to the portal's own tokens ---- */
+  --aa-surface: var(--surface, #fff);
+  --aa-surface-2: var(--surface-2, #f8fafc);
+  --aa-border: var(--border, #e2e8f0);
+  --aa-border-strong: var(--border, #cbd5e1);
+  --aa-text: var(--text, #0f172a);
+  --aa-muted: var(--text-muted, #64748b);
+
+  /*
+   * NOT `var(--accent, ...)`. The portal's `--accent` follows shadcn naming,
+   * where it is the pale tint painted *behind* a selected row (`--crest-wash`,
+   * #EEF0FD) and `--accent-foreground` is the ink that goes on top. Binding
+   * these to it made every hover state near-white on near-white — the chip
+   * label, the active switcher tab, the CSV and pager links all disappeared —
+   * and the #2563eb fallback never fired, because `--accent` is defined.
+   *
+   * `--crest` is the institution's actual accent, which is what these mean.
+   */
+  --aa-accent: var(--crest, #4338ca);
+  --aa-accent-2: var(--crest-lit, #6366f1);
+  --aa-accent-ink: #fff;
+  --aa-accent-soft: var(--crest-wash, rgba(67, 56, 202, 0.08));
+  --aa-glass: var(--surface, #fff);
+  --aa-blur: 0px;
+
+  --aa-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --aa-shadow-md: 0 6px 18px -8px rgba(15, 23, 42, 0.18);
+  --aa-shadow-lg: 0 16px 40px -16px rgba(15, 23, 42, 0.22);
+
+  --aa-glow-1: rgba(37, 99, 235, 0.10);
+  --aa-glow-2: rgba(14, 165, 233, 0.08);
+  --aa-glow-3: rgba(99, 102, 241, 0.07);
+
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 20px 64px;
+  color: var(--aa-text);
+}
+
+/*
+ * INDIGO GLASS — the faculty portal.
+ *
+ * Cool near-white ground, deep indigo primary, translucent panels over drifting
+ * light. Chosen to sit apart from the admin portal's crimson without fighting
+ * the dark sidebar both share.
+ */
+.aa--faculty {
+  --aa-surface: #ffffff;
+  --aa-surface-2: #f2f3f9;
+  --aa-border: #e4e6f0;
+  --aa-border-strong: #cdd0e4;
+  --aa-text: #14162b;
+  --aa-muted: #5b5f7b;
+  --aa-accent: #4338ca;
+  --aa-accent-2: #6366f1;
+  --aa-accent-ink: #ffffff;
+  --aa-accent-soft: rgba(67, 56, 202, 0.08);
+
+  /* The frosted panel. Falls back to solid where backdrop-filter is absent —
+     see the @supports block below, which is what actually turns it on. */
+  --aa-glass: #ffffff;
+  --aa-blur: 0px;
+
+  --aa-shadow: 0 1px 2px rgba(31, 27, 89, 0.06);
+  --aa-shadow-md: 0 8px 24px -10px rgba(31, 27, 89, 0.22);
+  --aa-shadow-lg: 0 20px 48px -20px rgba(31, 27, 89, 0.30);
+
+  --aa-glow-1: rgba(99, 102, 241, 0.22);
+  --aa-glow-2: rgba(56, 189, 248, 0.18);
+  --aa-glow-3: rgba(168, 85, 247, 0.16);
+}
+
+/*
+ * Frosting is opt-in rather than assumed.
+ *
+ * A translucent panel over a browser that cannot blur is just a washed-out
+ * panel with poor text contrast, so the glass look is only switched on where
+ * the effect exists to support it.
+ */
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .aa--faculty {
+    --aa-glass: rgba(255, 255, 255, 0.74);
+    --aa-blur: 14px;
+  }
+}
+
+/* ============================================================== hero ==== */
+
+/*
+ * The top of the page is one object rather than a heading followed by a form.
+ *
+ * The old arrangement put a title, a paragraph of caveats and a plain input
+ * in a narrow column, which made the single most important control on a page
+ * whose entire purpose is asking a question look like a search filter. Here
+ * the ask box sits inside the hero and the explanatory text is demoted to an
+ * eyebrow badge and one line of lede.
+ */
+.aa-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 34px 32px 26px;
+  margin-bottom: 22px;
+  background: var(--aa-surface);
+  border: 1px solid var(--aa-border);
+  border-radius: var(--aa-r-lg);
+  box-shadow: var(--aa-shadow);
+}
+
+/*
+ * Drifting light behind the hero.
+ *
+ * Two large blurred discs on long, mismatched, alternating cycles, so the
+ * motion never visibly loops. They animate `transform` only — a blurred
+ * element re-rasterised every frame is expensive, and translating a finished
+ * raster is not.
+ */
+.aa-hero::before,
+.aa-hero::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  width: 34rem;
+  height: 34rem;
+  border-radius: 50%;
+  filter: blur(64px);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.aa-hero::before {
+  top: -62%;
+  left: -8%;
+  background: var(--aa-glow-1);
+  animation: aa-drift-a 26s var(--aa-ease) infinite alternate;
+}
+
+.aa-hero::after {
+  top: -54%;
+  right: -10%;
+  background: var(--aa-glow-2);
+  animation: aa-drift-b 34s var(--aa-ease) infinite alternate;
+}
+
+@keyframes aa-drift-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(9%, 12%, 0) scale(1.18); }
+}
+
+@keyframes aa-drift-b {
+  from { transform: translate3d(0, 0, 0) scale(1.1); }
+  to   { transform: translate3d(-11%, 9%, 0) scale(0.92); }
+}
+
+/* Everything readable sits above the light. */
+.aa-hero-inner {
+  position: relative;
+  z-index: 1;
+}
+
+/*
+ * The scope note, as a badge rather than a sentence.
+ *
+ * For a teacher this line changes how every figure on the page should be read
+ * — the answers are about their roster, not the institute. Buried in a
+ * paragraph it was skipped; as a badge beside the title it is read once and
+ * remembered.
+ */
+.aa-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 11px 5px 9px;
+  margin-bottom: 14px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--aa-accent);
+  background: var(--aa-accent-soft);
+  border: 1px solid color-mix(in oklab, var(--aa-accent) 22%, transparent);
+  border-radius: var(--aa-r-pill);
+}
+
+.aa-eyebrow svg { flex: none; }
+
+/* A quiet pulse on the dot, so "live" reads as live. */
+.aa-eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: aa-pulse 2.6s ease-in-out infinite;
+}
+
+@keyframes aa-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.45; transform: scale(0.8); }
+}
+
+.aa-head h1 {
+  margin: 0 0 8px;
+  font-size: clamp(1.55rem, 1.1rem + 1.4vw, 2.05rem);
+  line-height: 1.15;
+  letter-spacing: -0.022em;
+  font-weight: 700;
+}
+
+.aa-lede {
+  margin: 0 0 22px;
+  max-width: 64ch;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--aa-muted);
+  text-wrap: pretty;
+}
+
+/* ------------------------------------------------------------- ask box -- */
+
+/*
+ * The main event, and styled like it.
+ *
+ * The submit button lives INSIDE the field's border rather than beside it, so
+ * the two read as one control. On a page with exactly one thing to do, that
+ * one thing should not look like two.
+ */
+.aa-ask {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 7px 7px 18px;
+  background: var(--aa-glass);
+  -webkit-backdrop-filter: blur(var(--aa-blur));
+  backdrop-filter: blur(var(--aa-blur));
+  border: 1px solid var(--aa-border);
+  border-radius: var(--aa-r-lg);
+  box-shadow: var(--aa-shadow-md);
+  transition:
+    border-color var(--aa-slow) var(--aa-ease),
+    box-shadow var(--aa-slow) var(--aa-ease);
+}
+
+.aa-ask:focus-within {
+  border-color: var(--aa-accent);
+  box-shadow: 0 0 0 4px var(--aa-accent-soft), var(--aa-shadow-lg);
+}
+
+.aa-ask input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 0;
+  font: inherit;
+  font-size: 1rem;
+  color: inherit;
+  background: transparent;
+  border: 0;
+}
+
+.aa-ask input::placeholder { color: var(--aa-muted); opacity: 0.85; }
+
+/* The wrapper already draws a focus ring for the whole control. */
+.aa-ask input:focus { outline: none; }
+
+.aa-ask button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex: none;
+  padding: 11px 20px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--aa-accent-ink);
+  background: linear-gradient(135deg, var(--aa-accent-2), var(--aa-accent));
+  border: 0;
+  border-radius: calc(var(--aa-r-lg) - 7px);
+  cursor: pointer;
+  transition:
+    transform var(--aa-fast) var(--aa-ease),
+    box-shadow var(--aa-slow) var(--aa-ease),
+    opacity var(--aa-fast) linear;
+}
+
+.aa-ask button:hover:not(:disabled) {
+  box-shadow: 0 6px 16px -6px color-mix(in oklab, var(--aa-accent) 60%, transparent);
+}
+
+/* A real press, not just a colour change. */
+.aa-ask button:active:not(:disabled) { transform: scale(0.97); }
+
+.aa-ask button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* --------------------------------------------------------- suggestions -- */
+
+.aa-suggest {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.aa-suggest button {
+  padding: 7px 14px;
+  font-size: 0.845rem;
+  color: var(--aa-muted);
+  background: var(--aa-surface);
+  border: 1px solid var(--aa-border);
+  border-radius: var(--aa-r-pill);
+  cursor: pointer;
+  transition:
+    color var(--aa-fast) linear,
+    border-color var(--aa-fast) linear,
+    background-color var(--aa-fast) linear,
+    transform var(--aa-fast) var(--aa-ease),
+    box-shadow var(--aa-slow) var(--aa-ease);
+  /* Each chip arrives just after the one before it. */
+  animation: aa-rise 420ms var(--aa-ease) both;
+  animation-delay: calc(var(--i, 0) * 45ms);
+}
+
+.aa-suggest button:hover:not(:disabled) {
+  color: var(--aa-accent);
+  background: var(--aa-accent-soft);
+  border-color: color-mix(in oklab, var(--aa-accent) 40%, transparent);
+  transform: translateY(-1px);
+  box-shadow: var(--aa-shadow-md);
+}
+
+.aa-suggest button:active:not(:disabled) { transform: translateY(0) scale(0.98); }
+
+/* Dimmed rather than removed while a query runs — see the note in the JSX. */
+.aa-suggest button:disabled {
+  opacity: 0.45;
+  cursor: default;
+  pointer-events: none;
+}
+
+@keyframes aa-rise {
+  from { opacity: 0; transform: translateY(7px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ------------------------------------------------------------- status --- */
+
+.aa-empty {
+  padding: 30px;
+  text-align: center;
+  color: var(--aa-muted);
+  background: var(--aa-surface);
+  border: 1px solid var(--aa-border);
+  border-radius: var(--aa-r);
+}
+
+.aa-error {
+  padding: 14px 16px;
+  color: #991b1b;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: var(--aa-r);
+  animation: aa-rise 280ms var(--aa-ease) both;
+}
+
+.aa-warn,
+.aa-note {
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  font-size: 0.88rem;
+  border-radius: 9px;
+}
+
+.aa-warn { color: #92400e; background: #fffbeb; border: 1px solid #fde68a; }
+
+.aa-note {
+  color: var(--aa-muted);
+  background: var(--aa-surface-2);
+  border: 1px solid var(--aa-border);
+}
+
+/* ----------------------------------------------------------- skeleton --- */
+
+/*
+ * What "Running the query…" looks like now.
+ *
+ * Shaped like the answer rather than like a spinner: a title bar, a row of
+ * bars of varying height, an axis rule. A skeleton that resembles the incoming
+ * result makes the wait feel like loading; a centred spinner makes it feel
+ * like nothing is happening.
+ *
+ * The heights are fixed rather than random. A skeleton that reshuffles on
+ * every render reads as data arriving and then changing its mind.
+ */
+.aa-skeleton {
+  padding: 20px;
+  background: var(--aa-surface);
+  border: 1px solid var(--aa-border);
+  border-radius: var(--aa-r);
+  animation: aa-rise 300ms var(--aa-ease) both;
+}
+
+.aa-sk-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.aa-sk-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2.4%;
+  height: 210px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--aa-border);
+}
+
+.aa-sk-bars span {
+  flex: 1;
+  border-radius: 5px 5px 0 0;
+}
+
+.aa-sk-line,
+.aa-sk-bars span {
+  /*
+   * One shimmer definition, shared. The sweep is a moving background rather
+   * than a moving element, so nothing is laid out twice per frame.
+   */
+  background-image: linear-gradient(
+    100deg,
+    var(--aa-surface-2) 28%,
+    color-mix(in oklab, var(--aa-surface-2) 55%, var(--aa-surface)) 46%,
+    var(--aa-surface-2) 64%
+  );
+  background-size: 220% 100%;
+  animation: aa-shimmer 1.5s linear infinite;
+}
+
+.aa-sk-line { height: 12px; border-radius: 6px; }
+
+@keyframes aa-shimmer {
+  from { background-position: 180% 0; }
+  to   { background-position: -80% 0; }
+}
+
+.aa-sk-foot {
+  display: flex;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+/*
+ * Said out loud, because the skeleton is a shape and not a promise: the
+ * columns being drawn are a placeholder, not a preview of the answer.
+ */
+.aa-sk-note {
+  margin: 16px 0 0;
+  font-size: 0.83rem;
+  color: var(--aa-muted);
+  text-align: center;
+}
+
+/* ------------------------------------------------------------- canvas --- */
+
+/* The colour a chart's edge fade dissolves into; see ChartTemplates.css. */
+.aa-canvas { --ct-fade: var(--aa-surface, #ffffff); }
+
+.aa-canvas {
+  padding: 22px;
+  background: var(--aa-surface);
+  border: 1px solid var(--aa-border);
+  border-radius: var(--aa-r);
+  box-shadow: var(--aa-shadow);
+  animation: aa-rise 340ms var(--aa-ease) both;
+}
+
+.aa-canvas-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.aa-canvas-head h2 {
+  margin: 0;
+  font-size: 1.18rem;
+  letter-spacing: -0.012em;
+}
+
+.aa-corrected { margin: 5px 0 0; font-size: 0.85rem; color: var(--aa-muted); }
+
+.aa-meta { display: flex; align-items: center; gap: 10px; }
+
+/*
+ * The row count is the headline figure on this page, so it is styled like one.
+ * It is the length of the array beside it, never a model's description of it.
+ */
+.aa-count { font-size: 0.9rem; color: var(--aa-muted); white-space: nowrap; }
+
+.aa-count strong {
+  font-size: 1.2rem;
+  color: var(--aa-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.aa-csv {
+  padding: 7px 13px;
+  font-size: 0.83rem;
+  color: var(--aa-muted);
+  background: var(--aa-surface);
+  border: 1px solid var(--aa-border);
+  border-radius: 9px;
+  cursor: pointer;
+  transition:
+    color var(--aa-fast) linear,
+    border-color var(--aa-fast) linear,
+    transform var(--aa-fast) var(--aa-ease);
+}
+
+.aa-csv:hover {
+  color: var(--aa-accent);
+  border-color: color-mix(in oklab, var(--aa-accent) 40%, transparent);
+  transform: translateY(-1px);
+}
+
+.aa-csv:active { transform: translateY(0) scale(0.98); }
+
+/* ------------------------------------------------------------ switcher -- */
+
+/*
+ * Switching template is free — the rows are already here — so the control is
+ * always visible rather than hidden behind a menu. Unavailable types stay in
+ * place, disabled, so the set of options does not reshuffle between answers.
+ */
+.aa-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+  padding: 4px;
+  background: var(--aa-surface-2);
+  border-radius: 11px;
+}
+
+.aa-switch button {
+  padding: 6px 14px;
+  font-size: 0.84rem;
+  color: var(--aa-muted);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    color var(--aa-fast) linear,
+    background-color var(--aa-fast) linear,
+    box-shadow var(--aa-fast) linear;
+}
+
+.aa-switch button:hover:not(:disabled):not(.is-active) {
+  color: var(--aa-text);
+  background: var(--aa-surface);
+}
+
+.aa-switch button.is-active {
+  color: var(--aa-accent-ink);
+  background: var(--aa-accent);
+  box-shadow: var(--aa-shadow-md);
+}
+
+/*
+ * Disabled types keep a normal cursor rather than `not-allowed`: the tooltip
+ * explaining why is the useful part, and a blocked cursor discourages the
+ * hover that reveals it.
+ */
+.aa-switch button:disabled { opacity: 0.4; cursor: default; }
+
+.aa-switch .aa-reset { margin-left: auto; font-style: italic; }
+
+/* --------------------------------------------------------------- table -- */
+
+/* Wide results scroll inside the card rather than widening the page. */
+.aa-tablewrap {
+  overflow-x: auto;
+  border: 1px solid var(--aa-border);
+  border-radius: var(--aa-r);
+}
+
+.aa-table { width: 100%; border-collapse: collapse; font-size: 0.87rem; }
+
+.aa-table th,
+.aa-table td {
+  padding: 9px 12px;
+  text-align: left;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--aa-border);
+}
+
+.aa-table th {
+  position: sticky;
+  top: 0;
+  font-weight: 600;
+  background: var(--aa-surface-2);
+}
+
+.aa-table tbody tr { transition: background-color var(--aa-fast) linear; }
+.aa-table tbody tr:hover { background: var(--aa-accent-soft); }
+.aa-table tbody tr:last-child td { border-bottom: 0; }
+
+.aa-rownum {
+  width: 1%;
+  color: var(--aa-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.aa-null { color: var(--aa-muted); }
+
+/* Figures line up column-wise only if they are tabular. */
+.aa-table td { font-variant-numeric: tabular-nums; }
+
+.aa-pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 14px;
+  font-size: 0.87rem;
+  color: var(--aa-muted);
+}
+
+.aa-pager button {
+  padding: 6px 14px;
+  color: inherit;
+  background: var(--aa-surface);
+  border: 1px solid var(--aa-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    border-color var(--aa-fast) linear,
+    color var(--aa-fast) linear;
+}
+
+.aa-pager button:hover:not(:disabled) {
+  color: var(--aa-accent);
+  border-color: color-mix(in oklab, var(--aa-accent) 40%, transparent);
+}
+
+.aa-pager button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* --------------------------------------------------------- provenance --- */
+
+/*
+ * Collapsed by default, but always present. Anyone querying a figure can see
+ * the tool or the exact SQL that produced it without asking an engineer.
+ */
+.aa-source { margin-top: 18px; font-size: 0.85rem; }
+
+.aa-source summary {
+  color: var(--aa-muted);
+  cursor: pointer;
+  padding: 6px 0;
+  transition: color var(--aa-fast) linear;
+}
+
+.aa-source summary:hover { color: var(--aa-accent); }
+
+.aa-source dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 16px;
+  margin: 12px 0 0;
+  animation: aa-rise 240ms var(--aa-ease) both;
+}
+
+.aa-source dt { color: var(--aa-muted); }
+.aa-source dd { margin: 0; }
+
+.aa-source pre {
+  margin: 0;
+  padding: 10px 12px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  background: var(--aa-surface-2);
+  border: 1px solid var(--aa-border);
+  border-radius: 8px;
+  white-space: pre-wrap;
+}
+
+/* -------------------------------------------------------------- narrow -- */
+
+@media (max-width: 720px) {
+  .aa { padding: 16px 14px 48px; }
+  .aa-hero { padding: 24px 18px 20px; }
+
+  /* Stacked, because a 20px submit button beside a 40% input is neither. */
+  .aa-ask { flex-direction: column; align-items: stretch; padding: 12px; gap: 10px; }
+  .aa-ask input { padding: 6px 4px; }
+  .aa-ask button { justify-content: center; }
+
+  .aa-canvas { padding: 14px; }
+}
+
+/* ----------------------------------------------------- reduced motion --- */
+
+/*
+ * One block, switching all of it off.
+ *
+ * Everything above is decoration over a layout that is already complete
+ * without it — no state is communicated by movement alone — so this can be a
+ * blanket removal rather than a set of gentler alternatives.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .aa *,
+  .aa *::before,
+  .aa *::after,
+  .aa-hero::before,
+  .aa-hero::after {
+    animation: none !important;
+    transition-duration: 1ms !important;
+  }
+
+  .aa-suggest button:hover,
+  .aa-csv:hover { transform: none; }
+}

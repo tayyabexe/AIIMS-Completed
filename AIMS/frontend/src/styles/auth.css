@@ -1,0 +1,601 @@
+/*
+ * AIMS access surfaces — portal chooser, sign-in, password recovery.
+ *
+ * DIRECTION
+ * These are the only screens a person sees before they are anyone in
+ * particular, so they carry the institute rather than a dashboard. The world
+ * they borrow from is a registrar's counter in morning light: glacier glass,
+ * white card stock, Oxford-blue ink, a hairline-ruled plate with an embossed
+ * identity chip. Airy, cool and precise — "calm in the chaos" rather than the
+ * heavy enterprise navy the old screens used.
+ *
+ * The tokens below are the Lumina design system (DESIGN.md) verbatim. They are
+ * namespaced under .aims-auth on purpose: the dashboards run on their own
+ * indigo-glass palette, and nothing here is allowed to leak into them.
+ *
+ * SIGNATURE
+ * The credential plate (.auth-plate). A hairline-framed white plate carrying a
+ * tinted identity chip, a tabular portal code and a ruled issue line. It is
+ * the one element that could only belong to this product — an access
+ * credential for an institute — and it recurs on all three screens: four of
+ * them on the chooser, one presented on the sign-in pane, one per role on
+ * recovery.
+ */
+
+.aims-auth {
+  /* Surfaces — one hue, lightness only. */
+  --surface: #f8f9ff;
+  --surface-dim: #cbdbf5;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #eff4ff;
+  --surface-container: #e5eeff;
+  --surface-container-high: #dce9ff;
+  --surface-container-highest: #d3e4fe;
+
+  /* Ink — four tiers, never two. */
+  --on-surface: #0b1c30;
+  --on-surface-variant: #434655;
+  --on-surface-muted: #737686;
+  --on-surface-faint: #9497a6;
+
+  --outline: #737686;
+  --outline-variant: #c3c6d7;
+
+  --primary: #004ac6;
+  --primary-strong: #003ea8;
+  --on-primary: #ffffff;
+  --primary-container: #2563eb;
+  --primary-fixed: #dbe1ff;
+  --primary-fixed-dim: #b4c5ff;
+  --on-primary-fixed: #00174b;
+  --on-primary-fixed-variant: #003ea8;
+
+  --secondary: #006686;
+  --secondary-fixed-dim: #7bd1fa;
+  --on-secondary-fixed-variant: #004d66;
+
+  --error: #ba1a1a;
+  --error-container: #ffdad6;
+  --on-error-container: #93000a;
+
+  /* Shape */
+  --r-sm: 0.25rem;
+  --r: 0.5rem;
+  --r-md: 0.75rem;
+  --r-lg: 1rem;
+  --r-xl: 1.5rem;
+  --r-full: 9999px;
+
+  /* Rhythm — 4px base, 8pt scale. */
+  --s-xs: 4px;
+  --s-sm: 8px;
+  --s-md: 16px;
+  --s-lg: 24px;
+  --s-xl: 32px;
+  --s-2xl: 48px;
+
+  /*
+   * Elevation is tonal-plus-ambient, never a hard line: a 1px colour ring and
+   * two diffused depths. Decided once here so no component invents its own.
+   */
+  --lift-1: 0 0 0 1px rgba(11, 28, 48, .05), 0 1px 2px -1px rgba(11, 28, 48, .06), 0 4px 20px rgba(11, 28, 48, .04);
+  --lift-2: 0 0 0 1px rgba(0, 74, 198, .10), 0 8px 12px -6px rgba(11, 28, 48, .10), 0 20px 40px -12px rgba(11, 28, 48, .12);
+  --lift-glass: 0 1px 0 0 rgba(255, 255, 255, .6) inset, 0 1px 24px rgba(11, 28, 48, .05);
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-move: cubic-bezier(0.77, 0, 0.175, 1);
+
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--on-surface);
+  background-color: var(--surface);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* ── Type scale ──────────────────────────────────────────────────────────
+   Manrope carries structure, Inter carries content. Hierarchy is built from
+   three levers at once — size, weight and ink tier — so one size can hold
+   three tiers where size alone could not. */
+
+.aims-auth .t-display { font-family: 'Manrope', 'Inter', sans-serif; font-size: 36px; line-height: 44px; font-weight: 700; letter-spacing: -0.02em; margin: 0; }
+.aims-auth .t-h1      { font-family: 'Manrope', 'Inter', sans-serif; font-size: 28px; line-height: 36px; font-weight: 600; letter-spacing: -0.01em; margin: 0; }
+.aims-auth .t-h2      { font-family: 'Manrope', 'Inter', sans-serif; font-size: 22px; line-height: 30px; font-weight: 600; margin: 0; }
+.aims-auth .t-h3      { font-family: 'Manrope', 'Inter', sans-serif; font-size: 18px; line-height: 24px; font-weight: 600; margin: 0; }
+.aims-auth .t-body-lg { font-size: 16px; line-height: 24px; font-weight: 400; margin: 0; }
+.aims-auth .t-body    { font-size: 14px; line-height: 20px; font-weight: 400; margin: 0; }
+.aims-auth .t-body-sm { font-size: 12px; line-height: 16px; font-weight: 400; margin: 0; }
+.aims-auth .t-label   { font-size: 14px; line-height: 20px; font-weight: 600; letter-spacing: 0.05em; margin: 0; }
+.aims-auth .t-label-sm{ font-size: 12px; line-height: 16px; font-weight: 500; margin: 0; }
+
+.aims-auth .t-eyebrow {
+  font-size: 12px; line-height: 16px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--on-surface-muted); margin: 0;
+}
+/* Anything a person may read back over a phone gets fixed-width digits. */
+.aims-auth .t-code {
+  font-family: ui-monospace, 'SFMono-Regular', 'JetBrains Mono', Menlo, monospace;
+  font-size: 11px; line-height: 16px; font-weight: 500;
+  letter-spacing: 0.08em; font-variant-numeric: tabular-nums;
+}
+
+.aims-auth .ink-2 { color: var(--on-surface-variant); }
+.aims-auth .ink-3 { color: var(--on-surface-muted); }
+.aims-auth .ink-4 { color: var(--on-surface-faint); }
+.aims-auth .balance { text-wrap: balance; }
+.aims-auth .pretty  { text-wrap: pretty; }
+
+@media (max-width: 640px) {
+  .aims-auth .t-display { font-size: 26px; line-height: 34px; }
+  .aims-auth .t-h1      { font-size: 24px; line-height: 32px; }
+}
+
+/* ── The field ───────────────────────────────────────────────────────────
+   Two soft auras over the glacier surface. They are the atmospheric gradient
+   the brand asks for, kept far enough behind that no text ever sits on a
+   colour edge. */
+
+.aims-auth .auth-field {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  /*
+   * `overflow: clip`, on BOTH axes, and never `hidden`.
+   *
+   * Two separate bugs live in this one line, and the fix for the first caused
+   * the second.
+   *
+   * `overflow-x: hidden` computes overflow-y to `auto`, which turns this
+   * element into its own scroll container: the page scrolled inside the panel
+   * instead of in the document, the sticky bar stuck to the panel rather than
+   * the viewport, and the footer sat above the fold with a second scrollbar
+   * beside it. So it became `overflow-x: clip`, which trims without creating a
+   * scrollport.
+   *
+   * But `overflow-x` alone leaves the y-axis visible, and the ambient aura
+   * below hangs 260px past the bottom edge (`::after { bottom: -260px }`).
+   * That hang was measurable as exactly 260px of document scroll under a
+   * footer that had nothing after it — the "empty space below the footer".
+   * Clipping both axes removes the phantom without reintroducing the
+   * scrollport, because `clip`, unlike `hidden`, is not a scroll container.
+   */
+  overflow: clip;
+}
+
+/*
+ * Viewport-locked variant.
+ *
+ * The chooser and the two credential screens are single-question screens:
+ * there is nothing below the fold, so a scrollbar would only ever be an
+ * invitation to go looking for emptiness. Removing it is done in JavaScript
+ * (useViewportLock), not here, and for a specific reason.
+ *
+ * This rule used to be `height: 100dvh` above a fixed 880x620 breakpoint. On
+ * an element that clips — which this one must, to contain the auras — a fixed
+ * height does not merely remove the scrollbar, it cuts content off. The
+ * recovery card is about 760px tall, so at 1280x680 that rule hid its submit
+ * button and there was no scrollbar left to reach it with. A breakpoint cannot
+ * know whether the content fits; only measuring can, and only the hook can
+ * measure.
+ *
+ * So the class stays as the marker of intent and carries no height. The
+ * element keeps `min-height: 100dvh`, which is what puts the footer on the
+ * bottom edge when the content is short, and lets it grow and scroll normally
+ * when it is not.
+ */
+
+.aims-auth .auth-field::before,
+.aims-auth .auth-field::after {
+  content: '';
+  position: absolute;
+  border-radius: var(--r-full);
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: -1;
+}
+.aims-auth .auth-field::before {
+  width: 620px; height: 620px;
+  top: -280px; left: -180px;
+  background: var(--aura, rgba(0, 74, 198, .20));
+}
+.aims-auth .auth-field::after {
+  width: 560px; height: 560px;
+  right: -220px; bottom: -260px;
+  background: rgba(0, 102, 134, .16);
+}
+
+/* ── Glass chrome ─────────────────────────────────────────────────────── */
+
+.aims-auth .auth-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-md);
+  padding: var(--s-md) clamp(20px, 5vw, 56px);
+  padding-top: max(var(--s-md), env(safe-area-inset-top));
+  background: rgba(255, 255, 255, .78);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom: 1px solid rgba(195, 198, 215, .5);
+  box-shadow: var(--lift-glass);
+}
+
+/* ── Mark ─────────────────────────────────────────────────────────────── */
+
+.aims-auth .auth-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: 0;
+  padding: 4px;
+  margin: -4px;
+  border-radius: var(--r-md);
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+}
+.aims-auth .auth-mark:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(0, 74, 198, .28); }
+.aims-auth .auth-mark__seal {
+  width: 40px; height: 40px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-md);
+  background: linear-gradient(140deg, var(--primary) 0%, var(--secondary) 100%);
+  color: var(--on-primary);
+  box-shadow: 0 4px 12px rgba(0, 74, 198, .28);
+}
+.aims-auth .auth-mark__name {
+  font-family: 'Manrope', 'Inter', sans-serif;
+  font-size: 18px; line-height: 22px; font-weight: 700;
+  letter-spacing: -0.01em;
+  display: block;
+}
+.aims-auth .auth-mark__sub {
+  font-size: 11px; line-height: 14px; font-weight: 500;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--on-surface-muted);
+  display: block;
+}
+.aims-auth .auth-mark--invert .auth-mark__seal {
+  background: rgba(255, 255, 255, .12);
+  border: 1px solid rgba(255, 255, 255, .28);
+  box-shadow: none;
+}
+.aims-auth .auth-mark--invert .auth-mark__name { color: #ffffff; }
+.aims-auth .auth-mark--invert .auth-mark__sub  { color: var(--primary-fixed-dim); }
+.aims-auth .auth-mark--invert:focus-visible { box-shadow: 0 0 0 3px rgba(255, 255, 255, .5); }
+
+/* ── Credential plate — the signature ─────────────────────────────────── */
+
+.aims-auth .auth-plate {
+  --hue: var(--primary);
+  --hue-soft: var(--primary-fixed);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-md);
+  width: 100%;
+  padding: var(--s-lg);
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--r-lg);
+  box-shadow: var(--lift-1);
+  overflow: hidden;
+  cursor: pointer;
+  transition:
+    transform 200ms var(--ease-out),
+    box-shadow 200ms var(--ease-out),
+    border-color 200ms var(--ease-out);
+}
+/* A plate is issued in one hue, and shows it as a ruled edge — nothing more. */
+.aims-auth .auth-plate::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--hue);
+  opacity: .85;
+}
+.aims-auth .auth-plate:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--lift-2);
+  border-color: color-mix(in srgb, var(--hue) 35%, var(--outline-variant));
+}
+.aims-auth .auth-plate:active { transform: translateY(-1px) scale(.99); }
+.aims-auth .auth-plate:focus-visible {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: var(--lift-2), 0 0 0 3px rgba(0, 74, 198, .28);
+}
+
+.aims-auth .auth-plate__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s-sm);
+}
+.aims-auth .auth-plate__chip {
+  width: 44px; height: 44px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-md);
+  background: var(--hue-soft);
+  color: var(--hue);
+  border: 1px solid color-mix(in srgb, var(--hue) 18%, transparent);
+}
+/* The chooser's plates carry the go-affordance in the head rather than a
+   portal code: the codes were internal shorthand that meant nothing to the
+   person reading them. */
+.aims-auth .auth-plate__arrow {
+  width: 32px; height: 32px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-full);
+  background: var(--surface-container-low);
+  color: var(--on-surface-muted);
+  transition: background-color 200ms var(--ease-out), color 200ms var(--ease-out), transform 200ms var(--ease-out);
+}
+.aims-auth .auth-plate:hover .auth-plate__arrow {
+  background: var(--primary);
+  color: var(--on-primary);
+  transform: translateX(2px);
+}
+.aims-auth .auth-plate__desc { color: var(--on-surface-variant); }
+
+.aims-auth .auth-plate__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-sm);
+  margin-top: auto;
+  padding-top: var(--s-md);
+  border-top: 1px solid rgba(195, 198, 215, .55);
+}
+.aims-auth .auth-plate__go {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--primary);
+}
+.aims-auth .auth-plate__go svg { transition: transform 200ms var(--ease-out); }
+.aims-auth .auth-plate:hover .auth-plate__go svg { transform: translateX(4px); }
+
+/* ── Fields ──────────────────────────────────────────────────────────────
+   Inputs are inset: a tint darker than the card holding them, so "type here"
+   reads without a heavy border. */
+
+.aims-auth .fld { display: flex; flex-direction: column; gap: 6px; }
+.aims-auth .fld__row { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-sm); }
+.aims-auth .fld__label {
+  margin: 0;
+  font-size: 12px; line-height: 16px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--on-surface-variant);
+}
+.aims-auth .fld__wrap { position: relative; display: flex; align-items: center; }
+.aims-auth .fld__icon {
+  position: absolute; left: 14px;
+  color: var(--on-surface-faint);
+  pointer-events: none;
+  transition: color 160ms var(--ease-out);
+}
+.aims-auth .fld__input {
+  width: 100%;
+  height: 48px;
+  padding: 0 14px 0 42px;
+  font: inherit;
+  font-size: 15px;
+  color: var(--on-surface);
+  background: var(--surface-container-low);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--r);
+  outline: none;
+  transition: background-color 160ms var(--ease-out), border-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
+}
+.aims-auth .fld__input::placeholder { color: var(--on-surface-faint); }
+.aims-auth .fld__input:hover { border-color: var(--outline); }
+.aims-auth .fld__input:focus {
+  background: var(--surface-container-lowest);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 74, 198, .16);
+}
+.aims-auth .fld__wrap:focus-within .fld__icon { color: var(--primary); }
+.aims-auth .fld__input--reveal { padding-right: 48px; }
+.aims-auth .fld__input[aria-invalid='true'] { border-color: var(--error); }
+
+/* 18px glyph, 44px target — the hit area is extended, not the icon. */
+.aims-auth .fld__reveal {
+  position: absolute;
+  right: 2px;
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  background: none; border: 0; padding: 0;
+  border-radius: var(--r);
+  color: var(--on-surface-muted);
+  cursor: pointer;
+  transition: color 160ms var(--ease-out), background-color 160ms var(--ease-out);
+}
+.aims-auth .fld__reveal:hover { color: var(--on-surface); background: rgba(11, 28, 48, .05); }
+.aims-auth .fld__reveal:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(0, 74, 198, .28); }
+
+/* ── Buttons ─────────────────────────────────────────────────────────── */
+
+.aims-auth .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 var(--s-lg);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border-radius: var(--r-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 140ms var(--ease-out), box-shadow 180ms var(--ease-out),
+              background-color 180ms var(--ease-out), color 180ms var(--ease-out),
+              border-color 180ms var(--ease-out), opacity 180ms var(--ease-out);
+}
+.aims-auth .btn--block { width: 100%; }
+.aims-auth .btn:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(0, 74, 198, .3); }
+.aims-auth .btn:active { transform: scale(.97); }
+.aims-auth .btn[disabled] { cursor: progress; opacity: .68; transform: none; }
+
+.aims-auth .btn--primary {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: var(--on-primary);
+  box-shadow: 0 1px 2px rgba(0, 23, 75, .24), 0 8px 20px -8px rgba(0, 74, 198, .55);
+}
+.aims-auth .btn--primary:hover:not([disabled]) {
+  box-shadow: 0 1px 2px rgba(0, 23, 75, .3), 0 12px 26px -8px rgba(0, 74, 198, .65);
+}
+.aims-auth .btn--primary:focus-visible {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, .9), 0 0 0 6px rgba(0, 74, 198, .4);
+}
+
+.aims-auth .btn--ghost {
+  background: var(--surface-container-lowest);
+  color: var(--primary);
+  border-color: color-mix(in srgb, var(--primary) 32%, transparent);
+}
+.aims-auth .btn--ghost:hover { background: var(--primary-fixed); border-color: var(--primary); }
+
+.aims-auth .btn--quiet {
+  height: 40px;
+  padding: 0 var(--s-sm);
+  background: none;
+  color: var(--on-surface-variant);
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: none;
+}
+.aims-auth .btn--quiet:hover { color: var(--primary); }
+
+.aims-auth .lnk {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+}
+.aims-auth .lnk:hover { text-decoration: underline; text-underline-offset: 3px; }
+.aims-auth .lnk:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(0, 74, 198, .28); }
+
+/* ── Alert ───────────────────────────────────────────────────────────── */
+
+.aims-auth .alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: var(--r);
+  background: var(--error-container);
+  border: 1px solid color-mix(in srgb, var(--error) 30%, transparent);
+  color: var(--on-error-container);
+  font-size: 13px;
+  line-height: 18px;
+  animation: auth-alert-in 200ms var(--ease-out) both;
+}
+.aims-auth .alert svg { flex: none; margin-top: 1px; }
+
+/* ── Divider ─────────────────────────────────────────────────────────── */
+
+.aims-auth .rule {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--on-surface-muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+.aims-auth .rule::before,
+.aims-auth .rule::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--outline-variant);
+}
+
+/* ── Segmented control (recovery portal picker) ──────────────────────── */
+
+.aims-auth .seg {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  padding: 4px;
+  background: var(--surface-container-low);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--r-md);
+}
+.aims-auth .seg__item {
+  height: 40px;
+  border: 0;
+  border-radius: var(--r);
+  background: none;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  cursor: pointer;
+  transition: background-color 160ms var(--ease-out), color 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
+}
+.aims-auth .seg__item:hover { color: var(--on-surface); }
+.aims-auth .seg__item[aria-pressed='true'] {
+  background: var(--surface-container-lowest);
+  color: var(--primary);
+  box-shadow: var(--lift-1);
+}
+.aims-auth .seg__item:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(0, 74, 198, .28); }
+
+/* ── Entrances ───────────────────────────────────────────────────────── */
+
+@keyframes auth-rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes auth-alert-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: none; }
+}
+.aims-auth .rise {
+  animation: auth-rise 420ms var(--ease-out) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aims-auth *,
+  .aims-auth *::before,
+  .aims-auth *::after {
+    animation-duration: .01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: .01ms !important;
+  }
+  .aims-auth .auth-plate:hover { transform: none; }
+}

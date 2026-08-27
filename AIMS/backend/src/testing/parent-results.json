@@ -1,0 +1,1970 @@
+[
+ {
+  "ep": "auth",
+  "test": "login SuperAdmin",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "auth",
+  "test": "login Admin",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "auth",
+  "test": "login Teacher",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "auth",
+  "test": "login Student",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "auth",
+  "test": "login Parent",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "auth",
+  "test": "login HR",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "auth",
+  "test": "login Accountant",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "auth",
+  "test": "login Library",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/parents/parent-login",
+  "test": "valid credentials",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/parents/login",
+  "test": "valid credentials",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/parent/parent-login",
+  "test": "valid credentials",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/parent/login",
+  "test": "valid credentials",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /parents/parent-login",
+  "test": "wrong password",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /parents/parent-login",
+  "test": "unknown email",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /parents/parent-login",
+  "test": "non-parent account",
+  "exp": 403,
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /parents/parent-login",
+  "test": "empty body",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /parents/parent-login",
+  "test": "missing password",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /parents/parent-login",
+  "test": "malformed email",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /parents/parent-login",
+  "test": "SQLi in email",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /parents/parent-login",
+  "test": "issues a token",
+  "exp": "token",
+  "got": "token",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /parents/parent-login",
+  "test": "no password_hash leak",
+  "exp": "absent",
+  "got": "absent",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/profile",
+  "test": "role 1 SuperAdmin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/profile",
+  "test": "role 2 Admin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/profile",
+  "test": "role 3 Teacher",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/profile",
+  "test": "role 4 Student",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/profile",
+  "test": "role 5 Parent",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/profile",
+  "test": "role 6 HR",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/profile",
+  "test": "role 7 Accountant",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/profile",
+  "test": "role 8 Library",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/profile",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/profile",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/profile",
+  "test": "role 1 SuperAdmin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/profile",
+  "test": "role 2 Admin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/profile",
+  "test": "role 3 Teacher",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/profile",
+  "test": "role 4 Student",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/profile",
+  "test": "role 5 Parent",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/profile",
+  "test": "role 6 HR",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/profile",
+  "test": "role 7 Accountant",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/profile",
+  "test": "role 8 Library",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/profile",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/profile",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/children",
+  "test": "role 1 SuperAdmin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/children",
+  "test": "role 2 Admin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/children",
+  "test": "role 3 Teacher",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/children",
+  "test": "role 4 Student",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/children",
+  "test": "role 5 Parent",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/children",
+  "test": "role 6 HR",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/children",
+  "test": "role 7 Accountant",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/children",
+  "test": "role 8 Library",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/children",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/children",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/children",
+  "test": "role 1 SuperAdmin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/children",
+  "test": "role 2 Admin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/children",
+  "test": "role 3 Teacher",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/children",
+  "test": "role 4 Student",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/children",
+  "test": "role 5 Parent",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/children",
+  "test": "role 6 HR",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/children",
+  "test": "role 7 Accountant",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/children",
+  "test": "role 8 Library",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/children",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/children",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/attendance",
+  "test": "role 1 SuperAdmin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/attendance",
+  "test": "role 2 Admin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/attendance",
+  "test": "role 3 Teacher",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/attendance",
+  "test": "role 4 Student",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/attendance",
+  "test": "role 5 Parent",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/attendance",
+  "test": "role 6 HR",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/attendance",
+  "test": "role 7 Accountant",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/attendance",
+  "test": "role 8 Library",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/attendance",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/attendance",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/attendance",
+  "test": "role 1 SuperAdmin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/attendance",
+  "test": "role 2 Admin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/attendance",
+  "test": "role 3 Teacher",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/attendance",
+  "test": "role 4 Student",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/attendance",
+  "test": "role 5 Parent",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/attendance",
+  "test": "role 6 HR",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/attendance",
+  "test": "role 7 Accountant",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/attendance",
+  "test": "role 8 Library",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/attendance",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/attendance",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/fee-status",
+  "test": "role 1 SuperAdmin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/fee-status",
+  "test": "role 2 Admin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/fee-status",
+  "test": "role 3 Teacher",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/fee-status",
+  "test": "role 4 Student",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/fee-status",
+  "test": "role 5 Parent",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/fee-status",
+  "test": "role 6 HR",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/fee-status",
+  "test": "role 7 Accountant",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/fee-status",
+  "test": "role 8 Library",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/fee-status",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/fee-status",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/fee-status",
+  "test": "role 1 SuperAdmin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/fee-status",
+  "test": "role 2 Admin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/fee-status",
+  "test": "role 3 Teacher",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/fee-status",
+  "test": "role 4 Student",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/fee-status",
+  "test": "role 5 Parent",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/fee-status",
+  "test": "role 6 HR",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/fee-status",
+  "test": "role 7 Accountant",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/fee-status",
+  "test": "role 8 Library",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/fee-status",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/fee-status",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/challan",
+  "test": "role 1 SuperAdmin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/challan",
+  "test": "role 2 Admin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/challan",
+  "test": "role 3 Teacher",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/challan",
+  "test": "role 4 Student",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/challan",
+  "test": "role 5 Parent",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/challan",
+  "test": "role 6 HR",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/challan",
+  "test": "role 7 Accountant",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/challan",
+  "test": "role 8 Library",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/challan",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/challan",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/challan",
+  "test": "role 1 SuperAdmin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/challan",
+  "test": "role 2 Admin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/challan",
+  "test": "role 3 Teacher",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/challan",
+  "test": "role 4 Student",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/challan",
+  "test": "role 5 Parent",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/challan",
+  "test": "role 6 HR",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/challan",
+  "test": "role 7 Accountant",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/challan",
+  "test": "role 8 Library",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/challan",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/challan",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/receipt",
+  "test": "role 1 SuperAdmin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/receipt",
+  "test": "role 2 Admin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/receipt",
+  "test": "role 3 Teacher",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/receipt",
+  "test": "role 4 Student",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/receipt",
+  "test": "role 5 Parent",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/receipt",
+  "test": "role 6 HR",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/receipt",
+  "test": "role 7 Accountant",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/receipt",
+  "test": "role 8 Library",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/receipt",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/receipt",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/receipt",
+  "test": "role 1 SuperAdmin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/receipt",
+  "test": "role 2 Admin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/receipt",
+  "test": "role 3 Teacher",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/receipt",
+  "test": "role 4 Student",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/receipt",
+  "test": "role 5 Parent",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/receipt",
+  "test": "role 6 HR",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/receipt",
+  "test": "role 7 Accountant",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/receipt",
+  "test": "role 8 Library",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/receipt",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/receipt",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/timetable",
+  "test": "role 1 SuperAdmin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/timetable",
+  "test": "role 2 Admin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/timetable",
+  "test": "role 3 Teacher",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/timetable",
+  "test": "role 4 Student",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/timetable",
+  "test": "role 5 Parent",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/timetable",
+  "test": "role 6 HR",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/timetable",
+  "test": "role 7 Accountant",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/timetable",
+  "test": "role 8 Library",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/timetable",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/timetable",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/timetable",
+  "test": "role 1 SuperAdmin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/timetable",
+  "test": "role 2 Admin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/timetable",
+  "test": "role 3 Teacher",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/timetable",
+  "test": "role 4 Student",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/timetable",
+  "test": "role 5 Parent",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/timetable",
+  "test": "role 6 HR",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/timetable",
+  "test": "role 7 Accountant",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/timetable",
+  "test": "role 8 Library",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/timetable",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/timetable",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/results",
+  "test": "role 1 SuperAdmin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/results",
+  "test": "role 2 Admin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/results",
+  "test": "role 3 Teacher",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/results",
+  "test": "role 4 Student",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/results",
+  "test": "role 5 Parent",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/results",
+  "test": "role 6 HR",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/results",
+  "test": "role 7 Accountant",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/results",
+  "test": "role 8 Library",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/results",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/results",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/results",
+  "test": "role 1 SuperAdmin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/results",
+  "test": "role 2 Admin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/results",
+  "test": "role 3 Teacher",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/results",
+  "test": "role 4 Student",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/results",
+  "test": "role 5 Parent",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/results",
+  "test": "role 6 HR",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/results",
+  "test": "role 7 Accountant",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/results",
+  "test": "role 8 Library",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/results",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/results",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/gpa-cgpa",
+  "test": "role 1 SuperAdmin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/gpa-cgpa",
+  "test": "role 2 Admin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/gpa-cgpa",
+  "test": "role 3 Teacher",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/gpa-cgpa",
+  "test": "role 4 Student",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/gpa-cgpa",
+  "test": "role 5 Parent",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/gpa-cgpa",
+  "test": "role 6 HR",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/gpa-cgpa",
+  "test": "role 7 Accountant",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/gpa-cgpa",
+  "test": "role 8 Library",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/gpa-cgpa",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/gpa-cgpa",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/gpa-cgpa",
+  "test": "role 1 SuperAdmin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/gpa-cgpa",
+  "test": "role 2 Admin",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/gpa-cgpa",
+  "test": "role 3 Teacher",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/gpa-cgpa",
+  "test": "role 4 Student",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/gpa-cgpa",
+  "test": "role 5 Parent",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/gpa-cgpa",
+  "test": "role 6 HR",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/gpa-cgpa",
+  "test": "role 7 Accountant",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/gpa-cgpa",
+  "test": "role 8 Library",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/gpa-cgpa",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/gpa-cgpa",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/notifications",
+  "test": "role 1 SuperAdmin",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/notifications",
+  "test": "role 2 Admin",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/notifications",
+  "test": "role 3 Teacher",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/notifications",
+  "test": "role 4 Student",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/notifications",
+  "test": "role 5 Parent",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/notifications",
+  "test": "role 6 HR",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/notifications",
+  "test": "role 7 Accountant",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/notifications",
+  "test": "role 8 Library",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/notifications",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parents/notifications",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/notifications",
+  "test": "role 1 SuperAdmin",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/notifications",
+  "test": "role 2 Admin",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/notifications",
+  "test": "role 3 Teacher",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/notifications",
+  "test": "role 4 Student",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/notifications",
+  "test": "role 5 Parent",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/notifications",
+  "test": "role 6 HR",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/notifications",
+  "test": "role 7 Accountant",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/notifications",
+  "test": "role 8 Library",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/notifications",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "/api/parent/notifications",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/profile",
+  "test": "parent_id matches DB",
+  "exp": 1,
+  "got": 1,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/profile",
+  "test": "first_name matches DB",
+  "exp": "Hamza",
+  "got": "Hamza",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/profile",
+  "test": "no password_hash",
+  "exp": "absent",
+  "got": "absent",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/children",
+  "test": "child count matches DB",
+  "exp": 1,
+  "got": 1,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/children",
+  "test": "child_id matches DB",
+  "exp": 1,
+  "got": 1,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/children",
+  "test": "relationship matches DB",
+  "exp": "Father",
+  "got": "Father",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/attendance",
+  "test": "returns 200",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/attendance",
+  "test": "DB has 30 records",
+  "exp": "non-empty",
+  "got": "non-empty",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/gpa-cgpa",
+  "test": "gpa matches DB",
+  "exp": "3.90",
+  "got": "3.90",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/gpa-cgpa",
+  "test": "cgpa matches DB",
+  "exp": "3.83",
+  "got": "3.83",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/notifications",
+  "test": "count matches DB",
+  "exp": 0,
+  "got": 0,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/notifications",
+  "test": "admin sees only own rows",
+  "exp": 1,
+  "got": 1,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/notifications",
+  "test": "no cross-user leak",
+  "exp": "scoped",
+  "got": "scoped",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/fee-status",
+  "test": "returns 200",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/fee-status",
+  "test": "success flag true",
+  "exp": true,
+  "got": true,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/challan",
+  "test": "returns 200",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/challan",
+  "test": "success flag true",
+  "exp": true,
+  "got": true,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/receipt",
+  "test": "returns 200",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/receipt",
+  "test": "success flag true",
+  "exp": true,
+  "got": true,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/timetable",
+  "test": "returns 200",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/timetable",
+  "test": "success flag true",
+  "exp": true,
+  "got": true,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/results",
+  "test": "returns 200",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/results",
+  "test": "success flag true",
+  "exp": true,
+  "got": true,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/children",
+  "test": "does NOT return other parent's child",
+  "exp": "excluded",
+  "got": "excluded",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /parent/children",
+  "test": "parent2 sees only own child",
+  "exp": 2,
+  "got": 2,
+  "pass": true,
+  "note": ""
+ }
+]

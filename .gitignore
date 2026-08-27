@@ -1,0 +1,40 @@
+# Repository-root ignore rules.
+#
+# The product's own rules live in AIMS/.gitignore, AIMS/backend/.gitignore and
+# AIMS/frontend/.gitignore. Those are scoped to their own directories, so
+# anything outside AIMS/ — everything under docs/, and the root itself — has to
+# be listed here.
+
+# ----------------------------------------------------------------- secrets
+# Belt and braces. The per-directory files already cover AIMS/**, but a stray
+# .env anywhere in the tree must never be committed.
+.env
+.env.*
+!.env.example
+
+# ------------------------------------------------------------ dependencies
+node_modules/
+
+# ------------------------------------------------------- agent tooling
+# Claude Code skill definitions and local settings. Development tooling for
+# whoever is editing the repository - not part of the AIMS product, and of no
+# use to anyone deploying or maintaining it. Kept on disk, out of the tree.
+.agents/
+.claude/
+
+# --------------------------------------------------------- editor / OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Word and Excel lock files — created beside an open document, meaningless
+# to anyone else, and committed by accident more than once.
+~$*
+
+# ------------------------------------------------------------------- logs
+*.log
+npm-debug.log*
+
+# Notes from the original database build. Kept locally; not part of the
+# handover — it describes the build process, not the delivered system.
+docs/DATABASE_BUILD_NOTES.md

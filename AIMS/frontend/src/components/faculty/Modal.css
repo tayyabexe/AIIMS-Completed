@@ -1,0 +1,153 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 15, 17, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+  animation: modal-fade 0.15s ease;
+}
+
+@keyframes modal-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-box {
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 520px;
+  max-height: min(88vh, 720px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  animation: modal-pop 0.16s ease;
+}
+
+@keyframes modal-pop {
+  from { transform: translateY(10px) scale(0.98); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.modal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 22px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.modal-head h3 {
+  font-size: 17px;
+  font-weight: 800;
+  font-family: var(--font-display);
+}
+
+.modal-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+.modal-close {
+  background: var(--page-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+.modal-close:hover { background: var(--border-soft); }
+
+.modal-body {
+  padding: 20px 22px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 22px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.modal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.modal-field label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.modal-field input,
+.modal-field select,
+.modal-field textarea {
+  padding: 10px 12px;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  background: var(--page-bg);
+  font-size: 14px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  width: 100%;
+}
+
+.modal-field textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+/*
+ * A form inside a modal.
+ *
+ * Optional — the four dialogs that predate it stack `.modal-field`s directly
+ * and rely on each field's own `margin-bottom`. This wrapper exists for two
+ * things that margin cannot do:
+ *
+ *   - separate a leading notice (DraftNotice) from the first field, without
+ *     the notice needing to know it is in a modal. It returns null when there
+ *     is no draft, and `gap` on a flex parent produces no space for an element
+ *     that is not there, where a margin on a wrapper div would.
+ *
+ *   - drop the trailing margin under the last field, which otherwise sits as
+ *     16px of dead space directly above the footer's top border.
+ */
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* The gap owns the spacing now; the fields' own margins would double it. */
+.modal-form > .modal-field,
+.modal-form > .modal-row-2 { margin-bottom: 0; }
+
+.modal-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 560px) {
+  .modal-row-2 { grid-template-columns: 1fr; }
+  .modal-head, .modal-body, .modal-footer { padding-left: 16px; padding-right: 16px; }
+}

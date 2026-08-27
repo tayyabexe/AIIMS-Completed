@@ -1,0 +1,2387 @@
+[
+ {
+  "mod": "challan",
+  "ep": "GET /api/challans",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "GET /api/challans",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "GET /api/challans",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "GET /api/challans",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "GET /api/challans",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "GET /api/challans",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "GET /api/challans",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "GET /api/challans",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "GET /api/challans",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "GET /api/challans",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "GET /api/challans/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "GET /api/challans/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "GET /api/challans/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "GET /api/challans/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "GET /api/challans/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "GET /api/challans/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "GET /api/challans/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "GET /api/challans/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "GET /api/challans/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "GET /api/challans/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "PUT /api/challans/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 404,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "PUT /api/challans/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "PUT /api/challans/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "PUT /api/challans/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "PUT /api/challans/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "PUT /api/challans/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "PUT /api/challans/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "PUT /api/challans/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "PUT /api/challans/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "PUT /api/challans/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "DELETE /api/challans/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 404,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "DELETE /api/challans/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "DELETE /api/challans/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "DELETE /api/challans/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "DELETE /api/challans/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "DELETE /api/challans/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "DELETE /api/challans/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "DELETE /api/challans/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "DELETE /api/challans/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "DELETE /api/challans/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "POST /api/challans",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 201,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "POST /api/challans",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 409,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "POST /api/challans",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "POST /api/challans",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "POST /api/challans",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "POST /api/challans",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "POST /api/challans",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "POST /api/challans",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "POST /api/challans",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "POST /api/challans",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "POST /api/challans",
+  "test": "DB row created",
+  "exp": "found",
+  "got": "found",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "POST /api/challans",
+  "test": "DB amount matches",
+  "exp": "12345.67",
+  "got": "12345.67",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "GET /api/challans/:id",
+  "test": "read back",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "PUT /api/challans/:id",
+  "test": "update",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "PUT /api/challans/:id",
+  "test": "DB status=Paid",
+  "exp": "Paid",
+  "got": "Paid",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "POST /api/challans",
+  "test": "empty body",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "POST /api/challans",
+  "test": "invalid status enum",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "POST /api/challans",
+  "test": "duplicate voucher_number",
+  "exp": 409,
+  "got": 409,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "POST /api/challans",
+  "test": "nonexistent student_id",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "POST /api/challans",
+  "test": "negative amount",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "GET /api/receipts",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "GET /api/receipts",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "GET /api/receipts",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "GET /api/receipts",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "GET /api/receipts",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "GET /api/receipts",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "GET /api/receipts",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "GET /api/receipts",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "GET /api/receipts",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "GET /api/receipts",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "GET /api/receipts/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "GET /api/receipts/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "GET /api/receipts/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "GET /api/receipts/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "GET /api/receipts/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "GET /api/receipts/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "GET /api/receipts/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "GET /api/receipts/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "GET /api/receipts/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "GET /api/receipts/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "PUT /api/receipts/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 404,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "PUT /api/receipts/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "PUT /api/receipts/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "PUT /api/receipts/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "PUT /api/receipts/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "PUT /api/receipts/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "PUT /api/receipts/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "PUT /api/receipts/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "PUT /api/receipts/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "PUT /api/receipts/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "DELETE /api/receipts/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 404,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "DELETE /api/receipts/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "DELETE /api/receipts/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "DELETE /api/receipts/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "DELETE /api/receipts/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "DELETE /api/receipts/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "DELETE /api/receipts/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "DELETE /api/receipts/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "DELETE /api/receipts/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "DELETE /api/receipts/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "POST /api/receipts",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 201,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "POST /api/receipts",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 409,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "POST /api/receipts",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "POST /api/receipts",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "POST /api/receipts",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "POST /api/receipts",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "POST /api/receipts",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "POST /api/receipts",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "POST /api/receipts",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "POST /api/receipts",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "POST /api/receipts",
+  "test": "DB row created",
+  "exp": "found",
+  "got": "found",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "PUT /api/receipts/:id",
+  "test": "update",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "PUT /api/receipts/:id",
+  "test": "DB amount=7500.00",
+  "exp": "7500.00",
+  "got": "7500.00",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "POST /api/receipts",
+  "test": "empty body",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "POST /api/receipts",
+  "test": "duplicate receipt_number",
+  "exp": 409,
+  "got": 409,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "POST /api/receipts",
+  "test": "nonexistent challan_id",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "GET /api/fee-payments",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "GET /api/fee-payments",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "GET /api/fee-payments",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "GET /api/fee-payments",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "GET /api/fee-payments",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "GET /api/fee-payments",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "GET /api/fee-payments",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "GET /api/fee-payments",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "GET /api/fee-payments",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "GET /api/fee-payments",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "GET /api/fee-payments/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "GET /api/fee-payments/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "GET /api/fee-payments/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "GET /api/fee-payments/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "GET /api/fee-payments/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "GET /api/fee-payments/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "GET /api/fee-payments/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "GET /api/fee-payments/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "GET /api/fee-payments/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "GET /api/fee-payments/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "PUT /api/fee-payments/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 404,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "PUT /api/fee-payments/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "PUT /api/fee-payments/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "PUT /api/fee-payments/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "PUT /api/fee-payments/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "PUT /api/fee-payments/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "PUT /api/fee-payments/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "PUT /api/fee-payments/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "PUT /api/fee-payments/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "PUT /api/fee-payments/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "DELETE /api/fee-payments/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 404,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "DELETE /api/fee-payments/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "DELETE /api/fee-payments/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "DELETE /api/fee-payments/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "DELETE /api/fee-payments/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "DELETE /api/fee-payments/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "DELETE /api/fee-payments/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "DELETE /api/fee-payments/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "DELETE /api/fee-payments/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "DELETE /api/fee-payments/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "POST /api/fee-payments",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 201,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "POST /api/fee-payments",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 201,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "POST /api/fee-payments",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "POST /api/fee-payments",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "POST /api/fee-payments",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "POST /api/fee-payments",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "POST /api/fee-payments",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "POST /api/fee-payments",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "POST /api/fee-payments",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "POST /api/fee-payments",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "POST /api/fee-payments",
+  "test": "DB row created",
+  "exp": "found",
+  "got": "found",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "PUT /api/fee-payments/:id",
+  "test": "update",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "PUT /api/fee-payments/:id",
+  "test": "DB status=Pending",
+  "exp": "Pending",
+  "got": "Pending",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "POST /api/fee-payments",
+  "test": "empty body",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "POST /api/fee-payments",
+  "test": "invalid payment_method",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "POST /api/fee-payments",
+  "test": "invalid status enum",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "POST /api/fee-payments",
+  "test": "nonexistent challan_id",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-report",
+  "ep": "GET /api/fee-reports",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "fee-report",
+  "ep": "GET /api/fee-reports",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-report",
+  "ep": "GET /api/fee-reports",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-report",
+  "ep": "GET /api/fee-reports",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-report",
+  "ep": "GET /api/fee-reports",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-report",
+  "ep": "GET /api/fee-reports",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-report",
+  "ep": "GET /api/fee-reports",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-report",
+  "ep": "GET /api/fee-reports",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-report",
+  "ep": "GET /api/fee-reports",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-report",
+  "ep": "GET /api/fee-reports",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-report",
+  "ep": "GET /api/fee-reports/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "fee-report",
+  "ep": "GET /api/fee-reports/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-report",
+  "ep": "GET /api/fee-reports/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-report",
+  "ep": "GET /api/fee-reports/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-report",
+  "ep": "GET /api/fee-reports/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-report",
+  "ep": "GET /api/fee-reports/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-report",
+  "ep": "GET /api/fee-reports/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-report",
+  "ep": "GET /api/fee-reports/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-report",
+  "ep": "GET /api/fee-reports/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-report",
+  "ep": "GET /api/fee-reports/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-report",
+  "ep": "GET /api/fee-reports",
+  "test": "count vs fee_payments",
+  "exp": 7,
+  "got": 7,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-report",
+  "ep": "GET /api/fee-reports/:id",
+  "test": "nonexistent",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-report",
+  "ep": "POST /api/fee-reports",
+  "test": "write blocked",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "GET /api/gpa",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "GET /api/gpa",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "GET /api/gpa",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "GET /api/gpa",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "GET /api/gpa",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "GET /api/gpa",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "GET /api/gpa",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "GET /api/gpa",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "GET /api/gpa",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "GET /api/gpa",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "GET /api/gpa/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "GET /api/gpa/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "GET /api/gpa/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "GET /api/gpa/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "GET /api/gpa/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "GET /api/gpa/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "GET /api/gpa/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "GET /api/gpa/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "GET /api/gpa/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "GET /api/gpa/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "PUT /api/gpa/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 404,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "PUT /api/gpa/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "PUT /api/gpa/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "PUT /api/gpa/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "PUT /api/gpa/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "PUT /api/gpa/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "PUT /api/gpa/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "PUT /api/gpa/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "PUT /api/gpa/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "PUT /api/gpa/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "DELETE /api/gpa/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 404,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "DELETE /api/gpa/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "DELETE /api/gpa/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "DELETE /api/gpa/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "DELETE /api/gpa/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "DELETE /api/gpa/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "DELETE /api/gpa/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "DELETE /api/gpa/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "DELETE /api/gpa/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "DELETE /api/gpa/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "POST /api/gpa",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 201,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "POST /api/gpa",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 201,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "POST /api/gpa",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "POST /api/gpa",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "POST /api/gpa",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "POST /api/gpa",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "POST /api/gpa",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "POST /api/gpa",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "POST /api/gpa",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "POST /api/gpa",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "POST /api/gpa",
+  "test": "DB row created",
+  "exp": "found",
+  "got": "found",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "PUT /api/gpa/:id",
+  "test": "update",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "PUT /api/gpa/:id",
+  "test": "DB gpa=3.75",
+  "exp": "3.75",
+  "got": "3.75",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "POST /api/gpa",
+  "test": "empty body",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "POST /api/gpa",
+  "test": "gpa above 4.0",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "POST /api/gpa",
+  "test": "negative cgpa",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "POST /api/gpa",
+  "test": "nonexistent student_id",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "DELETE /api/gpa/:id",
+  "test": "delete",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "DELETE /api/gpa/:id",
+  "test": "DB row removed",
+  "exp": 0,
+  "got": 0,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "ep": "DELETE /api/gpa/:id",
+  "test": "double delete",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "DELETE /api/fee-payments/:id",
+  "test": "delete",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "DELETE /api/fee-payments/:id",
+  "test": "DB row removed",
+  "exp": 0,
+  "got": 0,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-payment",
+  "ep": "DELETE /api/fee-payments/:id",
+  "test": "double delete",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "DELETE /api/receipts/:id",
+  "test": "delete",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "DELETE /api/receipts/:id",
+  "test": "DB row removed",
+  "exp": 0,
+  "got": 0,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "receipt",
+  "ep": "DELETE /api/receipts/:id",
+  "test": "double delete",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "DELETE /api/challans/:id",
+  "test": "delete",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "DELETE /api/challans/:id",
+  "test": "DB row removed",
+  "exp": 0,
+  "got": 0,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challan",
+  "ep": "DELETE /api/challans/:id",
+  "test": "double delete",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ }
+]

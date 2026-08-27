@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e ' *)",
+      "Bash(npx oxlint *)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\Tayyab Abdullah\\Desktop\\AIMS backend\\AIMS-Frontend\\client\\src\\context",
+      "c:\\Users\\Tayyab Abdullah\\Desktop\\AIMS backend\\AIMS-Frontend\\client\\src\\pages",
+      "c:\\Users\\Tayyab Abdullah\\Desktop\\AIMS backend\\AIMS-Frontend\\client\\src"
+    ]
+  }
+}

@@ -1,0 +1,531 @@
+/* =====================================================================
+   INDIGO GLASS — the admin portal's new-screen palette
+   =====================================================================
+
+   The direction established on the **Ask the Data** page (`.aa--faculty`
+   in pages/admin/AIAnalytics.css) and now carried by the two screens
+   built on the shadcn layer: Timetable Management and the Qualification
+   registry.
+
+   WHAT REPLACED WHAT
+   ------------------
+   These screens were first built in "composing stone" — warm ledger
+   paper, a maroon crest, brass room plates. That direction was coherent
+   but it was an island: the one page in the portal a user is most likely
+   to have open beside the timetable is Ask the Data, and the two looked
+   like different products. A house style that only one module speaks is
+   not a house style.
+
+   So the *values* moved to indigo glass and the *names* did not. That is
+   deliberate and it is why the move was one file rather than two
+   thousand lines of JSX: every token here was named for the job it does
+   in the domain — the substrate, the ink, the institution's accent, the
+   status stamps — never for its hue. A crest is whatever colour the
+   institution's crest is. Repainting it is a value change; renaming it
+   would have been a rewrite.
+
+   WHY DOMAIN NAMES AND NOT --gray-700
+   -----------------------------------
+   Someone reading only these variables should be able to guess what the
+   product is. `--ledger` and `--plate-brass` say "this is a scheduling
+   tool for an institution"; `--surface-2` says nothing and would sit
+   equally well in a crypto wallet.
+
+   THE 60/30/10 SPLIT
+   ------------------
+   --ledger and --ledger-rule carry ~60% of the screen (the substrate and
+   its hairlines), the ink family ~30% (all text and structure), and
+   --crest is the accent held to roughly the last 10%. The crest is spent
+   on exactly two meanings and nothing else:
+
+       "this class"   and   "this period is booked"
+       (on the registry screen: "this teacher" and "this is recorded")
+
+   That scarcity is what makes a booked cell findable on a grid of
+   twenty-four. The moment indigo also means "primary button" and "active
+   tab" and "selected row", a booked period stops standing out at all.
+
+   Statuses get their own hues because they mean something different from
+   the accent. Under the old maroon crest, `--stamp-void` (#A33A3A) and
+   the crest (#991B1B) were close enough to be confusable on a small
+   stamp; against indigo, rose is unambiguous. That is a real gain from
+   the move, not a side effect.
+
+   A NOTE ON MOTION
+   ----------------
+   There is a fair amount of it: drifting light behind the command band,
+   shimmering skeletons, rows arriving in sequence, lifting rails. Every
+   piece is switched off wholesale by the reduced-motion block at the end
+   of this file, and none of it conveys information that is not also
+   conveyed statically. Motion here is texture, never a message.
+*/
+:root {
+  /* --- the substrate: cool, near-white, faintly blue ----------------- */
+  --ledger:            #F6F7FB;   /* the page itself                     */
+  --ledger-raised:     #FFFFFF;   /* a card lifted off it                */
+  --ledger-sunk:       #F2F3F9;   /* an inset well: inputs, empty cells  */
+  --ledger-rule:       #E4E6F0;   /* the faint printed rule              */
+  --ledger-rule-firm:  #CDD0E4;   /* a rule that divides sections        */
+
+  /* --- ink: four levels of text, indigo-shifted off pure grey -------- */
+  --ink:               #14162B;   /* primary                             */
+  --ink-secondary:     #33365A;   /* supporting                          */
+  --ink-tertiary:      #5B5F7B;   /* metadata                            */
+  --ink-muted:         #8589A6;   /* disabled, zero values               */
+
+  /* --- the crest: the institution's accent, spent sparingly ---------- */
+  --crest:             #4338CA;
+  --crest-lit:         #6366F1;   /* the gradient partner, lit edge      */
+  --crest-deep:        #312E81;
+  --crest-wash:        #EEF0FD;   /* the tint behind a selected row      */
+  --crest-edge:        #C7CBF5;
+
+  /*
+   * Brass: room plates, and nothing else.
+   *
+   * Kept warm on a cool page on purpose. It is the one place colour is
+   * decorative rather than semantic, and warm-on-cool is exactly what
+   * makes a plate read as a physical object screwed to a wall rather
+   * than as another panel.
+   */
+  --plate-brass:       #A16207;
+  --plate-face:        #FAF6ED;
+  --plate-edge:        #E6DBC2;
+
+  /* --- status, distinct from the accent and from each other ---------- */
+  --stamp-clear:        #047857;  /* complete                            */
+  --stamp-clear-wash:   #ECFDF5;
+  --stamp-pending:      #B45309;  /* partly done, needs attention        */
+  --stamp-pending-wash: #FFFBEB;
+  --stamp-void:         #BE123C;  /* blocked, unstaffed                  */
+  --stamp-void-wash:    #FFF1F3;
+
+  /* --- the hatch drawn over a blocked cell --------------------------- */
+  --hatch:             #D8DAE8;
+
+  /*
+   * The frosted panel, and the light behind it.
+   *
+   * Frosting is opt-in rather than assumed — see the @supports block
+   * below. A translucent panel over a browser that cannot blur is just a
+   * washed-out panel with poor text contrast, so the glass look is only
+   * switched on where the effect exists to support it.
+   */
+  --glass:             #FFFFFF;
+  --glass-blur:        0px;
+
+  --glow-1:            rgba(99, 102, 241, 0.22);
+  --glow-2:            rgba(56, 189, 248, 0.18);
+  --glow-3:            rgba(168, 85, 247, 0.16);
+
+  /* --- density: a workbench, not a brochure -------------------------- */
+  --step-1: 4px;
+  --step-2: 8px;
+  --step-3: 12px;
+  --step-4: 16px;
+  --step-6: 24px;
+  --step-8: 32px;
+
+  /* --- radius scale: small controls, softer cards -------------------- */
+  --r-plate: 3px;
+  --r-control: 9px;
+  --r-cell: 10px;
+  --r-card: 12px;
+  --r-sheet: 18px;
+  --r-pill: 999px;
+
+  /*
+   * Depth is borders-first, because this is a dense technical tool and a
+   * grid of twenty-four shadowed cells is soup. The three shadows here
+   * are for things that genuinely float above the page: the command
+   * band, popovers, dialogs.
+   */
+  --lift: 0 1px 2px rgb(31 27 89 / 0.06);
+  --lift-md: 0 8px 24px -10px rgb(31 27 89 / 0.22);
+  --lift-sheet: 0 20px 48px -20px rgb(31 27 89 / 0.30);
+
+  /*
+   * Entering and interactive motion. ease-in delays the first frame -
+   * the one the user is actually watching - so everything here is the
+   * Ask the Data page's own out-curve, shared so the two screens move
+   * the same way.
+   */
+  --ease-out: cubic-bezier(0.32, 0.72, 0, 1);
+  --t-fast: 140ms;
+  --t-slow: 260ms;
+
+  /*
+   * THE LAYERING SCALE
+   * ------------------
+   * One scale for the whole app, because there was none and the two halves
+   * of the codebase disagreed by an order of magnitude.
+   *
+   * The legacy chrome picked its own numbers as it went - the admin header
+   * and the sidebar at 100 (TopNav.css), the assistant FAB at 900
+   * (AssistantWidget.css), its panel at 950-970 (pinned.css), the header's
+   * own account menu at 1200. The shadcn primitives ship Tailwind's `z-50`.
+   *
+   * 50 < 100, so EVERY tooltip, select and dialog in the new module rendered
+   * *underneath* the sticky header, the sidebar and the assistant button.
+   * Measured, not guessed: the "Enrol section" tooltip resolves to z-index 50
+   * at y=99, directly behind a header that is z-index 100. Any tip on a
+   * control in the top ~140px of the screen was unreadable - which is most of
+   * the command band, and every chip on the class detail header.
+   */
+  --z-chrome:       100;   /* sticky admin header, sidebar              */
+  --z-chrome-raised: 900;  /* assistant FAB and its panel               */
+  --z-chrome-menu:  1200;   /* menus the chrome opens (account dropdown) */
+  --z-overlay:      2000;   /* portalled: tooltip, select, dialog, toast */
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :root {
+    --glass: rgb(255 255 255 / 0.76);
+    --glass-blur: 14px;
+  }
+}
+
+/* =====================================================================
+   The shadcn semantic layer, mapped onto the palette above.
+   =====================================================================
+   Components pulled from the registry bind to these names. Pointing them
+   at the indigo-glass tokens, rather than letting the CLI write its own
+   stone-grey defaults, is what stops an imported component arriving in a
+   different world from the screen it sits on.
+
+   `--primary` is deliberately NOT the crest. A registry component's
+   default button, active tab and focus ring all bind to --primary, and
+   letting the crest cover those would spend the accent everywhere and
+   destroy the "booked" signal. The crest is applied explicitly, by the
+   few things that actually mean it.
+*/
+:root {
+  --background: var(--ledger);
+  --foreground: var(--ink);
+
+  --card: var(--ledger-raised);
+  --card-foreground: var(--ink);
+
+  --popover: var(--ledger-raised);
+  --popover-foreground: var(--ink);
+
+  --primary: var(--ink);
+  --primary-foreground: var(--ledger-raised);
+
+  --secondary: var(--ledger-sunk);
+  --secondary-foreground: var(--ink-secondary);
+
+  --muted: var(--ledger-sunk);
+  --muted-foreground: var(--ink-tertiary);
+
+  --accent: var(--crest-wash);
+  --accent-foreground: var(--crest-deep);
+
+  --destructive: var(--stamp-void);
+  --destructive-foreground: var(--ledger-raised);
+
+  --border: var(--ledger-rule);
+  --input: var(--ledger-rule-firm);
+  --ring: var(--crest);
+
+  --radius: var(--r-card);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* The indigo-glass palette, reachable as utilities too. */
+  --color-ledger: var(--ledger);
+  --color-ledger-raised: var(--ledger-raised);
+  --color-ledger-sunk: var(--ledger-sunk);
+  --color-ledger-rule: var(--ledger-rule);
+  --color-ledger-rule-firm: var(--ledger-rule-firm);
+  --color-ink: var(--ink);
+  --color-ink-secondary: var(--ink-secondary);
+  --color-ink-tertiary: var(--ink-tertiary);
+  --color-ink-muted: var(--ink-muted);
+  --color-crest: var(--crest);
+  --color-crest-lit: var(--crest-lit);
+  --color-crest-deep: var(--crest-deep);
+  --color-crest-wash: var(--crest-wash);
+  --color-crest-edge: var(--crest-edge);
+  --color-plate-brass: var(--plate-brass);
+  --color-plate-face: var(--plate-face);
+  --color-plate-edge: var(--plate-edge);
+  --color-stamp-clear: var(--stamp-clear);
+  --color-stamp-clear-wash: var(--stamp-clear-wash);
+  --color-stamp-pending: var(--stamp-pending);
+  --color-stamp-pending-wash: var(--stamp-pending-wash);
+  --color-stamp-void: var(--stamp-void);
+  --color-stamp-void-wash: var(--stamp-void-wash);
+
+  --radius-plate: var(--r-plate);
+  --radius-control: var(--r-control);
+  --radius-cell: var(--r-cell);
+  --radius-card: var(--r-card);
+  --radius-sheet: var(--r-sheet);
+}
+
+/* =====================================================================
+   THE COMMAND BAND — glass, with light moving behind it
+   =====================================================================
+
+   The one piece of the Ask the Data hero these screens take wholesale.
+
+   Not as a hero, though. That page has one thing to do and its hero is
+   34px of padding around a single question box; these screens collapsed
+   exactly that kind of chrome to get the grid from y=530 to y=270, and
+   putting it back would undo the densest, hardest-won part of the
+   layout. So the light goes behind the 48px sticky band instead: the
+   same frosted panel and the same drifting discs, in the height the work
+   needs.
+*/
+.ig-band {
+  position: relative;
+  overflow: hidden;
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  backdrop-filter: blur(var(--glass-blur));
+}
+
+/*
+ * Two large blurred discs on long, mismatched, alternating cycles, so
+ * the motion never visibly loops. They animate `transform` only — a
+ * blurred element re-rasterised every frame is expensive, and
+ * translating a finished raster is not.
+ */
+.ig-band::before,
+.ig-band::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  width: 22rem;
+  height: 22rem;
+  border-radius: 50%;
+  filter: blur(58px);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.ig-band::before {
+  top: -240%;
+  left: -4%;
+  background: var(--glow-1);
+  animation: ig-drift-a 26s var(--ease-out) infinite alternate;
+}
+
+.ig-band::after {
+  top: -230%;
+  right: -6%;
+  background: var(--glow-2);
+  animation: ig-drift-b 34s var(--ease-out) infinite alternate;
+}
+
+@keyframes ig-drift-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(14%, 22%, 0) scale(1.18); }
+}
+
+@keyframes ig-drift-b {
+  from { transform: translate3d(0, 0, 0) scale(1.1); }
+  to   { transform: translate3d(-16%, 18%, 0) scale(0.92); }
+}
+
+/* Everything readable sits above the light. */
+.ig-band > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* =====================================================================
+   ARRIVAL — rows that come in, in the order they are read
+   =====================================================================
+
+   `--i` is set per row and multiplies the delay, so a rail of fifteen
+   arrives as a sequence rather than as a block. Capped in the callers at
+   a dozen or so: past that the last row is waiting on an animation
+   instead of on data, which is the opposite of the intended impression.
+*/
+.ig-rise {
+  animation: ig-rise 420ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 28ms);
+}
+
+@keyframes ig-rise {
+  from { opacity: 0; transform: translateY(7px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* A quiet pulse, so "live" and "needs you" read as live. */
+.ig-pulse {
+  animation: ig-pulse 2.6s ease-in-out infinite;
+}
+
+@keyframes ig-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.45; transform: scale(0.8); }
+}
+
+/*
+ * A tick that lands rather than appears.
+ *
+ * On a tree of forty rows the mark is the whole feedback for the click,
+ * and an instant swap is easy to miss when the pointer is over it.
+ */
+.ig-mark {
+  animation: ig-mark 200ms var(--ease-out) both;
+}
+
+@keyframes ig-mark {
+  from { opacity: 0; transform: scale(0.4); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* =====================================================================
+   SKELETONS — shaped like the answer, not like a spinner
+   =====================================================================
+
+   A skeleton that resembles the incoming result makes the wait feel like
+   loading; a centred spinner makes it feel like nothing is happening.
+
+   The sweep is a moving background rather than a moving element, so
+   nothing is laid out twice per frame. Heights are fixed rather than
+   random: a skeleton that reshuffles on every render reads as data
+   arriving and then changing its mind.
+*/
+.ig-shimmer {
+  background-image: linear-gradient(
+    100deg,
+    var(--ledger-sunk) 28%,
+    color-mix(in oklab, var(--ledger-sunk) 55%, var(--ledger-raised)) 46%,
+    var(--ledger-sunk) 64%
+  );
+  background-size: 220% 100%;
+  animation: ig-shimmer 1.5s linear infinite;
+}
+
+@keyframes ig-shimmer {
+  from { background-position: 180% 0; }
+  to   { background-position: -80% 0; }
+}
+
+/* =====================================================================
+   THE SMALL PIECES
+   ===================================================================== */
+
+/*
+ * The hatch, drawn over a period that cannot be used.
+ *
+ * Colour alone would carry this, and colour alone is exactly the problem:
+ * on a grid of twenty-four cells, "greyer than the others" is not a signal
+ * that survives a squint or a red-green deficiency. A struck-through
+ * ledger entry is how this was marked on paper, and the texture reads
+ * before the hue does.
+ */
+.ig-hatch {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--hatch) 0 1px,
+    transparent 1px 7px
+  );
+}
+
+/* Any figure that changes must not reflow the column it sits in. */
+.ig-tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+ * Tactile confirmation that the click was heard. 0.96 exactly - below
+ * about 0.95 the control looks like it is being squashed rather than
+ * pressed.
+ */
+.ig-press {
+  transition: transform var(--t-fast) var(--ease-out),
+    background-color var(--t-fast) var(--ease-out),
+    border-color var(--t-fast) var(--ease-out),
+    box-shadow var(--t-slow) var(--ease-out),
+    color var(--t-fast) var(--ease-out);
+}
+
+.ig-press:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+/*
+ * A row that rises to meet the pointer.
+ *
+ * One pixel, not four. This is a list somebody reads for three hours; a
+ * card that jumps is charming twice and tiring by the twentieth row. The
+ * shadow does most of the work and the pixel just stops it looking like
+ * a shadow arriving from nowhere.
+ */
+.ig-lift {
+  transition: transform var(--t-fast) var(--ease-out),
+    box-shadow var(--t-slow) var(--ease-out),
+    background-color var(--t-fast) linear,
+    border-color var(--t-fast) linear;
+}
+
+.ig-lift:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--lift-md);
+}
+
+.ig-lift:active:not(:disabled) {
+  transform: translateY(0) scale(0.99);
+}
+
+/* =====================================================================
+   REDUCED MOTION — one block, switching all of it off
+   =====================================================================
+
+   Everything above is decoration over a layout that is already complete
+   without it — no state is communicated by movement alone — so this is a
+   blanket removal rather than a set of gentler alternatives. Colour and
+   opacity still change on press and hover: they are feedback, not
+   decoration. Only movement is dropped.
+*/
+@media (prefers-reduced-motion: reduce) {
+  .ig-band::before,
+  .ig-band::after,
+  .ig-rise,
+  .ig-pulse,
+  .ig-mark,
+  .ig-shimmer {
+    animation: none !important;
+  }
+
+  /* The shimmer is the only one whose static form needs stating. */
+  .ig-shimmer {
+    background-image: none;
+    background-color: var(--ledger-sunk);
+  }
+
+  .ig-press,
+  .ig-press:active:not(:disabled),
+  .ig-lift,
+  .ig-lift:hover:not(:disabled),
+  .ig-lift:active:not(:disabled) {
+    transform: none;
+    transition-property: color, background-color, border-color, box-shadow, opacity;
+  }
+}

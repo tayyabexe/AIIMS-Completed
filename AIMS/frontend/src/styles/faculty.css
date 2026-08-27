@@ -1,0 +1,296 @@
+:root {
+  /* Sidebar (near-black, from reference palette) */
+  --sidebar-bg: #121212;
+  --sidebar-bg-soft: #1b1b1b;
+  --sidebar-text: #cfcfcf;
+  --sidebar-text-dim: #8a8a8a;
+  --sidebar-border: #262626;
+
+  /* Brand red / maroon */
+  --brand-red: #dc2626;
+  --brand-red-dark: #b91c1c;
+  --brand-maroon: #7f1d1d;
+  --brand-gradient: linear-gradient(135deg, #8a1010 0%, #c81e2b 55%, #e0303a 100%);
+
+  /* Page (light content area, from layout reference) */
+  --page-bg: #f5f6f8;
+  --card-bg: #ffffff;
+  --border: #e7e7ea;
+  --border-soft: #eef0f2;
+
+  /* Text */
+  --text-primary: #17181a;
+  --text-secondary: #6b7078;
+  --text-muted: #9497a0;
+
+  /* Status */
+  --success-bg: #e7f7ee;
+  --success-text: #1f9d55;
+  --danger-bg: #fdeaea;
+  --danger-text: #d1373f;
+  --warning-bg: #fdf2df;
+  --warning-text: #b6791b;
+  --info-bg: #eaf1fd;
+  --info-text: #2a63c9;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  --font-display: 'Manrope', 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+/*
+ * Layered, not unlayered — main.jsx loads this file app-wide, and an
+ * unlayered `padding: 0` outranks every Tailwind `@layer utilities` rule
+ * regardless of specificity. Unlayered, this block silently zeroed the
+ * padding on every Tailwind-styled component in the portal.
+ */
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--page-bg);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.app-shell {
+  display: flex !important;
+  min-height: 100vh !important;
+  width: 100% !important;
+  position: relative !important;
+}
+
+.app-shell > .sidebar {
+  position: sticky !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 264px !important;
+  min-width: 264px !important;
+  max-width: 264px !important;
+  flex-shrink: 0 !important;
+  height: 100vh !important;
+  z-index: 100 !important;
+  transform: none !important;
+}
+
+.app-shell > .main-area {
+  flex: 1 1 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+  width: 0 !important;
+}
+
+.page-content {
+  padding: 24px 28px 40px;
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+}
+
+@media (max-width: 860px) {
+  .app-shell > .sidebar {
+    position: fixed !important;
+    left: 0 !important;
+    top: 0 !important;
+    height: 100vh !important;
+    width: 250px !important;
+    min-width: 250px !important;
+    transform: translateX(-100%) !important;
+    transition: transform 0.2s ease !important;
+    z-index: 1001 !important;
+  }
+
+  .app-shell > .sidebar.open {
+    transform: translateX(0) !important;
+  }
+
+  .app-shell > .main-area {
+    width: 100% !important;
+  }
+}
+
+.page-title-row {
+  margin-bottom: 20px;
+}
+
+/* Shared card */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.btn {
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px 18px;
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.15s ease, transform 0.05s ease;
+}
+
+.btn:active { transform: translateY(1px); }
+
+.btn-primary {
+  background: var(--brand-gradient);
+  color: #fff;
+}
+.btn-primary:hover { opacity: 0.92; }
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+}
+.btn-outline:hover { background: var(--page-bg); }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.badge-success { background: var(--success-bg); color: var(--success-text); }
+.badge-danger { background: var(--danger-bg); color: var(--danger-text); }
+.badge-warning { background: var(--warning-bg); color: var(--warning-text); }
+.badge-info { background: var(--info-bg); color: var(--info-text); }
+.badge-neutral { background: var(--border-soft); color: var(--text-secondary); }
+
+.scroll-x {
+  overflow-x: auto;
+}
+
+/* Shared filter row, reused across My Classes, Students, Announcements,
+   Notifications, Assignments, Attendance, Marks */
+.filters-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 190px;
+}
+
+.filter-field label {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.filter-field select,
+.filter-field input {
+  padding: 9px 12px;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  font-size: 13.5px;
+  color: var(--text-primary);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #d7d8db;
+  border-radius: 8px;
+}
+
+/* ---------------------------------------------------------
+   Global responsive rules
+   --------------------------------------------------------- */
+img { max-width: 100%; }
+
+.btn { white-space: nowrap; }
+
+@media (max-width: 1024px) {
+  .page-content { padding: 20px 20px 36px; }
+}
+
+@media (max-width: 720px) {
+  .page-content { padding: 16px 16px 32px; }
+  .topbar-title,
+  h2 { word-break: break-word; }
+}
+
+@media (max-width: 480px) {
+  .page-content { padding: 14px 12px 28px; }
+  .filters-row { gap: 10px; }
+  .filter-field { min-width: 0; flex: 1 1 140px; }
+  .btn { padding: 9px 14px; font-size: 13.5px; }
+}
+
+/* Tables: allow horizontal scroll instead of squashing content */
+table { min-width: 560px; }
+
+.students-table,
+.attendance-table,
+.marks-table,
+.ann-table {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 720px) {
+  .students-table thead th,
+  .students-table tbody td,
+  .marks-table thead th,
+  .marks-table tbody td,
+  .ann-table thead th,
+  .ann-table tbody td {
+    padding: 11px 14px;
+    font-size: 13px;
+  }
+}
+
+.empty-state {
+  padding: 40px 16px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.page-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}

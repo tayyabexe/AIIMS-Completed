@@ -1,0 +1,98 @@
+[
+ {
+  "t": "LOGIN admin2 -> token issued",
+  "exp": "token",
+  "got": "token",
+  "pass": true
+ },
+ {
+  "t": "LOGIN role_id matches DB",
+  "exp": 2,
+  "got": 2,
+  "pass": true
+ },
+ {
+  "t": "STUDENT PROFILE status",
+  "exp": 200,
+  "got": 200,
+  "pass": true
+ },
+ {
+  "t": "STUDENT PROFILE reg_no matches DB",
+  "exp": "2023-AIMS-REG-0002",
+  "got": "2023-AIMS-REG-0002",
+  "pass": true
+ },
+ {
+  "t": "FILTER program_id=1 (DB says 408)",
+  "exp": 408,
+  "got": 408,
+  "pass": true
+ },
+ {
+  "t": "FILTER program_id=999999 (no match)",
+  "exp": 0,
+  "got": 0,
+  "pass": true
+ },
+ {
+  "t": "PAGINATION limit=5",
+  "exp": 5,
+  "got": 5,
+  "pass": true
+ },
+ {
+  "t": "SEARCH first_name=Ayeza (DB says 1)",
+  "exp": 1,
+  "got": 1,
+  "pass": true
+ },
+ {
+  "t": "SEARCH no-match returns empty",
+  "exp": 0,
+  "got": 0,
+  "pass": true
+ },
+ {
+  "t": "EXAM BY ID status",
+  "exp": 200,
+  "got": 200,
+  "pass": true
+ },
+ {
+  "t": "EXAM BY ID name matches DB",
+  "exp": "Operating Systems Mid-Term",
+  "got": "Operating Systems Mid-Term",
+  "pass": true
+ },
+ {
+  "t": "MARKS student 1 count vs DB",
+  "exp": 10,
+  "got": 10,
+  "pass": true
+ },
+ {
+  "t": "ATTENDANCE student 1 count vs DB",
+  "exp": 30,
+  "got": 30,
+  "pass": true
+ },
+ {
+  "t": "ATTENDANCE report total vs DB",
+  "exp": 30,
+  "got": 30,
+  "pass": true
+ },
+ {
+  "t": "CGPA student 1 vs DB",
+  "exp": "3.83",
+  "got": "3.83",
+  "pass": true
+ },
+ {
+  "t": "TRANSCRIPT reachable",
+  "exp": 200,
+  "got": 200,
+  "pass": true
+ }
+]

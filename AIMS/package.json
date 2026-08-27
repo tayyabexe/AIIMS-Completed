@@ -1,0 +1,14 @@
+{
+  "name": "aims",
+  "private": true,
+  "version": "1.0.0",
+  "description": "AI-Based Institute Management System - backend (Express/Sequelize) and frontend (React/Vite)",
+  "scripts": {
+    "install:all": "npm --prefix backend install && npm --prefix frontend install",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "start:backend": "npm --prefix backend start",
+    "build:frontend": "npm --prefix frontend run build",
+    "lint:frontend": "npm --prefix frontend run lint"
+  }
+}

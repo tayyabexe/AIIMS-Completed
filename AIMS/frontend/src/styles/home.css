@@ -1,0 +1,1105 @@
+/*
+ * A NOTE ON UNITS
+ *
+ * Sizes here are px, not rem, and that is deliberate rather than sloppy.
+ *
+ * styles/viewport.css sets `html { font-size: var(--aims-root-size) }`, a
+ * viewport-relative clamp that exists to make the dashboards' dense tables
+ * scale with the window. On a 900px-tall screen it resolves the root to about
+ * 13.15px, so every rem-based size on this page arrived roughly 18% smaller
+ * than it was written — which is most of why the landing page read as
+ * undersized and cramped. auth.css already sets its type in px for the same
+ * reason; this file now matches it.
+ *
+ * The tradeoff is that these two screens no longer follow the user's font-size
+ * preference. That preference is a dashboard control, set behind the login, by
+ * someone who by definition is not looking at this page.
+ */
+
+/*
+ * The landing page — scrolling sections over a fixed stage.
+ *
+ * The chooser and the sign-in screens are locked to the viewport because each
+ * asks exactly one question. The landing page is the opposite case: it has
+ * something to say, and saying it needs room. So it scrolls, and the stage
+ * behind it — clip, aurora, ruled field — is fixed, which is what makes the
+ * scrolling read as moving *through* a space rather than dragging a sheet of
+ * paper past a window. Sections travel; the room stays put.
+ *
+ * ONE CALL TO ACTION, ALWAYS
+ * There is one portal button on this page and it lives in the hero. When you
+ * scroll past it the header adopts it, and the header only carries it while
+ * the hero's copy is off screen — so exactly one "choose your portal" is
+ * visible at any moment, and never two at once. The alternative, a button
+ * repeated in every band, is how the old page taught readers that its buttons
+ * did not matter; the alternative to *that*, no button below the fold at all,
+ * strands anyone who read to the end.
+ */
+
+/*
+ * THE EDITORIAL LAYER
+ *
+ * The grammar of this page is borrowed from magazine-spread product sites:
+ * a serif display face at regular weight in every size, ghost-quiet category
+ * tags instead of tracked SaaS eyebrows, pill controls in matched pairs, one
+ * rationed chromatic accent, and product UI presented as floating artifacts
+ * with the only real elevation on the page.
+ *
+ * The palette is not borrowed. It is Lumina's — Oxford blue #004ac6 and the
+ * four ink tiers — read on dark ground rather than on paper. Taking another
+ * product's colours would have made this page look like that product; taking
+ * its *structure* and keeping our own colour is the whole point.
+ *
+ * The serif does the heavy lifting. Instrument Serif ships one weight, so the
+ * page cannot fall back into the 800-weight geometric-sans headline that every
+ * generated dashboard landing page wears. The one italic phrase per headline
+ * is the accent — colour reinforces it, it does not carry it alone.
+ */
+.aims-auth .stage--fixed {
+  --font-display: 'Instrument Serif', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+
+  /* Two structural radii and two for what sits inside them. */
+  --r-card: 24px;   /* content cards */
+  --r-art: 20px;    /* floating product artifacts */
+  --r-shot: 12px;   /* screenshots and images */
+
+  /* Artifacts are the only elements on this page that earn a shadow, and the
+     ring is the part that actually reads on ink — the diffusion behind it is
+     nearly free, but it is what keeps the edge from looking cut out. */
+  --lift-art:
+    0 0 0 1px rgba(255, 255, 255, .13),
+    0 1px 0 0 rgba(255, 255, 255, .07) inset,
+    0 24px 44px -18px rgba(0, 0, 0, .85),
+    0 4px 12px -6px rgba(0, 0, 0, .6);
+}
+
+/* Display type. Regular weight at every size — the restraint is the signature,
+   and a serif that has no bold cannot be talked out of it. */
+.aims-auth .t-serif {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-style: normal;
+}
+
+/*
+ * The category tag. Whisper-quiet on purpose: sentence case, no tracking, no
+ * background, no border, no pill. It groups without weight. The tracked
+ * uppercase micro-label it replaced is the single most generic element in
+ * product design — every dashboard landing page has one, which is exactly why
+ * it says nothing.
+ */
+.aims-auth .tag {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--on-surface-faint);
+  margin: 0 0 18px;
+}
+
+/* Background planes travel with the viewport instead of the document. */
+.aims-auth .stage.stage--fixed .stage__base,
+.aims-auth .stage.stage--fixed .stage__video,
+.aims-auth .stage.stage--fixed .stage__grid,
+.aims-auth .stage.stage--fixed .stage__aurora,
+.aims-auth .stage.stage--fixed .stage__scrim {
+  position: fixed;
+}
+
+.aims-auth .stage.stage--fixed {
+  height: auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  /*
+   * Not `clip` here. The fixed planes are already viewport-sized and a clipping
+   * ancestor would turn them back into document-scrolled elements, because a
+   * clip container becomes the containing block for fixed descendants.
+   */
+  overflow: visible;
+}
+
+/* The clip carries the whole page now, not a 22% wash behind one screen, so it
+   comes up to a weight where it is legible as the product without ever
+   competing with type — everything above it still sits on the scrim. */
+/*
+ * The clip.
+ *
+ * Getting this right took two wrong answers. At 34% and a 2px blur it was
+ * still resolving into readable panels directly behind the headline, which
+ * both dropped contrast on the type and invited people to read lettering that
+ * is model-invented and says nothing. Washing the whole page down to fix that
+ * worked, and made the clip effectively invisible — which is not a fix, it is
+ * a deletion.
+ *
+ * A flat wash was the wrong instrument. The clip is masked instead: it is
+ * brightest over the right and lower-middle of the frame, where the
+ * composition deliberately keeps no body copy, and falls to nothing across the
+ * left third where every headline, paragraph and button on this page lives. So
+ * it is plainly present — moving light in the shape of software — and never
+ * behind a word.
+ *
+ * Still blurred, and that is not negotiable: soft enough that its invented
+ * lettering can never resolve into something a reader would try to read.
+ */
+/*
+ * RE-AIMED, TWICE
+ *
+ * The mask used to be a tight radial centred at 76%/44%, which was the right
+ * answer until the hero grew a collage and put two opaque plates on exactly
+ * that spot. The clip was still there and still playing; it was simply behind
+ * furniture, which from a reader's chair is indistinguishable from absent.
+ *
+ * It is a diagonal wash now rather than a blob: nothing across the left third
+ * where every headline and paragraph lives, rising to full weight across the
+ * right half, where the only things in front of it are the two artifacts —
+ * and those carry a backdrop blur, so the footage reads *through* them as
+ * moving colour. That is the depth story: crisp product UI, floating on
+ * blurred footage of the same product.
+ *
+ * Raised to .72 and softened to a 4px blur. It has to survive being scrubbed,
+ * which means being legible while stationary — a looping clip gets away with
+ * being faint because motion draws the eye on its own; a clip that stops when
+ * the reader stops does not.
+ */
+.aims-auth .stage.stage--fixed .stage__video {
+  opacity: .78;
+  /*
+   * Lifted, not dimmed. The footage is dark navy with cyan card outlines and
+   * it is being shown on a dark navy page, so the two were cancelling: at .58
+   * and a 5px blur the clip was technically present and visually absent. The
+   * contrast bump is what makes the card edges read at all.
+   *
+   * The blur comes down to 3px because this clip does not need protecting from
+   * itself — the model abstracted the interface into panels and outlines
+   * rather than inventing lettering, so there is nothing in it a reader would
+   * try to read and fail.
+   */
+  filter: saturate(1.08) contrast(1.16) brightness(1.02) blur(3px);
+  /*
+   * Pushed right as well as scaled. The clip composes its subject in the
+   * middle of its own frame, and the middle of this page is where the reading
+   * column ends — so the subject was landing under the paragraph and the empty
+   * half was landing where the mask lets it through. Translating it moves the
+   * cards into the half of the screen that is actually open.
+   */
+  transform: scale(1.3) translateX(11%);
+  -webkit-mask-image: linear-gradient(100deg, transparent 10%, rgba(0, 0, 0, .3) 34%, rgba(0, 0, 0, .82) 58%, #000 82%);
+  mask-image: linear-gradient(100deg, transparent 10%, rgba(0, 0, 0, .3) 34%, rgba(0, 0, 0, .82) 58%, #000 82%);
+}
+
+/* The scrim now only has to guard the reading column, since the mask already
+   keeps the clip off it. Heavy on the left, light on the right — so the type
+   sits on ink and the clip still gets to be seen. */
+.aims-auth .stage.stage--fixed .stage__scrim {
+  background:
+    linear-gradient(97deg, rgba(3, 11, 24, .95) 0%, rgba(3, 11, 24, .88) 30%, rgba(3, 11, 24, .5) 62%, rgba(3, 11, 24, .3) 100%),
+    linear-gradient(to bottom, rgba(3, 11, 24, .72) 0%, rgba(3, 11, 24, .1) 16%, rgba(3, 11, 24, .1) 80%, rgba(3, 11, 24, .78) 100%),
+    radial-gradient(130% 100% at 50% 50%, transparent 34%, rgba(2, 8, 18, .5) 100%);
+}
+
+/* ── Chrome ───────────────────────────────────────────────────────────────
+   The header sticks, and adopts the call to action once the hero's own is
+   gone. */
+
+.aims-auth .stage.stage--fixed .stage__bar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+
+.aims-auth .bar__act {
+  display: flex;
+  align-items: center;
+  gap: var(--s-md);
+}
+.aims-auth .bar__cta {
+  opacity: 0;
+  transform: translateY(-6px) scale(.96);
+  pointer-events: none;
+  transition: opacity 320ms var(--ease-out), transform 320ms var(--ease-out);
+}
+.aims-auth .stage__bar.is-armed .bar__cta {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+/* The caption and the button swap places rather than stacking, so the header
+   never carries both at once. */
+.aims-auth .bar__says { transition: opacity 240ms var(--ease-out); }
+.aims-auth .stage__bar.is-armed .bar__says { opacity: 0; pointer-events: none; }
+@media (max-width: 720px) {
+  .aims-auth .bar__says { display: none; }
+}
+
+/* ── Section rhythm ───────────────────────────────────────────────────────
+   Uneven on purpose. The hero owns a whole screen, the reel nearly one, and
+   the two reading sections are tighter — the page breathes in and out rather
+   than marching. */
+
+/*
+ * A 1240px measure, not 1380. Narrowing the column is what makes 56px display
+ * type read as large — width and size trade against each other, and a headline
+ * stretched across 1380px reads smaller than the same headline set in a
+ * tighter column. The reel opts out (.sec--wide) because it carries a 1440px
+ * screenshot and every pixel it loses is detail a reader cannot get back.
+ */
+/*
+ * The measure is held by padding, not by max-width, and that is load-bearing.
+ *
+ * A centred 1240px box with a background paints a 1240px background, so the
+ * moment the sections started carrying their own ink veil the page grew two
+ * vertical seams — a hundred pixels of unveiled clip down the left edge and
+ * another strip down the right, which read as a rendering fault rather than as
+ * a layout. Spanning the section edge to edge and pushing its content inward
+ * with `max(gutter, (100% - measure) / 2)` gives the same 1240px column with a
+ * background that actually reaches the window.
+ *
+ * The obvious alternative — a full-bleed pseudo-element at width: 100vw — is
+ * wrong here: 100vw includes the scrollbar, and this page always has one.
+ */
+.aims-auth .sec {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding-block: clamp(56px, 8vh, 104px);
+  padding-inline: max(clamp(20px, 4vw, 48px), (100% - 1240px) / 2);
+}
+/* The reel opts out of the measure: it carries a 1440px screenshot and every
+   pixel it gives up is detail a reader cannot get back. */
+.aims-auth .sec--wide { padding-inline: max(clamp(20px, 4vw, 48px), (100% - 1440px) / 2); }
+.aims-auth .sec--hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100dvh - 68px);
+  padding-top: clamp(32px, 6vh, 72px);
+  padding-bottom: clamp(48px, 8vh, 96px);
+}
+/*
+ * The rule draws itself in rather than arriving whole. It is a one-second
+ * event on a hairline, which is about the smallest thing on this page that can
+ * be animated without becoming decoration.
+ */
+.aims-auth .sec--rule::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--hairline-soft);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 1100ms var(--ease-move);
+}
+.aims-auth .sec--rule.is-in::before { transform: scaleX(1); }
+
+/*
+ * Alternating bands. On paper this would be two shades of white; on ink it is
+ * a two-percent lift with a blur behind it, so the band is felt as a change in
+ * material rather than seen as a box. The clip keeps moving underneath either
+ * way — the band sits on the stage, it does not replace it.
+ */
+/*
+ * THE CLIP HAS ONE ROOM, NOT FOUR
+ *
+ * Brightening the footage enough to be seen in the hero made it a problem
+ * everywhere else: by the reel it was washing straight through a 819px
+ * screenshot and a column of body copy, which is a background winning an
+ * argument with the content.
+ *
+ * So the hero is the open room and the sections below it stand on plates. Each
+ * section carries its own ink veil — enough to take the footage back down to
+ * movement you notice at the edge of vision, not enough to switch it off. The
+ * two veils differ by a few points of lightness, which is also what gives the
+ * page its alternating band rhythm; one gradient doing two jobs rather than a
+ * tint stacked on a tint.
+ */
+.aims-auth .sec--rule {
+  border-top: 0;
+  background: rgba(3, 11, 24, .66);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+.aims-auth .sec--band {
+  background: rgba(10, 22, 42, .76);
+}
+
+.aims-auth .sec__head {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 3.9vw, 56px);
+  line-height: 1.16;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  color: #fff;
+  margin: 0;
+  max-width: 20ch;
+  text-wrap: balance;
+}
+/* The italic is the emphasis. It is the same device as the hero's, one step
+   quieter, and it is why these heads need no colour of their own. */
+.aims-auth .sec__head em {
+  font-style: italic;
+  color: #a8c4ff;
+}
+.aims-auth .sec__sub {
+  margin: 20px 0 0;
+  max-width: 620px;
+  font-size: 17px;
+  font-weight: 430;
+  line-height: 1.5;
+  color: var(--on-surface-variant);
+  text-wrap: pretty;
+}
+
+/* Fire-once reveal. Sections arrive; they do not re-animate on the way back
+   up, because content that re-enacts itself every scroll stops being content
+   and becomes a fidget. */
+.aims-auth .rise-in {
+  opacity: 0;
+  transform: translate3d(0, 26px, 0);
+  transition: opacity 760ms var(--ease-out), transform 760ms var(--ease-out);
+  transition-delay: var(--d, 0ms);
+}
+.aims-auth .rise-in.is-in { opacity: 1; transform: none; }
+
+/* ── Hero ─────────────────────────────────────────────────────────────── */
+
+/*
+ * The hero is a collage, not a stack: type on the left, real product UI
+ * floating on the right over the clip. Below 1080 it collapses to one column
+ * and the artifacts go under the type rather than beside it.
+ */
+.aims-auth .hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, .94fr);
+  gap: clamp(30px, 4vw, 72px);
+  align-items: center;
+}
+
+.aims-auth .hero__head {
+  font-family: var(--font-display);
+  font-size: clamp(42px, 6.4vw, 90px);
+  line-height: 1.12;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  margin: 6px 0 0;
+  max-width: 15ch;
+  color: #fff;
+}
+
+/*
+ * Revealed a line at a time behind a mask, not a word at a time through a
+ * blur. The blur-rise is the house style of every generated hero on the
+ * internet; a mask that slides the line up out of its own bounding box is what
+ * a serif headline wants, because it keeps the baseline grid intact while it
+ * moves and the letterforms never distort.
+ *
+ * Two elements per line: the <span> is the shutter, the <b> is the type.
+ */
+.aims-auth .hero__line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: .06em;   /* descenders live below the baseline; without this
+                              the mask crops the tail of a 'y' at rest. */
+}
+.aims-auth .hero__line > b {
+  display: block;
+  font-weight: inherit;
+  transform: translate3d(0, 106%, 0);
+  animation: line-lift 1150ms var(--ease-move) both;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes line-lift {
+  from { transform: translate3d(0, 106%, 0); }
+  to   { transform: none; }
+}
+
+/*
+ * One accent phrase, set in italic and tinted. The italic is doing the work —
+ * colour alone on a dark ground reads as a link, and a headline that looks
+ * clickable and is not is a small lie. Oxford blue lifted to #8fb4ff so it
+ * survives ink; the same family as every action on the site.
+ */
+.aims-auth .hero__accent {
+  font-style: italic;
+  color: #8fb4ff;
+}
+
+.aims-auth .hero__sub {
+  margin: clamp(18px, 2.6vh, 30px) 0 0;
+  max-width: 608px;
+  font-size: clamp(16px, 1.35vw, 19px);
+  line-height: 1.62;
+  color: var(--on-surface-variant);
+  text-wrap: pretty;
+  animation: fade-up 700ms var(--ease-out) both 640ms;
+}
+
+.aims-auth .hero__act {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-lg);
+  margin-top: clamp(24px, 3.6vh, 42px);
+  animation: fade-up 700ms var(--ease-out) both 780ms;
+}
+
+/*
+ * Controls come in matched pairs on one baseline: a filled pill and a ghost
+ * pill sharing the same geometry, so they read as one decision with two
+ * answers rather than as a button and some leftover text.
+ *
+ * The fill is flat Oxford blue. It used to be a three-stop gradient under a
+ * 34px coloured glow, which is the visual language of a mobile game — and
+ * worse, it made the button the loudest object on a page whose loudest object
+ * should be the sentence above it. Flat colour, a hairline, and a shadow that
+ * only appears on hover.
+ */
+.aims-auth .cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 26px;
+  border: 1px solid transparent;
+  border-radius: var(--r-full);
+  background: var(--primary);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 480;
+  letter-spacing: -0.005em;
+  cursor: pointer;
+  transition: background-color 220ms var(--ease-out), box-shadow 240ms var(--ease-out), transform 200ms var(--ease-out);
+}
+.aims-auth .cta:hover {
+  background: #1b5cd8;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 26px -12px rgba(0, 74, 198, .9);
+}
+.aims-auth .cta:active { transform: translateY(0); box-shadow: none; }
+
+/* The secondary half of the pair. Same pill, same height, no fill — it shares
+   the baseline so the two read as siblings. */
+.aims-auth .cta--ghost {
+  background: transparent;
+  border-color: rgba(255, 255, 255, .26);
+  color: rgba(255, 255, 255, .88);
+  font-weight: 450;
+}
+.aims-auth .cta--ghost:hover {
+  background: rgba(255, 255, 255, .06);
+  border-color: rgba(255, 255, 255, .42);
+  box-shadow: none;
+}
+.aims-auth .cta svg { transition: transform 240ms var(--ease-out); }
+.aims-auth .cta:hover svg { transform: translateX(3px); }
+/* The header's copy is the same control at a smaller register. */
+.aims-auth .cta--sm { min-height: 38px; padding: 0 17px; font-size: 14px; }
+
+/* The term, on one rule. Six stages in the order a term happens — what is left
+   of a whole scrolled band once it was written tightly. Not links: none of it
+   is reachable without signing in, and making it look clickable would be a
+   promise the page cannot keep. */
+.aims-auth .flow {
+  margin-top: clamp(34px, 5.5vh, 66px);
+  padding-top: clamp(18px, 2.6vh, 26px);
+  border-top: 1px solid var(--hairline-soft);
+  animation: fade-up 700ms var(--ease-out) both 900ms;
+}
+.aims-auth .flow__cap {
+  font-size: 11px; font-weight: 600; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--on-surface-faint); margin: 0 0 14px;
+}
+.aims-auth .flow__steps {
+  display: flex; align-items: center; flex-wrap: wrap;
+  gap: 8px 6px; margin: 0; padding: 0; list-style: none;
+}
+.aims-auth .flow__steps li {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 15px; font-weight: 500;
+  color: var(--on-surface-variant); white-space: nowrap;
+}
+/* A hairline between stages, not a bullet: the order is the point, and a
+   bullet would say these are a set rather than a sequence. */
+.aims-auth .flow__steps li + li::before {
+  content: ''; width: 18px; height: 1px; margin-right: 6px; background: var(--hairline);
+}
+.aims-auth .flow__steps b {
+  width: 6px; height: 6px; flex: none;
+  border-radius: var(--r-full); background: var(--on-surface-faint);
+}
+
+/* ══ The reel ═════════════════════════════════════════════════════════════
+   The product, large. The previous version put it in a 40%-wide column at a
+   15° rake, which threw away most of its pixels and made a 1440px screenshot
+   arrive as an illegible thumbnail. It gets the full width of the page now,
+   flat enough to read, with the feature list beside it as the control. */
+
+.aims-auth .reel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.72fr) minmax(280px, 1fr);
+  gap: clamp(24px, 3.4vw, 52px);
+  align-items: start;
+  margin-top: clamp(30px, 4.6vh, 56px);
+}
+
+/*
+ * The screenshot is mounted in a frame, not bled to the edge of a box.
+ *
+ * The 12px of surface around it is what turns a cropped image into an artifact
+ * — a thing with a mount, sitting in the room. Bled to the edge it reads as a
+ * background that happens to be a picture, which is why the previous version
+ * needed a 15° rake and a blue glow to look like anything at all.
+ *
+ * And it is flat now. The rake was buying dimension that the frame and the
+ * shadow already provide, and it was spending real legibility to do it: a
+ * 1440px capture turned 4° off-axis is a 1440px capture you have to squint at.
+ */
+.aims-auth .reel__pane {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  padding: 12px;
+  border-radius: var(--r-art);
+  background: rgba(255, 255, 255, .05);
+  box-shadow: var(--lift-art);
+}
+
+/*
+ * Frames arrive with a wipe, not a cross-fade.
+ *
+ * Two screenshots of the same application dissolved into each other read as a
+ * smudge — the sidebar and chrome are identical in every frame, so a fade
+ * changes almost nothing visible and the eye reports "blurry" rather than
+ * "next". A clip wipe with a slight lift gives the change an edge and a
+ * direction, so each frame reads as a distinct thing being brought forward.
+ */
+.aims-auth .reel__frame {
+  position: absolute;
+  inset: 12px;
+  width: calc(100% - 24px); height: calc(100% - 24px);
+  border-radius: var(--r-shot);
+  object-fit: cover;
+  object-position: top left;
+  opacity: 0;
+  clip-path: inset(0 0 0 100%);
+  transform: scale(1.03);
+  transition: clip-path 900ms var(--ease-move), opacity 380ms linear, transform 5600ms linear;
+}
+.aims-auth .reel__frame.is-on {
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+  transform: scale(1);
+}
+
+/* One sweep of light across the glass, so the pane reads as a surface. */
+.aims-auth .reel__pane::after {
+  content: '';
+  position: absolute; inset: 12px; pointer-events: none;
+  border-radius: var(--r-shot);
+  overflow: hidden;
+  background: linear-gradient(104deg, transparent 40%, rgba(255, 255, 255, .1) 50%, transparent 60%);
+  transform: translateX(-130%);
+  animation: sweep 8s var(--ease-move) infinite;
+}
+@keyframes sweep {
+  0%, 64% { transform: translateX(-130%); }
+  94%, 100% { transform: translateX(130%); }
+}
+
+/* ── The feature list ─────────────────────────────────────────────────────
+   The reel's control and its caption in one column. The active row opens to
+   show its note; the rest stay as titles. A list of six full paragraphs would
+   be a wall, and six titles alone would say nothing. */
+
+.aims-auth .reel__list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0; padding: 0;
+  list-style: none;
+}
+.aims-auth .reel__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  width: 100%;
+  min-height: 48px;
+  padding: 13px 14px;
+  border: 0;
+  border-left: 2px solid transparent;
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 300ms var(--ease-out), border-color 400ms var(--ease-out);
+}
+.aims-auth .reel__item:hover { background: rgba(255, 255, 255, .045); }
+.aims-auth .reel__item.is-on {
+  background: rgba(255, 255, 255, .06);
+  border-left-color: var(--hue, #8fb4ff);
+}
+.aims-auth .reel__ico {
+  width: 34px; height: 34px; flex: none;
+  display: grid; place-items: center;
+  border-radius: var(--r-md);
+  background: var(--glass);
+  border: 1px solid var(--hairline);
+  color: var(--on-surface-muted);
+  transition: color 400ms var(--ease-out), background-color 400ms var(--ease-out);
+}
+.aims-auth .reel__item.is-on .reel__ico {
+  color: var(--hue, #8fb4ff);
+  background: rgba(255, 255, 255, .1);
+}
+.aims-auth .reel__name {
+  font-family: 'Inter', sans-serif;
+  font-size: 17px;
+  font-weight: 480;
+  letter-spacing: -0.009em;
+  color: var(--on-surface-muted);
+  margin: 4px 0 0;
+  transition: color 300ms var(--ease-out);
+}
+.aims-auth .reel__item.is-on .reel__name { color: #fff; }
+
+/*
+ * The note. Sized at 1rem/1.6 and not the 13px it was — this is the sentence
+ * that explains the feature, which makes it body copy, and body copy set below
+ * 15px on a dark ground is a caption pretending to be a paragraph.
+ *
+ * It opens on a grid-template-rows transition rather than max-height, so the
+ * travel is exactly the height of the text instead of an invented number that
+ * is wrong for every string but one.
+ */
+.aims-auth .reel__note {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 480ms var(--ease-out), opacity 380ms var(--ease-out);
+  opacity: 0;
+}
+.aims-auth .reel__item.is-on .reel__note { grid-template-rows: 1fr; opacity: 1; }
+.aims-auth .reel__note > span {
+  overflow: hidden;
+  min-height: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--on-surface-variant);
+  text-wrap: pretty;
+}
+.aims-auth .reel__item.is-on .reel__note > span { padding-top: 8px; }
+
+/* The active row drains in real time, so the reel's rhythm is visible rather
+   than a surprise. */
+.aims-auth .reel__bar {
+  height: 2px;
+  margin: 12px 0 0 14px;
+  border-radius: var(--r-full);
+  background: rgba(255, 255, 255, .12);
+  overflow: hidden;
+}
+.aims-auth .reel__bar i {
+  display: block; height: 100%;
+  border-radius: inherit;
+  background: var(--hue, #8fb4ff);
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: bar-fill var(--dwell, 5600ms) linear both;
+}
+.aims-auth .reel__bar.is-held i { animation-play-state: paused; }
+@keyframes bar-fill { to { transform: scaleX(1); } }
+
+/* ══ Who it is for ═══════════════════════════════════════════════════════
+   Four portals described, not offered. There is no button in this section on
+   purpose: the page makes its ask once, and this is the part that earns it. */
+
+.aims-auth .who {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(14px, 1.6vw, 24px);
+  margin-top: clamp(30px, 4.4vh, 54px);
+}
+.aims-auth .who__col {
+  padding: clamp(22px, 2vw, 30px);
+  border-radius: var(--r-card);
+  border: 1px solid var(--hairline-soft);
+  background: linear-gradient(170deg, rgba(255, 255, 255, .055), rgba(255, 255, 255, .015));
+  transition: border-color 400ms var(--ease-out), transform 400ms var(--ease-out), background 400ms var(--ease-out);
+}
+.aims-auth .who__col:hover {
+  border-color: var(--hairline);
+  transform: translateY(-3px);
+  background: linear-gradient(170deg, rgba(255, 255, 255, .085), rgba(255, 255, 255, .02));
+}
+.aims-auth .who__ico {
+  width: 42px; height: 42px;
+  display: grid; place-items: center;
+  border-radius: var(--r-md);
+  background: color-mix(in srgb, var(--hue) 22%, transparent);
+  color: var(--hue-ink);
+  margin-bottom: 16px;
+}
+.aims-auth .who__name {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px; font-weight: 500; letter-spacing: -0.009em;
+  color: #fff; margin: 0;
+}
+.aims-auth .who__duties {
+  margin: 14px 0 0; padding: 0; list-style: none;
+  display: flex; flex-direction: column; gap: 9px;
+}
+.aims-auth .who__duties li {
+  display: flex; align-items: flex-start; gap: 9px;
+  font-size: 15px; line-height: 1.5;
+  color: var(--on-surface-variant);
+  text-wrap: pretty;
+}
+.aims-auth .who__duties svg { flex: none; margin-top: 3px; color: var(--hue-ink); opacity: .8; }
+
+/* ══ Figures ═════════════════════════════════════════════════════════════
+   Supplied platform claims, not readings from this deployment — so they get
+   size, but no live dot, no ticking "now" and no health colour. */
+
+.aims-auth .figs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(14px, 2vw, 30px);
+  margin-top: clamp(26px, 3.6vh, 44px);
+}
+.aims-auth .fig {
+  padding: clamp(18px, 1.8vw, 26px) 0;
+  border-top: 1px solid var(--hairline);
+}
+.aims-auth .fig b {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(34px, 4.2vw, 62px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.05;
+}
+.aims-auth .fig span {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--on-surface-faint);
+}
+
+/* ══ Foot ════════════════════════════════════════════════════════════════ */
+
+.aims-auth .stage.stage--fixed .stage__foot {
+  position: relative;
+  margin-top: clamp(16px, 2.4vh, 32px);
+}
+
+/* ══ Floating product artifacts ═══════════════════════════════════════════
+ *
+ * Two fragments of the real interface, floating beside the hero copy over the
+ * clip. They are drawn in markup rather than captured, for two reasons: a
+ * screenshot at this size is unreadable, and these need to stay crisp sitting
+ * directly on top of blurred generated footage — the contrast between the two
+ * is the depth cue that makes the composition work.
+ *
+ * Everything in them is structural. There is not a single digit anywhere, and
+ * that is deliberate: the dashboards these come from run on a fresh database,
+ * so any number here would be either a zero or an invention. Shapes can say
+ * "a result came back" honestly; a figure cannot.
+ *
+ * They carry aria-hidden and no interactive elements. A composer that looks
+ * like an input and does not accept text is a promise the page cannot keep.
+ */
+.aims-auth .arts {
+  position: relative;
+  display: grid;
+  gap: clamp(16px, 2vh, 26px);
+  justify-items: end;
+}
+.aims-auth .art {
+  width: 100%;
+  max-width: 420px;
+  padding: 16px 18px 14px;
+  border-radius: var(--r-art);
+  background: linear-gradient(168deg, rgba(18, 32, 54, .92), rgba(10, 20, 38, .88));
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  backdrop-filter: blur(14px) saturate(1.1);
+  box-shadow: var(--lift-art);
+  animation: art-in 900ms var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes art-in {
+  from { opacity: 0; transform: translate3d(0, 22px, 0) scale(.985); }
+  to   { opacity: 1; transform: none; }
+}
+/* The lower artifact is offset left so the pair reads as a collage rather than
+   a two-row list. */
+.aims-auth .art--drift { justify-self: start; margin-left: clamp(0px, 3vw, 46px); }
+
+.aims-auth .art__cap {
+  margin: 0 0 12px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--on-surface-faint);
+}
+
+/* The question. A div, not an input — see above. */
+.aims-auth .art__field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 12px 12px 14px;
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 16px;
+  background: rgba(3, 11, 24, .55);
+}
+.aims-auth .art__q {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 430;
+  color: rgba(255, 255, 255, .9);
+}
+.aims-auth .art__send {
+  width: 30px; height: 30px; flex: none;
+  display: grid; place-items: center;
+  border-radius: var(--r-full);
+  background: var(--primary);
+  color: #fff;
+}
+
+/*
+ * The query, wiping in under the question — the one moment of literal product
+ * narrative on the page: plain language goes in, SQL comes out, rows come
+ * back. Monospace because that is what it is, and clipped rather than faded
+ * because a query is written left to right and should arrive that way.
+ */
+.aims-auth .art__wire {
+  margin: 12px 0 0;
+  padding: 9px 11px;
+  border-radius: 10px;
+  background: rgba(0, 74, 198, .16);
+  border: 1px solid rgba(143, 180, 255, .18);
+  overflow: hidden;
+}
+.aims-auth .art__sql {
+  display: block;
+  font-family: ui-monospace, 'SFMono-Regular', 'JetBrains Mono', Menlo, monospace;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: #a8c4ff;
+  white-space: nowrap;
+  clip-path: inset(0 100% 0 0);
+  animation: sql-wipe 2200ms var(--ease-move) both 900ms;
+}
+@keyframes sql-wipe { to { clip-path: inset(0 0 0 0); } }
+
+/* Result rows. Labels and proportions, never values. */
+.aims-auth .art__rows {
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.aims-auth .art__rows li {
+  display: grid;
+  grid-template-columns: 62px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  animation: row-in 620ms var(--ease-out) both;
+  animation-delay: calc(2400ms + var(--i) * 190ms);
+}
+@keyframes row-in {
+  from { opacity: 0; transform: translate3d(-10px, 0, 0); }
+  to   { opacity: 1; transform: none; }
+}
+.aims-auth .art__rows b {
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--on-surface-muted);
+  letter-spacing: .02em;
+}
+.aims-auth .art__rows i {
+  display: block;
+  height: 6px;
+  border-radius: var(--r-full);
+  background: rgba(255, 255, 255, .09);
+  overflow: hidden;
+}
+.aims-auth .art__rows i::after {
+  content: '';
+  display: block;
+  height: 100%;
+  width: var(--w, 50%);
+  border-radius: inherit;
+  background: var(--hue, #8fb4ff);
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: bar-grow 900ms var(--ease-out) both;
+  animation-delay: calc(2600ms + var(--i) * 190ms);
+}
+@keyframes bar-grow { to { transform: scaleX(1); } }
+
+/* ── The arrange artifact ─────────────────────────────────────────────────
+   Six dashboard cards, one lifted out of the grid and set down again, on a
+   loop. It is the only literal illustration on the page and it earns its place
+   because "the cards move" is the hardest claim here to make in words. */
+.aims-auth .art__cells {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 30px;
+  gap: 8px;
+}
+/* Each cell carries a title rule and a shorter body rule. Two hairlines is
+   the least a rectangle needs to stop reading as a placeholder and start
+   reading as a card with something in it. */
+.aims-auth .art__cells span {
+  position: relative;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .07);
+  border: 1px solid rgba(255, 255, 255, .07);
+}
+.aims-auth .art__cells span::before,
+.aims-auth .art__cells span::after {
+  content: '';
+  position: absolute;
+  left: 9px;
+  height: 3px;
+  border-radius: var(--r-full);
+  background: rgba(255, 255, 255, .17);
+}
+.aims-auth .art__cells span::before { top: 9px; width: 42%; }
+.aims-auth .art__cells span::after  { top: 17px; width: 26%; background: rgba(255, 255, 255, .1); }
+.aims-auth .art__cells .is-held::before { background: rgba(168, 196, 255, .75); }
+.aims-auth .art__cells .is-held::after  { background: rgba(168, 196, 255, .4); }
+.aims-auth .art__cells span:nth-child(1) { grid-column: span 2; }
+.aims-auth .art__cells span:nth-child(5) { grid-column: span 2; }
+.aims-auth .art__cells .is-held {
+  background: rgba(0, 74, 198, .3);
+  border-color: rgba(143, 180, 255, .5);
+  animation: cell-lift 5200ms var(--ease-move) infinite;
+}
+@keyframes cell-lift {
+  0%, 12%   { transform: none; box-shadow: none; }
+  30%, 52%  { transform: translate3d(-38%, -38px, 0) rotate(-2deg) scale(1.06);
+              box-shadow: 0 14px 26px -10px rgba(0, 0, 0, .8); }
+  74%, 100% { transform: none; box-shadow: none; }
+}
+
+/* ══ The one accent surface ═══════════════════════════════════════════════
+ *
+ * A single light plate on a dark page, used once and never again. The rule it
+ * follows is the reason it works: the moment a second one appears, neither is
+ * an accent any more — they are just the page's other background.
+ *
+ * It carries the statement this product actually needs to make, which is about
+ * permission rather than capability. No shadow: content cards on this page do
+ * not float, only artifacts do.
+ */
+/*
+ * Two columns, not one. Set as a single stack the quote ran to 22ch and the
+ * paragraph to 56ch inside a 1140px plate, so two thirds of the only light
+ * surface on the page was empty — which on a plate this loud reads as a
+ * mistake rather than as air. The quote and its gloss sit side by side,
+ * bottom-aligned, so the plate is full and the two still read in order.
+ */
+.aims-auth .pull {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(24px, 3.4vw, 60px);
+  align-items: end;
+  margin: clamp(30px, 5vh, 60px) 0 0;
+  padding: clamp(28px, 3.4vw, 52px);
+  border-radius: var(--r-card);
+  background: var(--primary-fixed);
+  color: var(--on-primary-fixed);
+}
+.aims-auth .pull__q {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(24px, 2.9vw, 40px);
+  line-height: 1.28;
+  font-weight: 400;
+  letter-spacing: -0.012em;
+  max-width: 22ch;
+  text-wrap: balance;
+}
+.aims-auth .pull__q em { font-style: italic; }
+.aims-auth .pull__by {
+  margin: 0;
+  padding-bottom: .3em;   /* sits on the quote's last baseline, not its box */
+  font-size: 15px;
+  font-weight: 430;
+  line-height: 1.55;
+  color: var(--on-primary-fixed-variant);
+}
+
+/* ── Narrow ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 1080px) {
+  .aims-auth .hero__grid { grid-template-columns: 1fr; }
+  .aims-auth .pull { grid-template-columns: 1fr; align-items: start; gap: 22px; }
+  .aims-auth .pull__by { padding-bottom: 0; }
+  .aims-auth .arts { justify-items: stretch; }
+  .aims-auth .art { max-width: none; }
+  .aims-auth .art--drift { margin-left: 0; }
+}
+@media (max-width: 1024px) {
+  .aims-auth .reel { grid-template-columns: 1fr; }
+  .aims-auth .who { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .aims-auth .who { grid-template-columns: 1fr; }
+  .aims-auth .figs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .aims-auth .hero__head { max-width: none; }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .aims-auth .hero__head b,
+  .aims-auth .hero__sub,
+  .aims-auth .hero__act,
+  .aims-auth .flow,
+  .aims-auth .reel__pane::after,
+  .aims-auth .hero__line > b,
+  .aims-auth .art,
+  .aims-auth .art__sql,
+  .aims-auth .art__rows li,
+  .aims-auth .art__rows i::after,
+  .aims-auth .art__cells .is-held,
+  .aims-auth .reel__bar i {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+  .aims-auth .reel__bar i,
+  .aims-auth .art__rows i::after { transform: scaleX(1); }
+  .aims-auth .art__sql { clip-path: none; }
+  .aims-auth .sec--rule::before { transform: scaleX(1); transition: none; }
+  .aims-auth .rise-in { opacity: 1; transform: none; transition: none; }
+  .aims-auth .reel__frame {
+    transition: opacity 300ms linear;
+    clip-path: none !important;
+    transform: none !important;
+  }
+  .aims-auth .stage.stage--fixed .stage__video { display: none; }
+}

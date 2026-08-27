@@ -1,0 +1,127 @@
+/* ===========================================================================
+   The faculty panels, inside the pinned grid.
+
+   The panels themselves are untouched — same `.panel`, `.stat-card`,
+   `.chart-card` and `.insights-card` chrome the faculty portal has always
+   used, same colours, same type. Everything here is about the one thing that
+   changed: they now live in cells whose height a teacher chooses, instead of
+   in CSS grid rows that chose for them.
+
+   Nothing in this file is loaded by any other screen — it is imported by
+   FacultyDashboard.jsx alone, and every rule is under `.pin-cell` or
+   `.pin-native`, so a faculty panel rendered anywhere else is unaffected.
+   =========================================================================== */
+
+/* ---------------------------------------------------------------- charts --
+
+   A chart has no natural height: it fills whatever box it is given. Both chart
+   panels therefore sit in unmeasured cells and are handed `height="100%"`,
+   which needs a definite box to resolve against.
+
+   `grid-template-rows: auto 1fr` gives it one. The head takes what it needs and
+   the body row is exactly the remainder, so `height: 100%` on the body means
+   "the space left after the title", not "as tall as the whole card" — which is
+   what a flex child would have computed, overflowing the card by the height of
+   its own heading.                                                          */
+
+.pin-cell:not(.is-measured) > .pin-native > .chart-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 0;
+}
+
+.pin-cell:not(.is-measured) > .pin-native > .chart-card > .chart-card-body {
+  min-height: 0;
+  /* Was `margin-top: 12px` against a head that is now a grid row. Padding on
+     the row keeps the gap without adding to the resolved height. */
+  margin-top: 0;
+  padding-top: 12px;
+}
+
+/* ----------------------------------------------------------------- lists --
+
+   Why the long panels cap their list rather than growing forever.
+
+   Notifications, the schedule and the activity feed are measured panels: the
+   card opens at exactly the height its contents come to, and that height is
+   also its permanent floor, so no arrangement can hide information. That rule
+   is what makes the board safe — and it is also what makes an uncapped list
+   dangerous, because a teacher with forty activity rows would get a card two
+   thousand pixels tall that they could never shrink.
+
+   So the list scrolls inside itself past 24rem. The floor then describes the
+   panel, not the size of this week's feed, and every row is still reachable.
+   This is the same treatment the admin dashboard's activity feed gets.       */
+
+.fac-pin-list {
+  max-height: 24rem;
+  overflow-y: auto;
+  /* Keeps a flick of the wheel inside the card from scrolling the page behind
+     it once the list bottoms out. */
+  overscroll-behavior: contain;
+}
+
+/* The rows carry their own separators; a scrollbar hard against them looks
+   like a border. */
+.fac-pin-list > * + * {
+  margin-right: 2px;
+}
+
+/* -------------------------------------------------------------- stretching --
+
+   `.pin-native` gives an unmeasured cell's contents `height: 100%`, which is
+   right for the charts. The panels that draw a bordered card need the border to
+   reach the bottom of that box too, or a card pulled taller shows its frame
+   ending halfway down.                                                       */
+
+.pin-cell:not(.is-measured) > .pin-native > .panel,
+.pin-cell:not(.is-measured) > .pin-native > .insights-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.pin-cell:not(.is-measured) > .pin-native > .panel > .fac-pin-list,
+.pin-cell:not(.is-measured) > .pin-native > .insights-card > .fac-pin-list {
+  flex: 1 1 auto;
+  /* The cap above is a floor-protection measure for MEASURED cells. Once the
+     teacher has sized the card by hand, the box is the authority. */
+  max-height: none;
+}
+
+/* ------------------------------------------------------------- arranging --
+
+   The quiet "these are movable" treatment, extended to the faculty portal's
+   own card classes. The pinned stylesheet already covers `.ad-card` and
+   `.pin-card`; these are the four this portal draws instead.                 */
+
+.pin-grid.is-editing .panel,
+.pin-grid.is-editing .stat-card,
+.pin-grid.is-editing .chart-card {
+  border-color: var(--border-strong, rgba(20, 22, 26, 0.16));
+}
+
+/*
+ * A stat tile stops being a button while the board is arranged — the role and
+ * the handlers are withdrawn in facultyPanels.jsx. This removes the pointer
+ * that would otherwise still promise a navigation, and the hover lift that
+ * would fire under a card being dragged.
+ */
+.pin-grid.is-editing .stat-card {
+  cursor: grab;
+}
+
+.pin-grid.is-editing .stat-card:hover {
+  transform: none;
+}
+
+/*
+ * Second guard, matching the admin grid's.
+ *
+ * Any anchor nested deeper than the panel registry can see — inside a
+ * notification body, say — must not swallow a drag and turn its mouse-up into
+ * a navigation.
+ */
+.pin-grid.is-editing a {
+  pointer-events: none;
+}

@@ -1,0 +1,882 @@
+[
+ {
+  "mod": "auth",
+  "test": "login SuperAdmin",
+  "expected": 200,
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "auth",
+  "test": "login Admin",
+  "expected": 200,
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "auth",
+  "test": "login Teacher",
+  "expected": 200,
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "auth",
+  "test": "login Student",
+  "expected": 200,
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "auth",
+  "test": "login Parent",
+  "expected": 200,
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "test": "POST create",
+  "expected": "201",
+  "actual": 201,
+  "pass": true,
+  "note": "id=60021"
+ },
+ {
+  "mod": "attendance",
+  "test": "DB row exists after create",
+  "expected": "found",
+  "actual": "found",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "test": "GET by id",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "test": "PUT update",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "test": "DB verify status=Late",
+  "expected": "Late",
+  "actual": "Late",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "test": "POST empty body",
+  "expected": "400",
+  "actual": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "test": "RBAC allow Admin",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "test": "RBAC allow Teacher",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "test": "RBAC deny Student",
+  "expected": "403",
+  "actual": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "test": "RBAC deny Parent",
+  "expected": "403",
+  "actual": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "test": "RBAC deny SuperAdmin",
+  "expected": "403",
+  "actual": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "test": "GET nonexistent",
+  "expected": "404",
+  "actual": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "test": "DELETE",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "test": "DB cleanup verified",
+  "expected": "removed",
+  "actual": "hard-deleted",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "test": "double delete",
+  "expected": "404",
+  "actual": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "test": "POST create",
+  "expected": "201",
+  "actual": 201,
+  "pass": true,
+  "note": "id=39"
+ },
+ {
+  "mod": "gpa",
+  "test": "DB row exists after create",
+  "expected": "found",
+  "actual": "found",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "test": "GET by id",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "test": "PUT update",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "test": "DB verify gpa=3.55",
+  "expected": "3.55",
+  "actual": "3.55",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "test": "POST empty body",
+  "expected": "400",
+  "actual": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "test": "RBAC allow Admin",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "test": "RBAC deny Teacher",
+  "expected": "403",
+  "actual": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "test": "RBAC deny Student",
+  "expected": "403",
+  "actual": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "test": "RBAC deny Parent",
+  "expected": "403",
+  "actual": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "test": "RBAC deny SuperAdmin",
+  "expected": "403",
+  "actual": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "test": "GET nonexistent",
+  "expected": "404",
+  "actual": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "test": "DELETE",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "test": "DB cleanup verified",
+  "expected": "removed",
+  "actual": "hard-deleted",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "gpa",
+  "test": "double delete",
+  "expected": "404",
+  "actual": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "teacher-schedules",
+  "test": "POST create",
+  "expected": "201",
+  "actual": 201,
+  "pass": true,
+  "note": "id=47"
+ },
+ {
+  "mod": "teacher-schedules",
+  "test": "DB row exists after create",
+  "expected": "found",
+  "actual": "found",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "teacher-schedules",
+  "test": "GET by id",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "teacher-schedules",
+  "test": "PUT update",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "teacher-schedules",
+  "test": "DB verify day=Saturday",
+  "expected": "Saturday",
+  "actual": "Saturday",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "teacher-schedules",
+  "test": "POST empty body",
+  "expected": "400",
+  "actual": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "teacher-schedules",
+  "test": "RBAC allow Admin",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "teacher-schedules",
+  "test": "RBAC deny Teacher",
+  "expected": "403",
+  "actual": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "teacher-schedules",
+  "test": "RBAC deny Student",
+  "expected": "403",
+  "actual": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "teacher-schedules",
+  "test": "RBAC deny Parent",
+  "expected": "403",
+  "actual": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "teacher-schedules",
+  "test": "RBAC deny SuperAdmin",
+  "expected": "403",
+  "actual": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "teacher-schedules",
+  "test": "GET nonexistent",
+  "expected": "404",
+  "actual": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "teacher-schedules",
+  "test": "DELETE",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "teacher-schedules",
+  "test": "DB cleanup verified",
+  "expected": "removed",
+  "actual": "hard-deleted",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "teacher-schedules",
+  "test": "double delete",
+  "expected": "404",
+  "actual": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challans",
+  "test": "POST create",
+  "expected": "201",
+  "actual": 201,
+  "pass": true,
+  "note": "id=42"
+ },
+ {
+  "mod": "challans",
+  "test": "DB row exists after create",
+  "expected": "found",
+  "actual": "found",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challans",
+  "test": "GET by id",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challans",
+  "test": "PUT update",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challans",
+  "test": "DB verify status=Paid",
+  "expected": "Paid",
+  "actual": "Paid",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challans",
+  "test": "POST empty body",
+  "expected": "400",
+  "actual": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challans",
+  "test": "RBAC allow Admin",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challans",
+  "test": "RBAC deny Teacher",
+  "expected": "403",
+  "actual": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challans",
+  "test": "RBAC deny Student",
+  "expected": "403",
+  "actual": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challans",
+  "test": "RBAC deny Parent",
+  "expected": "403",
+  "actual": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challans",
+  "test": "RBAC deny SuperAdmin",
+  "expected": "403",
+  "actual": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "challans",
+  "test": "GET nonexistent",
+  "expected": "404",
+  "actual": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challans",
+  "test": "DELETE",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challans",
+  "test": "DB cleanup verified",
+  "expected": "removed",
+  "actual": "hard-deleted",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "challans",
+  "test": "double delete",
+  "expected": "404",
+  "actual": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "teacher-assignments",
+  "test": "POST create",
+  "expected": "201",
+  "actual": 201,
+  "pass": true,
+  "note": "id=41"
+ },
+ {
+  "mod": "teacher-assignments",
+  "test": "DB row exists after create",
+  "expected": "found",
+  "actual": "found",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "teacher-assignments",
+  "test": "GET by id",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "teacher-assignments",
+  "test": "PUT update",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "teacher-assignments",
+  "test": "DB verify subject_id=3",
+  "expected": 3,
+  "actual": "3",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "teacher-assignments",
+  "test": "POST empty body",
+  "expected": "400",
+  "actual": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "teacher-assignments",
+  "test": "RBAC allow Admin",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "teacher-assignments",
+  "test": "RBAC deny Teacher",
+  "expected": "403",
+  "actual": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "teacher-assignments",
+  "test": "RBAC deny Student",
+  "expected": "403",
+  "actual": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "teacher-assignments",
+  "test": "RBAC deny Parent",
+  "expected": "403",
+  "actual": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "teacher-assignments",
+  "test": "RBAC deny SuperAdmin",
+  "expected": "403",
+  "actual": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "teacher-assignments",
+  "test": "GET nonexistent",
+  "expected": "404",
+  "actual": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "teacher-assignments",
+  "test": "DELETE",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "teacher-assignments",
+  "test": "DB cleanup verified",
+  "expected": "removed",
+  "actual": "hard-deleted",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "teacher-assignments",
+  "test": "double delete",
+  "expected": "404",
+  "actual": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-structures",
+  "test": "POST create",
+  "expected": "201",
+  "actual": 201,
+  "pass": true,
+  "note": "id=127"
+ },
+ {
+  "mod": "fee-structures",
+  "test": "DB row exists after create",
+  "expected": "found",
+  "actual": "found",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-structures",
+  "test": "GET by id",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-structures",
+  "test": "PUT update",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-structures",
+  "test": "DB verify amount=4444.00",
+  "expected": "4444.00",
+  "actual": "4444.00",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-structures",
+  "test": "POST empty body",
+  "expected": "400",
+  "actual": 500,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "fee-structures",
+  "test": "RBAC allow Admin",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-structures",
+  "test": "RBAC deny Teacher",
+  "expected": "403",
+  "actual": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-structures",
+  "test": "RBAC deny Student",
+  "expected": "403",
+  "actual": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-structures",
+  "test": "RBAC deny Parent",
+  "expected": "403",
+  "actual": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-structures",
+  "test": "RBAC deny SuperAdmin",
+  "expected": "403",
+  "actual": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "fee-structures",
+  "test": "GET nonexistent",
+  "expected": "404",
+  "actual": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-structures",
+  "test": "DELETE",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-structures",
+  "test": "DB cleanup verified",
+  "expected": "removed",
+  "actual": "hard-deleted",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "fee-structures",
+  "test": "double delete",
+  "expected": "404",
+  "actual": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "subjects",
+  "test": "POST create",
+  "expected": "201",
+  "actual": 500,
+  "pass": false,
+  "note": "{\"success\":false,\"message\":\"Subject name already exists\"}"
+ },
+ {
+  "mod": "timetables",
+  "test": "POST create",
+  "expected": "201",
+  "actual": 201,
+  "pass": true,
+  "note": "id=94"
+ },
+ {
+  "mod": "timetables",
+  "test": "DB row exists after create",
+  "expected": "found",
+  "actual": "found",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "timetables",
+  "test": "GET by id",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "timetables",
+  "test": "PUT update",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "timetables",
+  "test": "DB verify day_of_week=Saturday",
+  "expected": "Saturday",
+  "actual": "Saturday",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "timetables",
+  "test": "POST empty body",
+  "expected": "400",
+  "actual": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "timetables",
+  "test": "RBAC allow Admin",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "timetables",
+  "test": "RBAC deny Student",
+  "expected": "403",
+  "actual": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "timetables",
+  "test": "RBAC deny Parent",
+  "expected": "403",
+  "actual": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "timetables",
+  "test": "RBAC deny SuperAdmin",
+  "expected": "403",
+  "actual": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "timetables",
+  "test": "GET nonexistent",
+  "expected": "404",
+  "actual": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "timetables",
+  "test": "DELETE",
+  "expected": "200",
+  "actual": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "timetables",
+  "test": "DB cleanup verified",
+  "expected": "removed",
+  "actual": "hard-deleted",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "timetables",
+  "test": "double delete",
+  "expected": "404",
+  "actual": 404,
+  "pass": true,
+  "note": ""
+ }
+]

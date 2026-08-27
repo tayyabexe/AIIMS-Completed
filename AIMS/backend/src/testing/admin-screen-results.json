@@ -1,0 +1,962 @@
+{
+  "ranAt": "2026-08-15T07:52:55.807Z",
+  "passed": 202,
+  "total": 202,
+  "results": [
+    {
+      "name": "routing: 200 from /api/admin/fees",
+      "passed": true,
+      "detail": "status=200"
+    },
+    {
+      "name": "routing: envelope carries `rows`",
+      "passed": true
+    },
+    {
+      "name": "routing: envelope carries `pagination`",
+      "passed": true
+    },
+    {
+      "name": "routing: envelope carries `totals`",
+      "passed": true
+    },
+    {
+      "name": "routing: envelope carries `distribution`",
+      "passed": true
+    },
+    {
+      "name": "routing: envelope carries `monthlyCollection`",
+      "passed": true
+    },
+    {
+      "name": "routing: envelope carries `options`",
+      "passed": true
+    },
+    {
+      "name": "authenticity: totals.billed matches SUM(total_payable)",
+      "passed": true,
+      "detail": "api=187637160.08 db=187637160.08"
+    },
+    {
+      "name": "authenticity: totals.collected matches SUM(amount_paid)",
+      "passed": true,
+      "detail": "api=108294753.74 db=108294753.74"
+    },
+    {
+      "name": "authenticity: totals.outstanding matches SUM(remaining_balance)",
+      "passed": true,
+      "detail": "api=79342406.34 db=79342406.34"
+    },
+    {
+      "name": "authenticity: totals.studentsBilled matches COUNT(DISTINCT student)",
+      "passed": true,
+      "detail": "api=2000 db=2000"
+    },
+    {
+      "name": "authenticity: totals.paid matches DB",
+      "passed": true,
+      "detail": "api=825 db=825"
+    },
+    {
+      "name": "authenticity: totals.partial matches DB",
+      "passed": true,
+      "detail": "api=787 db=787"
+    },
+    {
+      "name": "authenticity: totals.unpaid matches DB",
+      "passed": true,
+      "detail": "api=3 db=3"
+    },
+    {
+      "name": "authenticity: totals.overdue matches DB",
+      "passed": true,
+      "detail": "api=385 db=385"
+    },
+    {
+      "name": "consistency: status chips sum to studentsBilled",
+      "passed": true,
+      "detail": "api=2000 db=2000"
+    },
+    {
+      "name": "authenticity: row.regNo (student 1)",
+      "passed": true,
+      "detail": "api=2023-AIMS-REG-0001 db=2023-AIMS-REG-0001"
+    },
+    {
+      "name": "authenticity: row.name",
+      "passed": true,
+      "detail": "api=Amna Malik db=Amna Malik"
+    },
+    {
+      "name": "authenticity: row.program",
+      "passed": true,
+      "detail": "api=BS Electrical Engineering db=BS Electrical Engineering"
+    },
+    {
+      "name": "authenticity: row.batch (rendered in the new Batch column)",
+      "passed": true,
+      "detail": "api=BSEE-2022 db=BSEE-2022"
+    },
+    {
+      "name": "authenticity: row.feeAmount",
+      "passed": true,
+      "detail": "api=0.08 db=0.08"
+    },
+    {
+      "name": "authenticity: row.paidAmount",
+      "passed": true,
+      "detail": "api=0 db=0.00"
+    },
+    {
+      "name": "authenticity: row.remainingBalance (new Balance Due column)",
+      "passed": true,
+      "detail": "api=0.08 db=0.08"
+    },
+    {
+      "name": "liveness: every feeStatus is one the UI has a style for",
+      "passed": true,
+      "detail": "seen=[Unpaid,Overdue,Paid]"
+    },
+    {
+      "name": "liveness: 'Pending' is never emitted (the value the UI used to test)",
+      "passed": true,
+      "detail": "seen=[Unpaid,Overdue,Paid]"
+    },
+    {
+      "name": "liveness: program filter narrows the roster",
+      "passed": true,
+      "detail": "filtered=408 all=2003"
+    },
+    {
+      "name": "liveness: program filter narrows totals.billed too (was frozen institute-wide)",
+      "passed": true,
+      "detail": "filtered=37970925 all=187637160.08"
+    },
+    {
+      "name": "authenticity: filtered totals.billed matches SQL for that programme",
+      "passed": true,
+      "detail": "api=37970925 db=37970925.00"
+    },
+    {
+      "name": "authenticity: monthlyCollection payment count matches verified rows",
+      "passed": true,
+      "detail": "api=1909 db=1909"
+    },
+    {
+      "name": "authenticity: monthlyCollection sums to verified money",
+      "passed": true,
+      "detail": "api=108396634.6 db=108396634.60"
+    },
+    {
+      "name": "liveness: monthlyCollection rows carry a `payments` count (now shown in the tooltip)",
+      "passed": true
+    },
+    {
+      "name": "authenticity: distribution category count matches fee_structures",
+      "passed": true,
+      "detail": "api=4 db=4"
+    },
+    {
+      "name": "authenticity: schedule amount for Tuition Fee",
+      "passed": true,
+      "detail": "api=3419000 db=3419000.00"
+    },
+    {
+      "name": "authenticity: schedule amount for Laboratory Fee",
+      "passed": true,
+      "detail": "api=240000 db=240000.00"
+    },
+    {
+      "name": "authenticity: schedule amount for Examination Fee",
+      "passed": true,
+      "detail": "api=200000 db=200000.00"
+    },
+    {
+      "name": "authenticity: schedule amount for Library Fee",
+      "passed": true,
+      "detail": "api=3500 db=3500.00"
+    },
+    {
+      "name": "routing: 200 from /api/admin/examination",
+      "passed": true,
+      "detail": "status=200"
+    },
+    {
+      "name": "routing: envelope carries `rows`",
+      "passed": true
+    },
+    {
+      "name": "routing: envelope carries `pagination`",
+      "passed": true
+    },
+    {
+      "name": "routing: envelope carries `summary`",
+      "passed": true
+    },
+    {
+      "name": "routing: envelope carries `gradeDistribution`",
+      "passed": true
+    },
+    {
+      "name": "routing: envelope carries `byProgram`",
+      "passed": true
+    },
+    {
+      "name": "routing: envelope carries `recentExams`",
+      "passed": true
+    },
+    {
+      "name": "routing: envelope carries `gradingScale`",
+      "passed": true
+    },
+    {
+      "name": "routing: envelope carries `options`",
+      "passed": true
+    },
+    {
+      "name": "authenticity: summary.scored matches students with graded sittings",
+      "passed": true,
+      "detail": "api=2000 db=2000"
+    },
+    {
+      "name": "authenticity: summary.averageScore matches AVG(pct)",
+      "passed": true,
+      "detail": "api=61 db=61.0"
+    },
+    {
+      "name": "authenticity: summary.withCgpa matches students with a result",
+      "passed": true,
+      "detail": "api=2000 db=2000"
+    },
+    {
+      "name": "authenticity: summary.passed matches CGPA >= 2.5",
+      "passed": true,
+      "detail": "api=1373 db=1373"
+    },
+    {
+      "name": "authenticity: summary.failed is withCgpa - passed",
+      "passed": true,
+      "detail": "api=627 db=627"
+    },
+    {
+      "name": "authenticity: summary.distinction matches pct >= 80",
+      "passed": true,
+      "detail": "api=0 db=0"
+    },
+    {
+      "name": "consistency: passRate equals passed/withCgpa (tile caption's denominator)",
+      "passed": true,
+      "detail": "api=68.7 db=68.7"
+    },
+    {
+      "name": "authenticity: gradingScale band count matches `grades` table",
+      "passed": true,
+      "detail": "api=5 db=5"
+    },
+    {
+      "name": "liveness: gradingScale is the institute's own ladder, not a hardcoded 12-band one",
+      "passed": true,
+      "detail": "api=[A,B,C,D,F] db=[A,B,C,D,F]"
+    },
+    {
+      "name": "consistency: gradeDistribution sums to summary.scored (the chart's real header)",
+      "passed": true,
+      "detail": "api=2000 db=2000"
+    },
+    {
+      "name": "liveness: byProgram.avgScore is a CGPA (0-4), not a percentage — the UI now labels it Avg. CGPA",
+      "passed": true,
+      "detail": "values=[2.96,2.26,3.03,3.03,3.02]"
+    },
+    {
+      "name": "authenticity: byProgram students for BBA Honors",
+      "passed": true,
+      "detail": "api=405 db=405"
+    },
+    {
+      "name": "authenticity: byProgram avg CGPA for BBA Honors",
+      "passed": true,
+      "detail": "api=2.96 db=2.96"
+    },
+    {
+      "name": "liveness: recentExams is populated (was fetched and discarded)",
+      "passed": true,
+      "detail": "count=15"
+    },
+    {
+      "name": "authenticity: recentExams[0].name (exam 60)",
+      "passed": true,
+      "detail": "api=Assignment 1 db=Assignment 1"
+    },
+    {
+      "name": "authenticity: recentExams[0].type",
+      "passed": true,
+      "detail": "api=Assignment db=Assignment"
+    },
+    {
+      "name": "authenticity: recentExams[0].totalMarks",
+      "passed": true,
+      "detail": "api=25 db=25"
+    },
+    {
+      "name": "authenticity: recentExams[0].subjectCode",
+      "passed": true,
+      "detail": "api=DS-405 db=DS-405"
+    },
+    {
+      "name": "authenticity: recentExams[0].marksEntered",
+      "passed": true,
+      "detail": "api=2 db=2"
+    },
+    {
+      "name": "liveness: row carries `cgpa` (all six are rendered now)",
+      "passed": true,
+      "detail": "value=3.83"
+    },
+    {
+      "name": "liveness: row carries `gpa` (all six are rendered now)",
+      "passed": true,
+      "detail": "value=3.9"
+    },
+    {
+      "name": "liveness: row carries `resultStatus` (all six are rendered now)",
+      "passed": true,
+      "detail": "value=Published"
+    },
+    {
+      "name": "liveness: row carries `examScore` (all six are rendered now)",
+      "passed": true,
+      "detail": "value=60.8"
+    },
+    {
+      "name": "liveness: row carries `examGrade` (all six are rendered now)",
+      "passed": true,
+      "detail": "value=C"
+    },
+    {
+      "name": "liveness: row carries `examSittings` (all six are rendered now)",
+      "passed": true,
+      "detail": "value=10"
+    },
+    {
+      "name": "authenticity: row.cgpa (student 1)",
+      "passed": true,
+      "detail": "api=3.83 db=3.83"
+    },
+    {
+      "name": "authenticity: row.gpa",
+      "passed": true,
+      "detail": "api=3.9 db=3.90"
+    },
+    {
+      "name": "authenticity: row.resultStatus",
+      "passed": true,
+      "detail": "api=Published db=Published"
+    },
+    {
+      "name": "liveness: program_id filter is honoured (the new dropdown)",
+      "passed": true,
+      "detail": "filtered=408 all=2003"
+    },
+    {
+      "name": "routing: 200 from /api/admin/parents",
+      "passed": true,
+      "detail": "status=200"
+    },
+    {
+      "name": "routing: envelope carries `rows`",
+      "passed": true
+    },
+    {
+      "name": "routing: envelope carries `pagination`",
+      "passed": true
+    },
+    {
+      "name": "routing: envelope carries `summary`",
+      "passed": true
+    },
+    {
+      "name": "authenticity: pagination.total matches live parents",
+      "passed": true,
+      "detail": "api=2001 db=2001"
+    },
+    {
+      "name": "authenticity: summary.parents (tile 1)",
+      "passed": true,
+      "detail": "api=2001 db=2001"
+    },
+    {
+      "name": "authenticity: summary.multipleChildren (tile 2)",
+      "passed": true,
+      "detail": "api=0 db=0"
+    },
+    {
+      "name": "authenticity: summary.singleChild (tile 3)",
+      "passed": true,
+      "detail": "api=2000 db=2000"
+    },
+    {
+      "name": "authenticity: summary.linkedChildren (tile 4)",
+      "passed": true,
+      "detail": "api=2000 db=2000"
+    },
+    {
+      "name": "authenticity: summary.noChildren",
+      "passed": true,
+      "detail": "api=1 db=1"
+    },
+    {
+      "name": "consistency: tiles 2+3+noChildren partition the parent count",
+      "passed": true,
+      "detail": "0+2000+1 vs 2001"
+    },
+    {
+      "name": "fixture: a guardian with a live ward exists to test against",
+      "passed": true
+    },
+    {
+      "name": "authenticity: row.name (parent 2)",
+      "passed": true,
+      "detail": "api=Zoya Sheikh db=Zoya Sheikh"
+    },
+    {
+      "name": "authenticity: row.email",
+      "passed": true,
+      "detail": "api=parent2@aims.edu.pk db=parent2@aims.edu.pk"
+    },
+    {
+      "name": "authenticity: row.phone",
+      "passed": true,
+      "detail": "api=+92-320-3014549 db=+92-320-3014549"
+    },
+    {
+      "name": "authenticity: row.occupation (now rendered on the card)",
+      "passed": true,
+      "detail": "api=Shopkeeper db=Shopkeeper"
+    },
+    {
+      "name": "liveness: row.firstName is sent, so the edit form need not split the name",
+      "passed": true,
+      "detail": "api=Zoya db=Zoya"
+    },
+    {
+      "name": "liveness: row.lastName is sent",
+      "passed": true,
+      "detail": "api=Sheikh db=Sheikh"
+    },
+    {
+      "name": "authenticity: child count matches student_guardians",
+      "passed": true,
+      "detail": "api=1 db=1"
+    },
+    {
+      "name": "coverage: the guardian under test has at least one child",
+      "passed": true,
+      "detail": "children=1"
+    },
+    {
+      "name": "authenticity: child.regNo",
+      "passed": true,
+      "detail": "api=2023-AIMS-REG-0002 db=2023-AIMS-REG-0002"
+    },
+    {
+      "name": "authenticity: child.name",
+      "passed": true,
+      "detail": "api=Ayeza Sajid db=Ayeza Sajid"
+    },
+    {
+      "name": "authenticity: child.program",
+      "passed": true,
+      "detail": "api=BS Computer Science db=BS Computer Science"
+    },
+    {
+      "name": "authenticity: child.status",
+      "passed": true,
+      "detail": "api=Active db=Active"
+    },
+    {
+      "name": "authenticity: child.relationship",
+      "passed": true,
+      "detail": "api=Guardian db=Guardian"
+    },
+    {
+      "name": "liveness: child.avatarBg is NOT sent — avatars must be derived client-side",
+      "passed": true
+    },
+    {
+      "name": "liveness: child.initials is NOT sent — initials must be derived client-side",
+      "passed": true
+    },
+    {
+      "name": "liveness: searching a CHILD's name finds the guardian",
+      "passed": true,
+      "detail": "q=\"Ayeza Sajid\" hits=1"
+    },
+    {
+      "name": "liveness: searching a registration number finds the guardian",
+      "passed": true,
+      "detail": "q=\"2023-AIMS-REG-0002\""
+    },
+    {
+      "name": "routing: 200 from /api/admin/teachers",
+      "passed": true,
+      "detail": "status=200"
+    },
+    {
+      "name": "routing: envelope carries `rows`",
+      "passed": true
+    },
+    {
+      "name": "routing: envelope carries `pagination`",
+      "passed": true
+    },
+    {
+      "name": "routing: envelope carries `departments`",
+      "passed": true
+    },
+    {
+      "name": "routing: envelope carries `subjects`",
+      "passed": true
+    },
+    {
+      "name": "routing: envelope carries `batches`",
+      "passed": true
+    },
+    {
+      "name": "routing: envelope carries `sections`",
+      "passed": true
+    },
+    {
+      "name": "authenticity: row.name (teacher 23)",
+      "passed": true,
+      "detail": "api=Adnan Farooq db=Adnan Farooq"
+    },
+    {
+      "name": "authenticity: row.employeeCode (now shown as a chip)",
+      "passed": true,
+      "detail": "api=EMP-1130 db=EMP-1130"
+    },
+    {
+      "name": "authenticity: row.designation",
+      "passed": true,
+      "detail": "api=Associate Professor db=Associate Professor"
+    },
+    {
+      "name": "authenticity: row.department",
+      "passed": true,
+      "detail": "api=Computer Science db=Computer Science"
+    },
+    {
+      "name": "authenticity: row.specialization (replaces the hardcoded Qualification card)",
+      "passed": true,
+      "detail": "api=Artificial Intelligence & Machine Learning db=Artificial Intelligence & Machine Learning"
+    },
+    {
+      "name": "authenticity: row.employmentStatus",
+      "passed": true,
+      "detail": "api=Active db=Active"
+    },
+    {
+      "name": "authenticity: row.email",
+      "passed": true,
+      "detail": "api=adnan.farooq@aims.edu.pk db=adnan.farooq@aims.edu.pk"
+    },
+    {
+      "name": "liveness: sectionCount is a real number (UI used a hardcoded [] and showed 0)",
+      "passed": true,
+      "detail": "sectionCount=3"
+    },
+    {
+      "name": "liveness: weeklyContactHours is sent (replaces the 'Students: null' tile)",
+      "passed": true,
+      "detail": "hours=4.5"
+    },
+    {
+      "name": "liveness: weeklySessions is sent",
+      "passed": true
+    },
+    {
+      "name": "liveness: hireDate is sent (new Joined card)",
+      "passed": true,
+      "detail": "hireDate=2021-01-03"
+    },
+    {
+      "name": "liveness: the API sends NO student/mentee count — the UI must not claim one",
+      "passed": true
+    },
+    {
+      "name": "liveness: subjects[] carries creditHours (now shown as a `N cr` chip)",
+      "passed": true,
+      "detail": "subjects=3"
+    },
+    {
+      "name": "consistency: subjectCount matches subjects[].length",
+      "passed": true,
+      "detail": "api=3 db=3"
+    },
+    {
+      "name": "authenticity: weeklySessions matches the timetable",
+      "passed": true,
+      "detail": "api=3 db=3"
+    },
+    {
+      "name": "authenticity: sectionCount matches DISTINCT sections on the timetable",
+      "passed": true,
+      "detail": "api=3 db=3"
+    },
+    {
+      "name": "authenticity: subjectCount matches DISTINCT subjects on the timetable",
+      "passed": true,
+      "detail": "api=3 db=3"
+    },
+    {
+      "name": "liveness: profilePicture is sent (the card now renders it)",
+      "passed": true,
+      "detail": "rows with a photo: 5/5"
+    },
+    {
+      "name": "routing: 200 from /api/announcements",
+      "passed": true,
+      "detail": "status=200"
+    },
+    {
+      "name": "routing: envelope carries `data`",
+      "passed": true
+    },
+    {
+      "name": "routing: envelope carries `total`",
+      "passed": true
+    },
+    {
+      "name": "routing: envelope carries `options`",
+      "passed": true
+    },
+    {
+      "name": "authenticity: total matches the announcements table",
+      "passed": true,
+      "detail": "api=14 db=14"
+    },
+    {
+      "name": "liveness: the page is limited (the board used to fetch everything)",
+      "passed": true,
+      "detail": "returned=5"
+    },
+    {
+      "name": "liveness: page 2 returns different rows to page 1",
+      "passed": true,
+      "detail": "overlap=0"
+    },
+    {
+      "name": "authenticity: option list covers every audience present",
+      "passed": true,
+      "detail": "api=4 db=4"
+    },
+    {
+      "name": "authenticity: audience count for Student",
+      "passed": true,
+      "detail": "api=8 db=8"
+    },
+    {
+      "name": "authenticity: audience count for All",
+      "passed": true,
+      "detail": "api=3 db=3"
+    },
+    {
+      "name": "authenticity: audience count for Teacher",
+      "passed": true,
+      "detail": "api=2 db=2"
+    },
+    {
+      "name": "authenticity: audience count for HR",
+      "passed": true,
+      "detail": "api=1 db=1"
+    },
+    {
+      "name": "liveness: every author option resolves to a label, never blank",
+      "passed": true,
+      "detail": "authors=5"
+    },
+    {
+      "name": "liveness: target_role=Student narrows to its count",
+      "passed": true,
+      "detail": "api=8 db=8"
+    },
+    {
+      "name": "liveness: q=\"Spring\" matches title OR body",
+      "passed": true,
+      "detail": "api=2 db=2"
+    },
+    {
+      "name": "liveness: posted_by narrows to that author's count",
+      "passed": true,
+      "detail": "api=5 db=5"
+    },
+    {
+      "name": "liveness: sort=oldest and sort=newest return opposite ends",
+      "passed": true
+    },
+    {
+      "name": "liveness: a from/to window spanning everything returns everything",
+      "passed": true,
+      "detail": "api=14 db=14"
+    },
+    {
+      "name": "routing: 200 from /api/users",
+      "passed": true,
+      "detail": "status=200"
+    },
+    {
+      "name": "routing: envelope carries `data`",
+      "passed": true
+    },
+    {
+      "name": "routing: envelope carries `total`",
+      "passed": true
+    },
+    {
+      "name": "routing: envelope carries `summary`",
+      "passed": true
+    },
+    {
+      "name": "routing: envelope carries `roleCounts`",
+      "passed": true
+    },
+    {
+      "name": "authenticity: summary.accounts",
+      "passed": true,
+      "detail": "api=4047 db=4047"
+    },
+    {
+      "name": "authenticity: summary.neverLoggedIn",
+      "passed": true,
+      "detail": "api=1012 db=1012"
+    },
+    {
+      "name": "authenticity: summary.locked",
+      "passed": true,
+      "detail": "api=316 db=316"
+    },
+    {
+      "name": "authenticity: summary.unverified",
+      "passed": true,
+      "detail": "api=229 db=229"
+    },
+    {
+      "name": "authenticity: summary.mustChangePassword",
+      "passed": true,
+      "detail": "api=1 db=1"
+    },
+    {
+      "name": "authenticity: summary.orphans (logins with no person record)",
+      "passed": true,
+      "detail": "api=12 db=12"
+    },
+    {
+      "name": "authenticity: roleCounts covers every role",
+      "passed": true,
+      "detail": "api=8 db=8"
+    },
+    {
+      "name": "authenticity: account count for Super Admin",
+      "passed": true,
+      "detail": "api=1 db=1"
+    },
+    {
+      "name": "authenticity: account count for Admin",
+      "passed": true,
+      "detail": "api=8 db=8"
+    },
+    {
+      "name": "authenticity: account count for Teacher",
+      "passed": true,
+      "detail": "api=26 db=26"
+    },
+    {
+      "name": "authenticity: account count for Student",
+      "passed": true,
+      "detail": "api=2005 db=2005"
+    },
+    {
+      "name": "authenticity: account count for Parent",
+      "passed": true,
+      "detail": "api=2001 db=2001"
+    },
+    {
+      "name": "authenticity: account count for HR",
+      "passed": true,
+      "detail": "api=2 db=2"
+    },
+    {
+      "name": "authenticity: account count for Accountant",
+      "passed": true,
+      "detail": "api=2 db=2"
+    },
+    {
+      "name": "authenticity: account count for Library Staff",
+      "passed": true,
+      "detail": "api=2 db=2"
+    },
+    {
+      "name": "liveness: row carries `is_active`",
+      "passed": true
+    },
+    {
+      "name": "liveness: row carries `email_verified`",
+      "passed": true
+    },
+    {
+      "name": "liveness: row carries `last_login`",
+      "passed": true
+    },
+    {
+      "name": "liveness: row carries `failed_login_attempts`",
+      "passed": true
+    },
+    {
+      "name": "liveness: row carries `must_change_password`",
+      "passed": true
+    },
+    {
+      "name": "liveness: row carries `last_password_change`",
+      "passed": true
+    },
+    {
+      "name": "liveness: row carries `created_at`",
+      "passed": true
+    },
+    {
+      "name": "liveness: row carries `full_name`",
+      "passed": true
+    },
+    {
+      "name": "liveness: row carries `profile_type`",
+      "passed": true
+    },
+    {
+      "name": "liveness: status=never_logged_in narrows to its real count",
+      "passed": true,
+      "detail": "api=1012 db=1012"
+    },
+    {
+      "name": "liveness: status=locked narrows to its real count",
+      "passed": true,
+      "detail": "api=316 db=316"
+    },
+    {
+      "name": "liveness: status=unverified narrows to its real count",
+      "passed": true,
+      "detail": "api=229 db=229"
+    },
+    {
+      "name": "liveness: status=must_change_password narrows to its real count",
+      "passed": true,
+      "detail": "api=1 db=1"
+    },
+    {
+      "name": "liveness: orphans=only returns exactly the unlinked logins",
+      "passed": true,
+      "detail": "api=12 db=12"
+    },
+    {
+      "name": "liveness: every orphan really has no person record",
+      "passed": true,
+      "detail": "checked=12"
+    },
+    {
+      "name": "liveness: is_active=1 and is_active=true agree (numeric form was read as FALSE)",
+      "passed": true,
+      "detail": "api=4047 db=4047"
+    },
+    {
+      "name": "liveness: sort=last_login&dir=desc puts a real sign-in first, not a null",
+      "passed": true,
+      "detail": "first=2026-12-31T12:25:00.000Z"
+    },
+    {
+      "name": "routing: 200 from /api/admin/reports",
+      "passed": true,
+      "detail": "status=200"
+    },
+    {
+      "name": "authenticity: reports.attendance.average",
+      "passed": true,
+      "detail": "api=88.6 db=88.6"
+    },
+    {
+      "name": "authenticity: reports.attendance.belowThreshold",
+      "passed": true,
+      "detail": "api=29 db=29"
+    },
+    {
+      "name": "routing: 200 from the export",
+      "passed": true,
+      "detail": "status=200"
+    },
+    {
+      "name": "liveness: export carries `attendance` (the PDFs report on it)",
+      "passed": true
+    },
+    {
+      "name": "liveness: export carries `feeStatus` (the PDFs report on it)",
+      "passed": true
+    },
+    {
+      "name": "liveness: export carries `feeAmount` (the PDFs report on it)",
+      "passed": true
+    },
+    {
+      "name": "liveness: export carries `paidAmount` (the PDFs report on it)",
+      "passed": true
+    },
+    {
+      "name": "liveness: export carries `remainingBalance` (the PDFs report on it)",
+      "passed": true
+    },
+    {
+      "name": "liveness: export carries `cgpa` (the PDFs report on it)",
+      "passed": true
+    },
+    {
+      "name": "liveness: export carries `gpa` (the PDFs report on it)",
+      "passed": true
+    },
+    {
+      "name": "liveness: export carries `examScore` (the PDFs report on it)",
+      "passed": true
+    },
+    {
+      "name": "authenticity: export attendance coverage matches the database",
+      "passed": true,
+      "detail": "api=2000 db=2000"
+    },
+    {
+      "name": "authenticity: students below 75% in the export match the aggregate",
+      "passed": true,
+      "detail": "api=29 db=29"
+    },
+    {
+      "name": "liveness: NOT every student is below 75% (the old report listed all of them)",
+      "passed": true,
+      "detail": "29 of 2003"
+    },
+    {
+      "name": "authenticity: the Fee PDF's collected total matches the ledger",
+      "passed": true,
+      "detail": "api=108294753.74000002 db=108294753.74"
+    },
+    {
+      "name": "liveness: the Fee PDF no longer totals Rs 0",
+      "passed": true,
+      "detail": "Rs 108294753.74"
+    },
+    {
+      "name": "liveness: export fee statuses are the four the PDF now buckets by",
+      "passed": true,
+      "detail": "seen=[Unpaid,Overdue,Paid,Partial]"
+    },
+    {
+      "name": "liveness: 'Pending' is never emitted (the bucket the PDF used to filter on)",
+      "passed": true
+    }
+  ]
+}

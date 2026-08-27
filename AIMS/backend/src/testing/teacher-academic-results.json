@@ -1,0 +1,2360 @@
+[
+ {
+  "mod": "tchr-assign",
+  "ep": "GET /teacher-assignments",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "GET /teacher-assignments",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "GET /teacher-assignments",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "GET /teacher-assignments",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "GET /teacher-assignments",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "GET /teacher-assignments",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "GET /teacher-assignments",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "GET /teacher-assignments",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "GET /teacher-assignments",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "GET /teacher-assignments",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "GET /teacher-assignments/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "GET /teacher-assignments/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "GET /teacher-assignments/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "GET /teacher-assignments/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "GET /teacher-assignments/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "GET /teacher-assignments/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "GET /teacher-assignments/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "GET /teacher-assignments/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "GET /teacher-assignments/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "GET /teacher-assignments/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "PUT /teacher-assignments/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 404,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "PUT /teacher-assignments/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "PUT /teacher-assignments/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "PUT /teacher-assignments/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "PUT /teacher-assignments/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "PUT /teacher-assignments/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "PUT /teacher-assignments/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "PUT /teacher-assignments/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "PUT /teacher-assignments/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "PUT /teacher-assignments/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "DELETE /teacher-assignments/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 404,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "DELETE /teacher-assignments/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "DELETE /teacher-assignments/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "DELETE /teacher-assignments/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "DELETE /teacher-assignments/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "DELETE /teacher-assignments/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "DELETE /teacher-assignments/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "DELETE /teacher-assignments/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "DELETE /teacher-assignments/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "DELETE /teacher-assignments/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "POST /teacher-assignments",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 201,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "POST /teacher-assignments",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 201,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "POST /teacher-assignments",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "POST /teacher-assignments",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "POST /teacher-assignments",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "POST /teacher-assignments",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "POST /teacher-assignments",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "POST /teacher-assignments",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "POST /teacher-assignments",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "POST /teacher-assignments",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "POST /teacher-assignments",
+  "test": "DB row created",
+  "exp": "found",
+  "got": "found",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "PUT /teacher-assignments/:id",
+  "test": "update",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "PUT /teacher-assignments/:id",
+  "test": "DB section persisted",
+  "exp": 2,
+  "got": 2,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "POST /teacher-assignments",
+  "test": "empty body",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "POST /teacher-assignments",
+  "test": "nonexistent teacher_id",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-assign",
+  "ep": "POST /teacher-assignments",
+  "test": "teacher_id as string",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "GET /teacher-profiles",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "GET /teacher-profiles",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "GET /teacher-profiles",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "GET /teacher-profiles",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "GET /teacher-profiles",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "GET /teacher-profiles",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "GET /teacher-profiles",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "GET /teacher-profiles",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "GET /teacher-profiles",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "GET /teacher-profiles",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "GET /teacher-profiles/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "GET /teacher-profiles/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "GET /teacher-profiles/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "GET /teacher-profiles/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "GET /teacher-profiles/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "GET /teacher-profiles/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "GET /teacher-profiles/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "GET /teacher-profiles/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "GET /teacher-profiles/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "GET /teacher-profiles/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "PUT /teacher-profiles/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 404,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "PUT /teacher-profiles/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "PUT /teacher-profiles/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "PUT /teacher-profiles/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "PUT /teacher-profiles/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "PUT /teacher-profiles/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "PUT /teacher-profiles/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "PUT /teacher-profiles/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "PUT /teacher-profiles/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "PUT /teacher-profiles/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "DELETE /teacher-profiles/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 404,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "DELETE /teacher-profiles/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "DELETE /teacher-profiles/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "DELETE /teacher-profiles/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "DELETE /teacher-profiles/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "DELETE /teacher-profiles/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "DELETE /teacher-profiles/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "DELETE /teacher-profiles/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "DELETE /teacher-profiles/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "DELETE /teacher-profiles/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "POST /teacher-profiles",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 400,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "POST /teacher-profiles",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "POST /teacher-profiles",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "POST /teacher-profiles",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "POST /teacher-profiles",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "POST /teacher-profiles",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "POST /teacher-profiles",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "POST /teacher-profiles",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "POST /teacher-profiles",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "POST /teacher-profiles",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "POST /teacher-profiles",
+  "test": "create",
+  "exp": 201,
+  "got": 201,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "POST /teacher-profiles",
+  "test": "DB qualification",
+  "exp": "MS Testing",
+  "got": "MS Testing",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "PUT /teacher-profiles/:id",
+  "test": "update",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "PUT /teacher-profiles/:id",
+  "test": "DB persisted",
+  "exp": "PhD Testing",
+  "got": "PhD Testing",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "DELETE /teacher-profiles/:id",
+  "test": "delete",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "DELETE /teacher-profiles/:id",
+  "test": "DB row removed",
+  "exp": 0,
+  "got": 0,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-profile",
+  "ep": "POST /teacher-profiles",
+  "test": "empty body",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-dash",
+  "ep": "GET /teacher-dashboard/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "tchr-dash",
+  "ep": "GET /teacher-dashboard/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-dash",
+  "ep": "GET /teacher-dashboard/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "tchr-dash",
+  "ep": "GET /teacher-dashboard/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-dash",
+  "ep": "GET /teacher-dashboard/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-dash",
+  "ep": "GET /teacher-dashboard/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-dash",
+  "ep": "GET /teacher-dashboard/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-dash",
+  "ep": "GET /teacher-dashboard/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-dash",
+  "ep": "GET /teacher-dashboard/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-dash",
+  "ep": "GET /teacher-dashboard/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-dash",
+  "ep": "GET /teacher-dashboard/:id",
+  "test": "returns 200",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-dash",
+  "ep": "GET /teacher-dashboard/:id",
+  "test": "payload has teacher",
+  "exp": "yes",
+  "got": "yes",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-dash",
+  "ep": "GET /teacher-dashboard/:id",
+  "test": "teacher_id matches",
+  "exp": 1,
+  "got": 1,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-dash",
+  "ep": "GET /teacher-dashboard/:id",
+  "test": "nonexistent",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "GET /teacher-schedules",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "GET /teacher-schedules",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "GET /teacher-schedules",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "GET /teacher-schedules",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "GET /teacher-schedules",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "GET /teacher-schedules",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "GET /teacher-schedules",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "GET /teacher-schedules",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "GET /teacher-schedules",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "GET /teacher-schedules",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "GET /teacher-schedules/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "GET /teacher-schedules/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "GET /teacher-schedules/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "GET /teacher-schedules/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "GET /teacher-schedules/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "GET /teacher-schedules/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "GET /teacher-schedules/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "GET /teacher-schedules/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "GET /teacher-schedules/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "GET /teacher-schedules/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "PUT /teacher-schedules/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 404,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "PUT /teacher-schedules/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "PUT /teacher-schedules/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "PUT /teacher-schedules/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "PUT /teacher-schedules/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "PUT /teacher-schedules/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "PUT /teacher-schedules/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "PUT /teacher-schedules/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "PUT /teacher-schedules/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "PUT /teacher-schedules/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "DELETE /teacher-schedules/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 404,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "DELETE /teacher-schedules/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "DELETE /teacher-schedules/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "DELETE /teacher-schedules/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "DELETE /teacher-schedules/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "DELETE /teacher-schedules/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "DELETE /teacher-schedules/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "DELETE /teacher-schedules/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "DELETE /teacher-schedules/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "DELETE /teacher-schedules/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "POST /teacher-schedules",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 201,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "POST /teacher-schedules",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 201,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "POST /teacher-schedules",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "POST /teacher-schedules",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "POST /teacher-schedules",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "POST /teacher-schedules",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "POST /teacher-schedules",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "POST /teacher-schedules",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "POST /teacher-schedules",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "POST /teacher-schedules",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "POST /teacher-schedules",
+  "test": "DB row created",
+  "exp": "found",
+  "got": "found",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "PUT /teacher-schedules/:id",
+  "test": "update",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "PUT /teacher-schedules/:id",
+  "test": "DB day=Saturday",
+  "exp": "Saturday",
+  "got": "Saturday",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "DELETE /teacher-schedules/:id",
+  "test": "delete",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "DELETE /teacher-schedules/:id",
+  "test": "DB row removed",
+  "exp": 0,
+  "got": 0,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "DELETE /teacher-schedules/:id",
+  "test": "double delete",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "POST /teacher-schedules",
+  "test": "empty body",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "POST /teacher-schedules",
+  "test": "end before start",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "tchr-sched",
+  "ep": "POST /teacher-schedules",
+  "test": "nonexistent teacher_id",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "cgpa",
+  "ep": "GET /results/cgpa/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "cgpa",
+  "ep": "GET /results/cgpa/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "cgpa",
+  "ep": "GET /results/cgpa/:id",
+  "test": "role 3 Teacher",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "cgpa",
+  "ep": "GET /results/cgpa/:id",
+  "test": "role 4 Student",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "cgpa",
+  "ep": "GET /results/cgpa/:id",
+  "test": "role 5 Parent",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "cgpa",
+  "ep": "GET /results/cgpa/:id",
+  "test": "role 6 HR",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "cgpa",
+  "ep": "GET /results/cgpa/:id",
+  "test": "role 7 Accountant",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "cgpa",
+  "ep": "GET /results/cgpa/:id",
+  "test": "role 8 Library",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "cgpa",
+  "ep": "GET /results/cgpa/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "cgpa",
+  "ep": "GET /results/cgpa/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "cgpa",
+  "ep": "GET /results/cgpa/:id",
+  "test": "returns 200",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "cgpa",
+  "ep": "GET /results/cgpa/:id",
+  "test": "CGPA matches DB",
+  "exp": "3.83",
+  "got": "3.83",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "cgpa",
+  "ep": "GET /results/cgpa/:id",
+  "test": "nonexistent student",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "cgpa",
+  "ep": "GET /results/transcript/:id",
+  "test": "transcript 200",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "exam",
+  "ep": "GET /api/exams/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "exam",
+  "ep": "GET /api/exams/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "exam",
+  "ep": "GET /api/exams/:id",
+  "test": "role 3 Teacher",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "exam",
+  "ep": "GET /api/exams/:id",
+  "test": "role 4 Student",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "exam",
+  "ep": "GET /api/exams/:id",
+  "test": "role 5 Parent",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "exam",
+  "ep": "GET /api/exams/:id",
+  "test": "role 6 HR",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "exam",
+  "ep": "GET /api/exams/:id",
+  "test": "role 7 Accountant",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "exam",
+  "ep": "GET /api/exams/:id",
+  "test": "role 8 Library",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "exam",
+  "ep": "GET /api/exams/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "exam",
+  "ep": "GET /api/exams/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "exam",
+  "ep": "GET /api/exams/:id",
+  "test": "returns 200",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "exam",
+  "ep": "GET /api/exams/:id",
+  "test": "exam_name matches DB",
+  "exp": "Final Examination",
+  "got": "Final Examination",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "exam",
+  "ep": "GET /api/exams/:id",
+  "test": "total_marks matches DB",
+  "exp": 100,
+  "got": 100,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "exam",
+  "ep": "GET /api/exams/:id",
+  "test": "nonexistent",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "exam",
+  "ep": "GET /api/exams/:id",
+  "test": "non-numeric id",
+  "exp": 400,
+  "got": 404,
+  "pass": true,
+  "note": "got 404"
+ },
+ {
+  "mod": "marks",
+  "ep": "GET /marks/student/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "marks",
+  "ep": "GET /marks/student/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "marks",
+  "ep": "GET /marks/student/:id",
+  "test": "role 3 Teacher",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "marks",
+  "ep": "GET /marks/student/:id",
+  "test": "role 4 Student",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "marks",
+  "ep": "GET /marks/student/:id",
+  "test": "role 5 Parent",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "marks",
+  "ep": "GET /marks/student/:id",
+  "test": "role 6 HR",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "marks",
+  "ep": "GET /marks/student/:id",
+  "test": "role 7 Accountant",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "marks",
+  "ep": "GET /marks/student/:id",
+  "test": "role 8 Library",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "marks",
+  "ep": "GET /marks/student/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "marks",
+  "ep": "GET /marks/student/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "marks",
+  "ep": "GET /marks/student/:id",
+  "test": "returns 200",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "marks",
+  "ep": "GET /marks/student/:id",
+  "test": "count matches DB",
+  "exp": 10,
+  "got": 10,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "marks",
+  "ep": "GET /marks/student/:id",
+  "test": "unknown student",
+  "exp": "200/404",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/student/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/student/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/student/:id",
+  "test": "role 3 Teacher",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/student/:id",
+  "test": "role 4 Student",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/student/:id",
+  "test": "role 5 Parent",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/student/:id",
+  "test": "role 6 HR",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/student/:id",
+  "test": "role 7 Accountant",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/student/:id",
+  "test": "role 8 Library",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/student/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/student/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/report/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/report/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/report/:id",
+  "test": "role 3 Teacher",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/report/:id",
+  "test": "role 4 Student",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/report/:id",
+  "test": "role 5 Parent",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/report/:id",
+  "test": "role 6 HR",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/report/:id",
+  "test": "role 7 Accountant",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/report/:id",
+  "test": "role 8 Library",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/report/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/report/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/percentage/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/percentage/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/percentage/:id",
+  "test": "role 3 Teacher",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/percentage/:id",
+  "test": "role 4 Student",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/percentage/:id",
+  "test": "role 5 Parent",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/percentage/:id",
+  "test": "role 6 HR",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/percentage/:id",
+  "test": "role 7 Accountant",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/percentage/:id",
+  "test": "role 8 Library",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/percentage/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/percentage/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/student/:id",
+  "test": "count matches DB",
+  "exp": 31,
+  "got": 31,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/report/:id",
+  "test": "total matches DB",
+  "exp": 31,
+  "got": 31,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/report/:id",
+  "test": "present matches DB",
+  "exp": "24",
+  "got": 24,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "mod": "attendance",
+  "ep": "GET /attendance/percentage/:id",
+  "test": "percentage matches DB",
+  "exp": "77.42%",
+  "got": "77.42%",
+  "pass": true,
+  "note": ""
+ }
+]

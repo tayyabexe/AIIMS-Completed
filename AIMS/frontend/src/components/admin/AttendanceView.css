@@ -1,0 +1,889 @@
+/* ══════════════════════════════════════════════════════════════════════════
+ * Admin › Attendance
+ *
+ * WHY THIS FILE EXISTS
+ * --------------------
+ * The screen was 855 lines of JSX carrying its entire design as inline style
+ * objects. Inline styles cannot express the three things this screen actually
+ * needed:
+ *
+ *   1. A media query. Every card was full-width at every viewport, so a 10px
+ *      proportion bar spanned 1,300px on a wide monitor while the table it sat
+ *      above had to scroll.
+ *   2. A hidden scrollbar. `overflowX: 'auto'` puts a grey trough under the
+ *      chart on every platform that shows one.
+ *   3. `:hover`, `:focus-visible` and `::-webkit-scrollbar`. The old file
+ *      emulated hover with `onMouseEnter`/`onMouseLeave` and a useState per
+ *      cohort tile and per table row — a re-render of the whole tile on every
+ *      pointer move across it, and no focus ring at all for anyone using a
+ *      keyboard.
+ *
+ * The palette is unchanged: cool neutrals on a slate canvas, hairline borders,
+ * one accent (the institute crimson) spent only on selection, and status
+ * colour only where it means something.
+ * ══════════════════════════════════════════════════════════════════════════ */
+
+.att {
+  /* ── canvas + ink ── */
+  --att-bg: #f8fafc;
+  --att-card: #ffffff;
+  --att-border: #e2e8f0;
+  --att-border-soft: #f1f5f9;
+  --att-track: #f1f5f9;
+  --att-hover: #f8fafc;
+
+  --att-ink: #0f172a;
+  --att-ink-2: #475569;
+  --att-ink-3: #64748b;
+  --att-ink-4: #94a3b8;
+
+  --att-accent: #991b1b;
+  --att-accent-wash: #fef2f2;
+  --att-accent-edge: #fecaca;
+
+  --att-ok: #059669;
+  --att-ok-soft: #34d399;
+  --att-ok-wash: #ecfdf5;
+  --att-warn: #d97706;
+  --att-warn-wash: #fffbeb;
+  --att-bad: #dc2626;
+  --att-bad-wash: #fef2f2;
+
+  --att-font: 'Inter', system-ui, -apple-system, sans-serif;
+  --att-ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --att-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+  --att-shadow-lift: 0 4px 12px -2px rgba(15, 23, 42, 0.1), 0 2px 4px -2px rgba(15, 23, 42, 0.06);
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: var(--att-font);
+  background-color: var(--att-bg);
+  /* Bleeds past the shell's padding so the screen owns its canvas. */
+  margin: -1.5rem -2rem;
+  padding: 1.5rem 2rem 2.5rem;
+  min-height: calc(100vh - 180px);
+}
+
+/* ── type scale: a 1.25 ratio off 13px — 11 · 13 · 15 · 20 · 30.
+   Hierarchy leans on weight and ink as much as on size. ── */
+.att-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--att-ink-3);
+  margin: 0;
+}
+
+.att-figure {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--att-ink);
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+
+.att-heading {
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--att-ink);
+  margin: 0;
+}
+
+.att-body {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--att-ink-2);
+  margin: 0;
+}
+
+.att-meta {
+  font-size: 12px;
+  color: var(--att-ink-3);
+  margin: 0;
+}
+
+.att-micro {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--att-ink-4);
+  margin: 0;
+}
+
+.att-num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── card ── */
+.att-card {
+  background-color: var(--att-card);
+  border: 1px solid var(--att-border);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: var(--att-shadow);
+}
+
+/* ── header ── */
+.att-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.att-title {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--att-ink);
+  margin: 0;
+  line-height: 1.15;
+}
+
+.att-intro {
+  margin-top: 6px;
+  text-wrap: pretty;
+  max-width: 64ch;
+}
+
+.att-intro strong {
+  color: var(--att-ink);
+  font-weight: 600;
+}
+
+.att-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.att-control {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--att-ink);
+  padding: 8px 12px;
+  border-radius: 9px;
+  border: 1px solid var(--att-border);
+  background-color: var(--att-card);
+  cursor: pointer;
+  box-shadow: var(--att-shadow);
+  transition: border-color 150ms var(--att-ease), background-color 150ms var(--att-ease);
+}
+
+.att-control.on {
+  border-color: var(--att-accent-edge);
+  background-color: var(--att-accent-wash);
+}
+
+.att-control:focus-visible,
+.att-tile:focus-visible,
+.att-bar:focus-visible,
+.att-zoom-btn:focus-visible,
+.att-row:focus-visible {
+  outline: 2px solid var(--att-accent);
+  outline-offset: 2px;
+}
+
+.att-period-select {
+  min-width: 210px;
+}
+
+.att-error {
+  border-color: var(--att-accent-edge);
+  background-color: var(--att-accent-wash);
+}
+
+.att-error .att-heading {
+  color: var(--att-accent);
+}
+
+/* ── cohort tiles ── */
+.att-cohorts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(236px, 1fr));
+  gap: 16px;
+}
+
+.att-tile {
+  text-align: left;
+  width: 100%;
+  font: inherit;
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition:
+    transform 180ms var(--att-ease),
+    box-shadow 180ms var(--att-ease),
+    background-color 150ms var(--att-ease),
+    border-color 150ms var(--att-ease);
+}
+
+.att-tile.interactive {
+  cursor: pointer;
+}
+
+/* Hover was a useState per tile, re-rendering the whole card on every pointer
+   move. It is a pseudo-class now, which is both cheaper and correct. */
+.att-tile.interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--att-shadow-lift);
+}
+
+.att-tile.on {
+  border-color: var(--att-accent-edge);
+  background-color: var(--att-accent-wash);
+}
+
+.att-tile.on .att-label {
+  color: var(--att-accent);
+}
+
+.att-tile-value {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.att-tile-note {
+  text-wrap: pretty;
+  line-height: 1.45;
+}
+
+/* ── the two-up region: standing meter beside the monthly chart ──
+ *
+ * Everything on this screen used to be one full-width column, which on a wide
+ * monitor gave a 10px-tall proportion bar 1,300px of horizontal space it had
+ * nothing to do with. The meter is a short, fixed-content card and the chart
+ * is the one thing here that genuinely wants width, so they share a row and
+ * the chart takes the surplus.
+ */
+.att-analysis {
+  display: grid;
+  grid-template-columns: minmax(320px, 26rem) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+@media (max-width: 1180px) {
+  .att-analysis {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ── the standing meter ── */
+.att-meter {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.att-meter-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.att-meter-head strong {
+  color: var(--att-ink);
+  font-weight: 650;
+}
+
+.att-meter-bar {
+  display: flex;
+  height: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: var(--att-track);
+}
+
+.att-meter-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.att-legend-row {
+  display: grid;
+  grid-template-columns: 10px 1fr auto auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.att-swatch {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+
+.att-legend-count {
+  color: var(--att-ink);
+  font-weight: 650;
+}
+
+/* ══ the monthly chart ══════════════════════════════════════════════════════
+ *
+ * THE DIMENSIONS BUG THIS FIXES
+ * -----------------------------
+ * Each bar was a <button> laid out as a flex COLUMN containing three things:
+ * a 168px-tall bar, the month name, and the percentage. That button was placed
+ * inside a row given `height: 168px` with `align-items: flex-end`. So roughly
+ * 200px of content was being asked to live in a 168px box: the labels spilled
+ * out of the plot, and the y-axis column next to them was nudged back into
+ * line with a hardcoded `marginBottom: 46px` that had to be guessed and
+ * re-guessed whenever the label text changed.
+ *
+ * The fix is to stop pretending the row is the plot. The row now sizes to its
+ * content; only the BAR inside each button is `--att-plot` tall, and every bar
+ * starts at the same y, so the 75% rule can be drawn as a single overlay at a
+ * fixed offset from the top instead of being positioned from a bottom edge
+ * that was not where it looked.
+ */
+.att-chart {
+  /* ── chart geometry, driven by the zoom control ──
+   *
+   * These live HERE, on the same element the zoom factor is set on, and not on
+   * `.att` with the rest of the tokens. A custom property is substituted where
+   * it is DECLARED, not where it is used: with `--att-plot` declared on `.att`
+   * it resolved against `.att`'s own `--att-zoom` once, and every descendant
+   * inherited the already-computed `180px`. Setting `--att-zoom` on this
+   * element then changed nothing at all — the zoom control moved its own
+   * readout and left the chart exactly the same size. Declaring both in one
+   * scope is what makes the calc re-resolve.
+   *
+   * One factor scales the plot and the bars together, so zooming changes the
+   * size of the chart rather than stretching it out of proportion.
+   */
+  --att-zoom: 1;
+  --att-plot: calc(180px * var(--att-zoom));
+  --att-bar-w: calc(40px * var(--att-zoom));
+  --att-bar-gap: calc(10px * var(--att-zoom));
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  /* The card must never grow past its grid column — without this the chart's
+     intrinsic min-content width (all bars, unwrapped) pushes the layout wide
+     and the page itself scrolls sideways. */
+  min-width: 0;
+}
+
+.att-chart-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.att-chart-keys {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.att-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.att-key-swatch {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+}
+
+.att-key-swatch.outlined {
+  border: 1px solid var(--att-border);
+}
+
+/* ── zoom control ── */
+.att-zoom {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  border: 1px solid var(--att-border);
+  border-radius: 9px;
+  padding: 2px;
+  background: var(--att-card);
+}
+
+.att-zoom-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: none;
+  background: transparent;
+  border-radius: 7px;
+  color: var(--att-ink-2);
+  cursor: pointer;
+  font: inherit;
+  transition: background-color 140ms var(--att-ease), color 140ms var(--att-ease);
+}
+
+.att-zoom-btn:hover:not(:disabled) {
+  background: var(--att-track);
+  color: var(--att-ink);
+}
+
+.att-zoom-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.att-zoom-level {
+  min-width: 46px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--att-ink-3);
+  font-variant-numeric: tabular-nums;
+  padding: 0 2px;
+}
+
+/* ── plot ── */
+.att-chart-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
+}
+
+/* The y-axis: exactly as tall as the plot, and aligned to its top. It used to
+   be a column of the same height pushed up by a hardcoded 46px bottom margin
+   to clear labels that were overflowing the plot — a number that had to be
+   re-guessed whenever the labels changed. */
+.att-chart-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: var(--att-plot);
+  flex-shrink: 0;
+  padding-top: 1px;
+}
+
+.att-chart-axis span {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--att-ink-4);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+/* The threshold tick, coloured to match the dashed rule drawn across the plot
+   at the same height. This is the only number on the chart that is a rule
+   rather than a gradation, and it decides who sits the exam. */
+.att-chart-axis span.rule {
+  color: var(--att-bad);
+  font-weight: 700;
+}
+
+/*
+ * The scroller.
+ *
+ * The scrollbar is hidden on every engine — Firefox (`scrollbar-width`),
+ * old Edge/IE (`-ms-overflow-style`) and WebKit/Blink (`::-webkit-scrollbar`).
+ * Hiding it does NOT remove the scrolling: wheel, trackpad, touch-drag,
+ * shift+wheel and keyboard all still work, and the bars themselves are focus
+ * targets so Tab walks the chart into view. `overscroll-behavior-x: contain`
+ * stops a horizontal flick at the end of the chart from triggering the
+ * browser's back gesture.
+ */
+.att-chart-scroll {
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-snap-type: x proximity;
+}
+
+.att-chart-scroll::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.att-chart-years {
+  display: flex;
+  align-items: flex-start;
+  gap: 28px;
+  width: max-content;
+  min-width: 100%;
+}
+
+.att-chart-year {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* The row of bars. It sizes to its CONTENT — bar plus labels — which is the
+   whole correction. `align-items: flex-start` so every bar's top edge is at
+   the same y and the rule below can be a single overlay. */
+.att-chart-cols {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--att-bar-gap);
+}
+
+/*
+ * The 75% rule, drawn once across the plot rather than once per bar, 25% down
+ * from the top of a plot whose full height is 100%.
+ *
+ * ABOVE the bars, not behind them. It sat at `z-index: 1` under bars at
+ * `z-index: 2`, so the one line on this screen that represents the actual
+ * regulation — the threshold that decides who sits the exam — was visible only
+ * in the 10px gaps between bars, and not at all once the chart was zoomed out.
+ * It is the reference the whole chart is read against; it belongs on top.
+ */
+.att-chart-rule {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--att-plot) * 0.25);
+  border-top: 1px dashed var(--att-bad);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/*
+ * The line is NOT labelled here.
+ *
+ * A badge on the rule is drawn once per year group, so a two-year chart gets
+ * two of them, each floating over whichever bar happens to be last in its
+ * group — which reads as a label belonging to that bar. The y-axis already has
+ * a tick at exactly this height; it is coloured to match the rule instead, so
+ * there is one label, in the place labels belong.
+ */
+
+.att-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  font: inherit;
+  scroll-snap-align: center;
+  flex-shrink: 0;
+}
+
+.att-bar-track {
+  width: var(--att-bar-w);
+  height: var(--att-plot);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border-radius: 7px;
+  overflow: hidden;
+  background-color: var(--att-track);
+  transition: opacity 150ms var(--att-ease);
+}
+
+.att-bar:hover .att-bar-track {
+  opacity: 0.88;
+}
+
+.att-bar.on .att-bar-track {
+  outline: 2px solid var(--att-accent);
+  outline-offset: 2px;
+  opacity: 1;
+}
+
+/* A month carrying a handful of sessions is not evidence about an institute of
+   two thousand, so it is drawn hollow and the caption says so. The figure is
+   not wrong; it is just not something to steer by. */
+.att-bar-track.thin {
+  background-color: transparent;
+  border: 1px dashed var(--att-ink-4);
+}
+
+.att-bar-fill {
+  background-color: var(--att-ok);
+  transition: height 320ms var(--att-ease);
+}
+
+.att-bar-track.thin .att-bar-fill {
+  background-color: rgba(5, 150, 105, 0.3);
+}
+
+.att-bar-month {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--att-ink-3);
+  white-space: nowrap;
+}
+
+.att-bar.on .att-bar-month {
+  color: var(--att-accent);
+  font-weight: 700;
+}
+
+.att-bar:hover .att-bar-month {
+  color: var(--att-ink);
+}
+
+.att-bar-pct {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--att-ink-4);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.att-bar-tip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 8px;
+  background-color: var(--att-ink);
+  color: #ffffff;
+  padding: 8px 10px;
+  border-radius: 9px;
+  white-space: nowrap;
+  z-index: 20;
+  pointer-events: none;
+  text-align: left;
+  box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.28);
+}
+
+.att-bar-tip-title {
+  display: block;
+  font-size: 12px;
+  font-weight: 650;
+  margin-bottom: 2px;
+}
+
+.att-bar-tip-note {
+  display: block;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: #cbd5e1;
+}
+
+.att-bar-tip-warn {
+  display: block;
+  font-size: 11px;
+  color: #fcd34d;
+  margin-top: 2px;
+}
+
+.att-chart-yearlabel {
+  text-align: center;
+  color: var(--att-ink-4);
+  border-top: 1px solid var(--att-border);
+  padding-top: 8px;
+}
+
+.att-chart-empty {
+  margin-top: 6px;
+}
+
+/* Only shown while the chart actually overflows its column. A hint about
+   scrolling on a chart that fits is noise. */
+.att-chart-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--att-ink-4);
+  font-size: 11px;
+}
+
+/* ── roster ── */
+.att-roster {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.att-roster-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.att-roster-filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.att-roster-search {
+  width: 256px;
+}
+
+@media (max-width: 640px) {
+  .att-roster-search {
+    width: 100%;
+  }
+}
+
+.att-table-wrap {
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid var(--att-border);
+}
+
+.att-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.att-table th {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--att-ink-3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--att-border);
+  white-space: nowrap;
+  background-color: var(--att-bg);
+}
+
+.att-table td {
+  font-size: 13px;
+  color: var(--att-ink-2);
+  padding: 11px 12px;
+  border-bottom: 1px solid var(--att-border-soft);
+}
+
+.att-row {
+  cursor: pointer;
+  background-color: var(--att-card);
+  transition: background-color 120ms var(--att-ease);
+}
+
+/* Was a useState per ROW — ten re-renders a second while the pointer crossed
+   the table. */
+.att-row:hover {
+  background-color: var(--att-hover);
+}
+
+.att-cell-reg {
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: 12px;
+  color: var(--att-ink-3);
+}
+
+.att-cell-name {
+  color: var(--att-ink);
+  font-weight: 600;
+}
+
+.att-cell-name span {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.att-cell-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.att-cell-num.strong {
+  font-weight: 650;
+}
+
+.att-cell-num.empty {
+  color: var(--att-ink-4);
+  font-weight: 400;
+}
+
+.att-cell-num.zero {
+  color: var(--att-ink-3);
+}
+
+.att-empty-cell {
+  text-align: center;
+  color: var(--att-ink-4);
+  padding: 48px 12px;
+}
+
+.att-pct {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.att-pct-value {
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  min-width: 46px;
+}
+
+.att-pct-track {
+  width: 60px;
+  height: 5px;
+  background-color: var(--att-track);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.att-pct-fill {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+}
+
+.att-standing {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.att-standing.eligible { background-color: var(--att-ok-wash); color: var(--att-ok); }
+.att-standing.short    { background-color: var(--att-bad-wash); color: var(--att-bad); }
+.att-standing.untracked{ background-color: var(--att-warn-wash); color: var(--att-warn); }
+
+/* Someone who has asked for less motion gets the screen without the lift, the
+   bar growth or the row fades. */
+@media (prefers-reduced-motion: reduce) {
+  .att-tile,
+  .att-bar-fill,
+  .att-bar-track,
+  .att-row,
+  .att-control,
+  .att-zoom-btn {
+    transition: none;
+  }
+
+  .att-tile.interactive:hover {
+    transform: none;
+  }
+
+  .att-chart-scroll {
+    scroll-behavior: auto;
+  }
+}

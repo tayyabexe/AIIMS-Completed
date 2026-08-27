@@ -1,0 +1,595 @@
+/*
+ * Styles for components/common/AvatarUploader.jsx.
+ *
+ * Kept beside the component rather than in a portal stylesheet: the dialog is
+ * mounted by four different portals, and a rule that lives in one of their
+ * sheets is a rule the other three do not get.
+ *
+ * The motion here is small on purpose. A picker is a two-second interaction, so
+ * every transition is under 260ms and nothing moves more than a few pixels —
+ * enough for the target to feel like a surface you can drop onto, not enough to
+ * make anyone wait for an animation to finish before clicking.
+ */
+
+.avu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(15, 23, 42, 0.48);
+  backdrop-filter: blur(4px);
+  animation: avu-fade 0.18s ease-out;
+}
+
+.avu-card {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border: 1px solid #e6eaf1;
+  border-radius: 20px;
+  box-shadow: 0 28px 70px rgba(15, 23, 42, 0.24);
+  overflow: hidden;
+  font-family: 'Inter', system-ui, sans-serif;
+  animation: avu-pop 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ------------------------------------------------------------------ head */
+
+.avu-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1.3rem 1.5rem 1rem;
+  border-bottom: 1px solid #f2f4f8;
+}
+
+.avu-title {
+  margin: 0;
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.avu-sub {
+  margin: 3px 0 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: #64748b;
+}
+
+.avu-close {
+  margin-left: auto;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 9px;
+  background: #f1f5f9;
+  color: #64748b;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.avu-close:hover { background: #e2e8f0; color: #0f172a; }
+
+/* ------------------------------------------------------------------ body */
+
+.avu-body {
+  padding: 1.5rem 1.5rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+/* --------------------------------------------------------------- target */
+
+/*
+ * The drop target and the preview are the same element.
+ *
+ * That is the whole idea of the redesign: the thing you are changing is the
+ * thing you interact with. It is 148px because a face has to be recognisable
+ * at the size you confirm it at — the dialog this replaced previewed at 60px,
+ * which is too small to tell a good crop from a bad one.
+ */
+.avu-target {
+  position: relative;
+  width: 148px;
+  height: 148px;
+  border-radius: 50%;
+  border: 2px dashed #cbd5e1;
+  background: #f8fafc;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.avu-target.has-image { border-style: solid; border-color: #e2e8f0; }
+
+.avu-target:hover {
+  border-color: #991b1b;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+}
+
+/* Dragging: the target grows very slightly and takes the accent, so the cursor
+   has an unmistakable place to land. */
+.avu-target.is-dragging {
+  border-style: dashed;
+  border-color: #991b1b;
+  background: #fff5f5;
+  transform: scale(1.03);
+  box-shadow: 0 0 0 6px rgba(153, 27, 27, 0.08);
+}
+
+.avu-target-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.avu-target-initials {
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 0.02em;
+}
+
+/* The veil is the affordance. Hidden until hover or drag, because a permanent
+   overlay would obscure the picture the dialog exists to show. */
+.avu-target-veil {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: #fff;
+  background: rgba(15, 23, 42, 0.55);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.avu-target:hover .avu-target-veil,
+.avu-target.is-dragging .avu-target-veil { opacity: 1; }
+
+.avu-target-veil-text {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.avu-hint {
+  margin: 0;
+  font-size: 0.73rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.avu-error {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 0.5rem 0.8rem;
+  border-radius: 9px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  font-size: 0.78rem;
+  animation: avu-shake 0.3s ease-out;
+}
+
+/* --------------------------------------------------------------- actions */
+
+.avu-actions {
+  display: flex;
+  gap: 0.55rem;
+  width: 100%;
+  margin-top: 0.35rem;
+}
+
+.avu-primary,
+.avu-ghost {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0.65rem 0.9rem;
+  border-radius: 11px;
+  font-size: 0.83rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.16s, border-color 0.16s, transform 0.09s, box-shadow 0.16s;
+}
+
+.avu-primary {
+  border: none;
+  background: #991b1b;
+  color: #fff;
+}
+
+.avu-primary:hover:not(:disabled) {
+  background: #7f1d1d;
+  box-shadow: 0 8px 20px rgba(153, 27, 27, 0.26);
+}
+
+.avu-ghost {
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  color: #475569;
+}
+
+.avu-ghost:hover:not(:disabled) { background: #f8fafc; border-color: #cbd5e1; }
+
+/* The press. 40ms of 0.97 is the difference between a button that responds and
+   one that only changes colour. */
+.avu-primary:active:not(:disabled),
+.avu-ghost:active:not(:disabled) { transform: scale(0.97); }
+
+.avu-primary:disabled,
+.avu-ghost:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/*
+ * Destructive, and deliberately the quietest thing on the card. In the dialog
+ * this replaces it was a full-width row identical to the two that ADD a
+ * picture, which is how a mis-click deletes a portrait.
+ */
+.avu-remove {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 0.15rem;
+  padding: 0.35rem 0.6rem;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  color: #94a3b8;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.16s, background 0.16s;
+}
+
+.avu-remove:hover:not(:disabled) { color: #dc2626; background: #fef2f2; }
+.avu-remove:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ---------------------------------------------------------------- camera */
+
+.avu-camera { width: 100%; display: flex; flex-direction: column; gap: 0.9rem; align-items: center; }
+
+.avu-camera-frame {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #0f172a;
+}
+
+.avu-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Mirrored, because an unmirrored self-view is the thing that makes people
+     frame themselves badly. The captured canvas is NOT mirrored — the photo is
+     stored the right way round. */
+  transform: scaleX(-1);
+}
+
+/* Shows the circle the picture will actually be cropped to when it is drawn as
+   an avatar, so nobody frames a shot that loses their chin. */
+.avu-camera-guide {
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 0 0 999px rgba(15, 23, 42, 0.35);
+  pointer-events: none;
+}
+
+.avu-camera-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 0.6rem;
+}
+
+.avu-camera-actions .avu-ghost { flex: 0 0 auto; }
+.avu-camera-spacer { flex: 0 0 84px; }
+
+.avu-shutter {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 3px solid #cbd5e1;
+  background: #fff;
+  padding: 4px;
+  cursor: pointer;
+  transition: transform 0.12s, border-color 0.16s;
+}
+
+.avu-shutter span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #991b1b;
+  transition: background 0.16s;
+}
+
+.avu-shutter:hover { border-color: #991b1b; }
+.avu-shutter:active { transform: scale(0.92); }
+.avu-shutter:active span { background: #7f1d1d; }
+
+/* ----------------------------------------------------------------- done */
+
+.avu-done { padding: 1.6rem 0 0.6rem; text-align: center; }
+
+.avu-done-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #ecfdf5;
+  color: #059669;
+  animation: avu-pop 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.avu-done-title {
+  margin: 0.9rem 0 0;
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.avu-done-sub { margin: 4px 0 0; font-size: 0.8rem; color: #64748b; }
+
+.avu-spin { animation: spin 0.8s linear infinite; }
+
+/* ------------------------------------------------------------ keyframes */
+
+@keyframes avu-fade { from { opacity: 0; } to { opacity: 1; } }
+
+@keyframes avu-pop {
+  from { opacity: 0; transform: scale(0.96) translateY(6px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes avu-shake {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-4px); }
+  75%      { transform: translateX(4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avu-backdrop,
+  .avu-card,
+  .avu-done-mark,
+  .avu-error { animation: none; }
+
+  .avu-target,
+  .avu-primary,
+  .avu-ghost,
+  .avu-shutter { transition: none; transform: none !important; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   AvatarCropper — the framing step between choosing a file and uploading it
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.avc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  width: 100%;
+}
+
+/*
+ * The window. It never moves — the picture moves under it — so the eye has one
+ * fixed thing to judge the framing against.
+ */
+.avc-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #0f172a;
+  cursor: grab;
+  touch-action: none;      /* the drag is ours; the browser must not pan */
+  user-select: none;
+  outline: none;
+  transition: box-shadow 0.16s;
+}
+
+.avc-frame:focus-visible {
+  box-shadow: 0 0 0 3px rgba(153, 27, 27, 0.35);
+}
+
+.avc-frame.is-dragging { cursor: grabbing; }
+
+.avc-img {
+  position: absolute;
+  max-width: none;         /* a global img{max-width:100%} would fight the zoom */
+  user-select: none;
+  -webkit-user-drag: none;
+  /* Not transitioned. A drag sets `left`/`top` every pointer move, and an
+     easing curve on those turns a 1:1 drag into the picture lagging the
+     cursor. */
+}
+
+/*
+ * Everything outside the circle is dimmed, so what is bright is exactly what
+ * will be stored. A ring drawn on top would leave the parts about to be cut
+ * looking just as present as the parts that survive.
+ *
+ * One element, no second layer: a huge spread shadow paints the whole frame and
+ * the element's own rounded box punches the hole.
+ */
+.avc-mask {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.55);
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  pointer-events: none;
+}
+
+.avc-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 300px;
+}
+
+.avc-zoom-btn {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e2e8f0;
+  border-radius: 9px;
+  background: #fff;
+  color: #475569;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.09s, color 0.15s;
+}
+
+.avc-zoom-btn:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+.avc-zoom-btn:active:not(:disabled) { transform: scale(0.92); }
+.avc-zoom-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* The slider is styled in both engines because an unstyled range control is
+   the one element that makes a designed dialog look unfinished. */
+.avc-slider {
+  flex: 1;
+  height: 4px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.avc-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #991b1b;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.3);
+  cursor: grab;
+  transition: transform 0.12s;
+}
+
+.avc-slider::-webkit-slider-thumb:active { transform: scale(1.18); cursor: grabbing; }
+
+.avc-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #991b1b;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.3);
+  cursor: grab;
+}
+
+.avc-slider:focus-visible { box-shadow: 0 0 0 3px rgba(153, 27, 27, 0.2); }
+.avc-slider:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.avc-hint {
+  margin: 0;
+  font-size: 0.72rem;
+  color: #94a3b8;
+  font-weight: 500;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avc-frame,
+  .avc-zoom-btn,
+  .avc-slider::-webkit-slider-thumb { transition: none; }
+  .avc-zoom-btn:active:not(:disabled) { transform: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   The "change my picture" affordance on a profile portrait
+   ═══════════════════════════════════════════════════════════════════════════
+
+   One rule, used by the faculty and parent profiles, so the control sits in the
+   same place and looks the same in both. The student portal keeps its own
+   `.avatar-edit-btn`, which is already this shape in its own stylesheet.
+
+   Bottom-right rather than centred over the face: an overlay in the middle
+   hides the very thing the person is deciding about. */
+
+.avu-editable { position: relative; display: inline-block; }
+
+.avu-edit-badge {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #991b1b;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.22);
+  transition: background 0.16s, transform 0.12s, box-shadow 0.16s;
+}
+
+.avu-edit-badge:hover {
+  background: #7f1d1d;
+  /* Grows slightly rather than moving: it is pinned to the portrait's corner,
+     and a control that shifts away from what it belongs to reads as detached. */
+  transform: scale(1.08);
+  box-shadow: 0 5px 16px rgba(153, 27, 27, 0.35);
+}
+
+.avu-edit-badge:active { transform: scale(0.95); }
+
+.avu-edit-badge:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(153, 27, 27, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avu-edit-badge { transition: none; }
+  .avu-edit-badge:hover,
+  .avu-edit-badge:active { transform: none; }
+}

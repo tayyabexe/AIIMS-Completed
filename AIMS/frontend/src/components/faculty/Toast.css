@@ -1,0 +1,48 @@
+.toast-stack {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1200;
+  max-width: calc(100vw - 40px);
+}
+
+.toast-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--sidebar-bg);
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  animation: toast-in 0.18s ease;
+}
+
+.toast-item svg { flex-shrink: 0; }
+
+/* The accent carries the outcome. The stripe down the leading edge is what
+   makes a failed save readable at a glance from across the desk, before the
+   sentence itself has been read. */
+.toast-success svg { color: #3fcf7f; }
+.toast-success { border-left: 4px solid #3fcf7f; }
+
+.toast-error svg { color: #ff8f8f; }
+.toast-error { border-left: 4px solid #ef4444; }
+
+.toast-info svg { color: #93c5fd; }
+.toast-info { border-left: 4px solid #3b82f6; }
+
+@keyframes toast-in {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@media (max-width: 480px) {
+  .toast-stack { left: 16px; right: 16px; bottom: 16px; }
+  .toast-item { width: 100%; }
+}

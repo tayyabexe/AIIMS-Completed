@@ -1,0 +1,58 @@
+.ann-top-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.ann-table {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ann-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ann-table thead th {
+  text-align: left;
+  font-size: 12.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.ann-table tbody td {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border-soft);
+  font-size: 14px;
+}
+
+.ann-table tbody tr:last-child td { border-bottom: none; }
+
+.ann-title {
+  font-weight: 700;
+}
+
+.ann-edit-btn {
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 13px;
+}
+.ann-edit-btn:hover { background: var(--page-bg); }
+
+@media (max-width: 640px) {
+  .ann-top-row { align-items: stretch; }
+  .ann-top-row > .btn { width: 100%; justify-content: center; }
+}

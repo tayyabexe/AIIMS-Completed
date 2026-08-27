@@ -1,0 +1,1172 @@
+/*
+ * Pinned analytics: the arrange drawer, the editable grid, and the cards on it.
+ *
+ * EVERY COLOUR HERE COMES FROM THE DASHBOARD'S OWN TOKENS.
+ * -------------------------------------------------------
+ * The first version of this file was written in cold slate greys (#E2E8F0,
+ * #0F172A) with indigo and purple gradient buttons, and dropped on top of a
+ * screen whose design system is warm paper, four levels of ink, hairline rules
+ * of low-opacity ink, and exactly ONE accent — the institute's crimson seal,
+ * spent on actions and never on decoration. Two design languages on one screen
+ * is what made edit mode read as a bolted-on builder rather than part of the
+ * product.
+ *
+ * So there are no literal colours below. Everything binds to the --ad-*
+ * variables declared on .aims-dash in index.css, which means this inherits
+ * dark mode for free and cannot drift from the screens it sits on.
+ *
+ * DEPTH STRATEGY: hairline borders plus tonal surfaces, matching .ad-card.
+ * No drop shadows except on the two surfaces that genuinely float — the
+ * drawer and the context menu — because the dashboard's own cards do not use
+ * them and a shadowed card beside a flat one is the mixed-strategy tell.
+ *
+ * MOTION: the portal's easing and durations, from styles/adminTheme.
+ */
+
+@import 'react-grid-layout/css/styles.css';
+@import 'react-resizable/css/styles.css';
+
+.aims-dash,
+.pin-panel {
+  /* The portal's entrance/interaction curve — see EASE in adminTheme. */
+  --pin-ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --pin-fast: 140ms;
+  --pin-enter: 220ms;
+}
+
+/* ====================================================== the open button == */
+
+/*
+ * Sits in the page toolbar as an ordinary chip. `ad-chip` carries the height,
+ * radius, hover and the 0.97 press-scale every other admin control uses.
+ */
+/*
+ * The row the closed button sits in.
+ *
+ * Both screens lay their children out in a flex COLUMN, which stretches every
+ * child to the full width — and `ad-chip` has a card background, so a bare
+ * button became a full-width white bar across the page with one word in the
+ * corner. The row keeps the chip at its own size and puts it where a
+ * screen-level control belongs, at the end of the line.
+ */
+.pin-openrow {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.pin-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+
+/* ========================================================== the drawer === */
+
+/*
+ * Thin enough to read the dashboard through. It is here to catch the click
+ * that closes the drawer, not to dim the screen someone is looking at.
+ */
+/*
+ * Above the portal's own chrome.
+ *
+ * At a lower z-index the drawer slid in UNDER the sticky top bar, which hid
+ * its heading and close button entirely, and under the floating assistant
+ * button (z-index 900, see AssistantWidget.css), which sat squarely on top of
+ * "Done" and swallowed the click — a browser test failed with the FAB
+ * "intercepts pointer events" rather than the drawer closing. These sit just
+ * above it.
+ *
+ * There is deliberately NO backdrop. An overlay behind this panel would cover
+ * the grid, and the grid is what the panel exists to drag things onto — the
+ * first version had one and it made every card inert while the drawer was
+ * open. The page stays live; the drawer is dismissed by Done, its close
+ * button, or Escape.
+ */
+
+
+/*
+ * A FLOATING PALETTE, NOT A DRAWER.
+ * ---------------------------------
+ * It was a full-height drawer that pushed the page aside. Two things were
+ * wrong with that, and both were fatal to the job it exists for:
+ *
+ *   - Taking 360px out of the page reflowed every card the instant it opened,
+ *     and reflowed them all back when it closed. Positioning a card against a
+ *     layout that rearranges itself the moment you reach for the tool is not
+ *     positioning, it is chasing.
+ *   - It was the size of a document for a list of names.
+ *
+ * So it floats clear of the content instead. The grid keeps the width it had
+ * before the palette opened and the width it will have after, which means what
+ * you arrange is what you get. It is sized to its contents, capped so it never
+ * runs past the viewport, and it scrolls internally when the library is long.
+ */
+.pin-panel {
+  position: fixed;
+  z-index: calc(var(--z-chrome-raised, 900) + 50);
+  top: 96px;
+  right: 20px;
+  width: 292px;
+  max-height: min(640px, calc(100dvh - 128px));
+  display: flex;
+  flex-direction: column;
+  background: var(--ad-card);
+  border: 1px solid var(--ad-rule);
+  border-radius: 14px;
+  /* Genuinely floating, so it earns a real shadow — unlike the flat cards. */
+  box-shadow: 0 18px 40px -18px rgba(20, 22, 26, 0.3),
+              0 0 0 1px rgba(20, 22, 26, 0.02);
+  animation: pin-slide var(--pin-enter) var(--pin-ease) both;
+}
+
+/* On a phone-width window it spans the screen bottom instead of hugging a
+   corner it would otherwise cover entirely. */
+@media (max-width: 640px) {
+  .pin-panel {
+    top: auto;
+    bottom: 12px;
+    right: 12px;
+    left: 12px;
+    width: auto;
+    max-height: 60dvh;
+  }
+}
+
+@keyframes pin-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Never from translateX(100%) plus opacity 0 — a panel that fades while it
+   travels reads as two effects. It slides, and only slides. */
+@keyframes pin-slide {
+  from { transform: translateX(16px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/*
+ * Also the drag handle, so the palette can be moved out of the way of whatever
+ * is being arranged underneath it. `touch-action: none` is what makes that
+ * work on a trackpad or a touchscreen — without it the browser claims the
+ * gesture for scrolling and the pointermove events never arrive.
+ */
+.pin-panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 11px 12px 10px;
+  border-bottom: 1px solid var(--ad-rule);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.pin-panel-head:active { cursor: grabbing; }
+
+.pin-panel-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.pin-grip { color: var(--ad-ink-4); flex-shrink: 0; }
+
+.pin-panel-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--ad-ink);
+}
+
+.pin-panel-sub {
+  margin: 1px 0 0;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ad-ink-4);
+}
+
+/*
+ * Which of the two layouts is being edited.
+ *
+ * The accent wash rather than a grey strip: this is the one piece of state in
+ * the drawer that changes what a drag will affect, so it is the one thing that
+ * earns colour.
+ */
+.pin-scope {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--ad-rule-soft);
+  color: var(--ad-ink-4);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.pin-scope svg { flex-shrink: 0; opacity: 0.7; }
+
+/* One quiet line of guidance at the foot of the list. */
+.pin-tip {
+  margin: 10px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--ad-rule-soft);
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--ad-ink-4);
+  text-wrap: pretty;
+}
+
+.pin-panel-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 2px 12px 12px;
+}
+
+.pin-section { padding: 12px 0; }
+.pin-section + .pin-section { border-top: 1px solid var(--ad-rule-soft); }
+
+.pin-section-title {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ad-ink-3);
+}
+
+.pin-section-hint {
+  margin: 5px 0 11px;
+  font-size: 12px;
+  color: var(--ad-ink-4);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.pin-help {
+  margin: 0;
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ad-ink-3);
+}
+
+.pin-hidden {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* A full-width row control: the shape a list of choices takes in this portal. */
+.pin-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 11px;
+  border: 1px solid var(--ad-rule);
+  border-radius: 8px;
+  background: var(--ad-card);
+  color: var(--ad-ink-2);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--pin-fast) var(--pin-ease),
+              border-color var(--pin-fast) var(--pin-ease),
+              color var(--pin-fast) var(--pin-ease);
+}
+
+.pin-row:hover {
+  background: var(--ad-hover);
+  border-color: var(--ad-rule-strong);
+  color: var(--ad-ink);
+}
+
+.pin-row:active { transform: scale(0.99); }
+
+.pin-panel-foot {
+  padding: 10px 12px 12px;
+  border-top: 1px solid var(--ad-rule);
+  background: var(--ad-card);
+}
+
+.pin-foot-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* The drawer's one primary action. Solid accent, no gradient — the palette
+   documents a single flat seal colour and gradients read as decoration. */
+.pin-done {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--ad-accent);
+  color: #fff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--pin-fast) var(--pin-ease);
+}
+
+.pin-done:hover { background: var(--ad-accent-hover); }
+.pin-done:active { transform: scale(0.97); }
+
+.pin-danger {
+  padding: 8px 14px;
+  border: 1px solid var(--ad-accent-edge);
+  border-radius: 8px;
+  background: var(--ad-accent-wash);
+  color: var(--ad-accent);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pin-danger:hover { background: var(--ad-accent); color: #fff; }
+
+.pin-confirm p {
+  margin: 0 0 10px;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--ad-ink-2);
+  text-wrap: pretty;
+}
+
+.pin-confirm strong { color: var(--ad-ink); font-weight: 600; }
+
+.pin-confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.pin-save {
+  margin: 10px 0 0;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ad-ink-4);
+}
+
+.pin-save.is-error { color: var(--ad-warning); }
+
+/* ===================================================== the saved strip === */
+
+/*
+ * A vertical list inside the drawer, not the horizontal shelf it was. In a
+ * 360px column a sideways-scrolling row of chips hides most of the library
+ * behind a scroll gesture; a list shows every saved query at once, which is
+ * the point of having a library.
+ */
+.pin-strip {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pin-strip-empty {
+  padding: 14px 12px;
+  border: 1px dashed var(--ad-rule-strong);
+  border-radius: 8px;
+  background: var(--ad-inset);
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--ad-ink-3);
+  text-wrap: pretty;
+}
+
+.pin-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 9px 11px;
+  border: 1px solid var(--ad-rule);
+  border-radius: 8px;
+  background: var(--ad-card);
+  color: var(--ad-ink);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 550;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--pin-fast) var(--pin-ease),
+              border-color var(--pin-fast) var(--pin-ease);
+}
+
+.pin-chip:hover { background: var(--ad-hover); border-color: var(--ad-rule-strong); }
+
+/*
+ * Open, the chip takes the ledger rule — the 3px accent bar the stat tiles
+ * already use to mark a card that wants attention. Reusing that vocabulary
+ * rather than inventing a highlight is what keeps this feeling like the same
+ * product.
+ */
+.pin-chip.is-open {
+  border-color: var(--ad-accent-edge);
+  background: var(--ad-accent-wash);
+  box-shadow: inset 3px 0 0 -1px var(--ad-accent);
+}
+
+.pin-chip-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The templates a saved query offers, revealed under its chip. */
+.pin-pop {
+  margin: 2px 0 6px;
+  padding: 6px;
+  border: 1px solid var(--ad-rule);
+  border-radius: 8px;
+  background: var(--ad-inset);
+  animation: pin-reveal 180ms var(--pin-ease) both;
+}
+
+@keyframes pin-reveal {
+  from { opacity: 0; transform: translateY(-3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pin-pop-head {
+  padding: 4px 6px 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ad-ink-4);
+}
+
+.pin-pop-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 8px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ad-ink-2);
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  text-align: left;
+  cursor: grab;
+  transition: background-color var(--pin-fast) var(--pin-ease);
+}
+
+.pin-pop-item:hover { background: var(--ad-card); color: var(--ad-ink); }
+.pin-pop-item:active { cursor: grabbing; }
+.pin-pop-item[disabled] { color: var(--ad-ink-4); cursor: not-allowed; opacity: 0.6; }
+
+.pin-pop-sep {
+  height: 1px;
+  margin: 5px 4px;
+  background: var(--ad-rule-soft);
+}
+
+.pin-pop-danger { color: var(--ad-accent); }
+.pin-pop-danger:hover { background: var(--ad-accent-wash); color: var(--ad-accent); }
+
+.pin-pop-note {
+  margin: 6px 6px 2px;
+  padding-top: 6px;
+  border-top: 1px solid var(--ad-rule-soft);
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--ad-ink-4);
+  white-space: normal;
+  text-wrap: pretty;
+}
+
+.pin-inline-input {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 8px;
+  border: 1px solid var(--ad-rule-strong);
+  border-radius: 6px;
+  background: var(--ad-card);
+  color: var(--ad-ink);
+  font-family: inherit;
+  font-size: 12.5px;
+}
+
+/* ============================================================ the grid === */
+
+.pin-gridwrap { width: 100%; }
+
+/*
+ * THE VERTICAL GAP LIVES HERE, NOT IN THE GRID'S MARGIN.
+ * -----------------------------------------------------
+ * react-grid-layout's vertical margin makes every card's height a multiple of
+ * (rowHeight + margin), which is why the Dashboard's tiles could not be their
+ * own height. The grid runs with rowHeight 1 and no vertical margin, so `h` is
+ * a height in pixels exactly, and the 16px that used to separate rows is this
+ * padding instead. Same spacing, exact arithmetic.
+ */
+.pin-cell {
+  height: 100%;
+  min-height: 0;
+  padding-bottom: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.pin-cell > * { min-height: 0; }
+
+/*
+ * A cell whose height was measured from its contents rather than chosen.
+ *
+ * It must NOT stretch what is inside it: the point is that the card is as tall
+ * as the panel, so forcing the panel to fill the card would make the
+ * measurement describe itself and every card would keep whatever height it
+ * started with.
+ */
+.pin-cell.is-measured { display: block; }
+.pin-cell.is-measured .pin-measure > * { height: auto; }
+
+/*
+ * Arranging state. Deliberately quiet: a dashed outline on every card turns
+ * the screen into a wireframe. A tonal lift and a slightly firmer edge say
+ * "these are movable" without shouting over the figures.
+ */
+.pin-grid.is-editing .pin-cell { cursor: grab; }
+.pin-grid.is-editing .react-draggable-dragging .pin-cell { cursor: grabbing; }
+
+.pin-grid.is-editing .ad-card,
+.pin-grid.is-editing .pin-card {
+  border-color: var(--ad-rule-strong);
+}
+
+/*
+ * Anchors are inert while arranging.
+ *
+ * Several Dashboard cards are wrapped in a <Link> to the screen they
+ * summarise, so releasing a drag on one was delivered as an ordinary click and
+ * navigated away, losing the arrangement in progress. The links are also
+ * removed from the built-ins in edit mode; this catches any link nested inside
+ * a card that fix does not reach — the activity feed's rows, for one.
+ */
+.pin-grid.is-editing a { pointer-events: none; }
+
+/* Where a dragged card will land. Accent wash, matching the selected-chip
+   tint used everywhere else, rather than a second highlight colour. */
+.pin-grid .react-grid-item.react-grid-placeholder {
+  background: var(--ad-accent);
+  opacity: 0.1;
+  border: 1px solid var(--ad-accent-edge);
+  border-radius: 12px;
+  transition-duration: 120ms;
+}
+
+/*
+ * The card being dragged floats above the rest — without this it disappears
+ * behind a taller neighbour mid-drag — and drops its transition so it tracks
+ * the pointer exactly rather than lagging behind it.
+ */
+.pin-grid .react-grid-item.react-draggable-dragging {
+  z-index: 30;
+  transition: none;
+  will-change: transform;
+}
+
+.pin-grid .react-grid-item.react-draggable-dragging .ad-card,
+.pin-grid .react-grid-item.react-draggable-dragging .pin-card {
+  border-color: var(--ad-accent-edge);
+  box-shadow: 0 12px 28px -12px rgba(20, 22, 26, 0.28);
+}
+
+/*
+ * Cards glide to their new positions. Only transform and dimensions are
+ * animated — RGL positions with translate — and the duration is the portal's
+ * entrance timing, so a reflow feels like the same product's motion.
+ */
+.pin-grid .react-grid-item {
+  transition: transform var(--pin-enter) var(--pin-ease),
+              width var(--pin-enter) var(--pin-ease),
+              height var(--pin-enter) var(--pin-ease);
+}
+
+.pin-grid .react-grid-item.resizing {
+  z-index: 30;
+  transition: none;
+  will-change: width, height;
+}
+
+/* The resize grip. Invisible until it is wanted, then unmistakable. */
+.pin-grid .react-grid-item > .react-resizable-handle {
+  opacity: 0;
+  transition: opacity var(--pin-fast) var(--pin-ease);
+}
+
+.pin-grid.is-editing .react-grid-item > .react-resizable-handle { opacity: 0.35; }
+.pin-grid.is-editing .react-grid-item:hover > .react-resizable-handle { opacity: 0.9; }
+
+.pin-grid .react-resizable-handle::after {
+  border-right-color: var(--ad-ink-4);
+  border-bottom-color: var(--ad-ink-4);
+}
+
+/* Nudged in from the corner so it clears the card's 12px radius. */
+.pin-grid .react-resizable-handle-se { bottom: 18px; right: 2px; }
+
+/* ---------------------------------------------------- the width handle ---
+
+   The east grip: drag a card wider or narrower without touching its height.
+
+   The library ships one glyph for every handle — the corner arrow — and rotates
+   it into place. On an edge that reads as a diagonal arrow pointing off the
+   card, which is the wrong promise: this handle moves one axis. So the arrow is
+   removed and replaced with a vertical bar, the shape every resizable pane in
+   every editor uses.
+
+   The hit area is deliberately much larger than the bar. The visible grip is
+   3px wide because a thick rule down the side of every card is noise; 3px is
+   not something anyone can reliably grab, so the transparent target around it
+   is 20px and spans most of the card's height.                              */
+
+.pin-grid .react-grid-item > .react-resizable-handle-e {
+  /* Undo the library's rotated corner glyph. */
+  transform: none;
+
+  top: 10px;
+  bottom: 10px;
+  right: 0;
+  width: 20px;
+  height: auto;
+  margin-top: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  /* The gap between cards is 16px of cell padding, so the grip sits in the
+     channel between two cards rather than over either one's contents. */
+  padding-right: 5px;
+  cursor: ew-resize;
+}
+
+/* The corner arrow is drawn with two borders on ::after. Both go. */
+.pin-grid .react-grid-item > .react-resizable-handle-e::after {
+  content: "";
+  position: static;
+  width: 3px;
+  height: 100%;
+  max-height: 44px;
+  border: none;
+  border-radius: 999px;
+  background: var(--ad-ink-4);
+}
+
+/* ============================================================ the card === */
+
+.pin-card {
+  /* What the chart's overflow fade blends into on this surface. */
+  --ct-fade: var(--ad-card, #ffffff);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  /* See the fallback note on .pin-dialog -- same reason. */
+  background: var(--ad-card, #ffffff);
+  border: 1px solid var(--ad-rule, #e6e3df);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color var(--pin-fast) var(--pin-ease);
+}
+
+.pin-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 16px 16px 8px;
+}
+
+.pin-card-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ad-ink);
+  letter-spacing: -0.005em;
+}
+
+.pin-card-sub {
+  margin: 3px 0 0;
+  font-size: 11px;
+  font-weight: 450;
+  color: var(--ad-ink-4);
+  font-variant-numeric: tabular-nums;
+}
+
+.pin-card-tools {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+/*
+ * A 26px visual target with a 40px hit area, so the control is small enough
+ * not to compete with the card's content and still big enough to hit.
+ */
+.pin-icon-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ad-ink-4);
+  cursor: pointer;
+  transition: background-color var(--pin-fast) var(--pin-ease),
+              color var(--pin-fast) var(--pin-ease);
+}
+
+.pin-icon-btn::after {
+  content: '';
+  position: absolute;
+  inset: -7px;
+}
+
+.pin-icon-btn:hover { background: var(--ad-inset); color: var(--ad-ink-2); }
+.pin-icon-btn:active { transform: scale(0.94); }
+.pin-icon-btn.is-danger:hover { background: var(--ad-accent-wash); color: var(--ad-accent); }
+
+.pin-card-body {
+  flex: 1;
+  min-height: 0;
+  padding: 0 12px 12px;
+  overflow: auto;
+}
+
+/*
+ * A chart card does not scroll. At all, on either axis.
+ *
+ * This replaces an override that had quietly stopped working. It used to read
+ * `.pin-card-body > div:first-child { height: 100% }`, aimed at the single
+ * wrapper the chart templates used to render. Once those templates gained a
+ * scrolling frame the sized element moved two levels deeper, the override
+ * stopped reaching it, and the chart kept its full 380px inside a 125px card
+ * -- hanging a quarter of a metre of SVG below its own tile, reachable only by
+ * a scrollbar nested inside a draggable grid cell.
+ *
+ * The fix is not a taller selector. Charts now draw in `fit` mode (see Frame
+ * in ChartTemplates.jsx), which sizes them to exactly this box, so overflow
+ * here can only mean something is wrong. Hiding it makes that a visual bug
+ * rather than a broken interaction, and it removes the nested scroll area
+ * that made resizing feel unreliable.
+ *
+ * Tables are excluded deliberately: their rows really do not fit, and paging
+ * through them inside the card is what they are for.
+ */
+.pin-card-body.is-chart {
+  overflow: hidden;
+}
+
+/*
+ * The depth-independent version of the old rule. `> *` rather than
+ * `> div:first-child` so it cannot be silently defeated again by a template
+ * adding a wrapper.
+ */
+.pin-card-body.is-chart > * {
+  height: 100%;
+  min-height: 0;
+}
+
+.pin-card-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 16px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ad-ink-4);
+  text-wrap: pretty;
+}
+
+.pin-card-state strong { color: var(--ad-ink-3); font-weight: 600; }
+.pin-card-state.is-error strong { color: var(--ad-warning); }
+
+/*
+ * A built-in panel that already draws its own card.
+ *
+ * `height: 100%` is deliberately NOT set here. It was, and it is what turned a
+ * 150px stat tile into a 300px rectangle with its figure floating in the
+ * middle — the card stretched to whatever the grid row happened to be. The
+ * cell is sized from the panel now, not the panel from the cell.
+ */
+.pin-native {
+  min-height: 0;
+  box-sizing: border-box;
+}
+
+/* Only where the grid genuinely owns the height — AI Insights' charts and
+   tables, which have no natural height and must fill their box. */
+.pin-cell:not(.is-measured) > .pin-native { height: 100%; overflow: auto; }
+.pin-cell:not(.is-measured) > .pin-native > * { height: 100%; box-sizing: border-box; }
+
+/* ==================================================== the context menu === */
+
+.pin-menu {
+  position: fixed;
+  z-index: calc(var(--z-chrome-raised, 900) + 60);
+  min-width: 200px;
+  padding: 5px;
+  border: 1px solid var(--ad-rule);
+  border-radius: 10px;
+  background: var(--ad-card);
+  box-shadow: 0 16px 40px -16px rgba(20, 22, 26, 0.3);
+  /* Scales from the pointer, not from its own centre. */
+  animation: pin-menu-in 150ms var(--pin-ease) both;
+}
+
+@keyframes pin-menu-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.pin-menu-label {
+  padding: 6px 8px 4px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ad-ink-4);
+}
+
+.pin-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 7px 8px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ad-ink-2);
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--pin-fast) var(--pin-ease);
+}
+
+.pin-menu-item:hover { background: var(--ad-inset); color: var(--ad-ink); }
+.pin-menu-item.is-active { color: var(--ad-accent); font-weight: 600; }
+.pin-menu-item.is-danger { color: var(--ad-accent); }
+.pin-menu-item.is-danger:hover { background: var(--ad-accent-wash); }
+.pin-menu-item[disabled] { color: var(--ad-ink-4); opacity: 0.55; cursor: not-allowed; }
+
+.pin-menu-sep { height: 1px; margin: 5px 4px; background: var(--ad-rule-soft); }
+
+.pin-menu-note {
+  margin: 4px 8px 4px;
+  padding-top: 6px;
+  border-top: 1px solid var(--ad-rule-soft);
+  max-width: 200px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--ad-ink-4);
+  text-wrap: pretty;
+}
+
+/* ========================================================== dialogues ==== */
+
+.pin-dialog-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-chrome-raised, 900) + 70);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(20, 22, 26, 0.4);
+  animation: pin-fade var(--pin-fast) var(--pin-ease) both;
+}
+
+/*
+ * FALLBACKS ARE NOT DECORATION HERE.
+ *
+ * The --ad-* tokens are declared on `.aims-dash`, which wraps the ADMIN
+ * portal only. This stylesheet is also imported by the faculty portal, where
+ * that class is absent and every one of those custom properties resolves to
+ * nothing -- so `background: var(--ad-card)` computed to no background at all
+ * and the expanded chart opened as a transparent panel floating over a dimmed
+ * page, with the sidebar showing through its title.
+ *
+ * A var() fallback is the fix rather than re-declaring the tokens on this
+ * element: setting them locally would OVERRIDE the values inherited from
+ * .aims-dash, taking the admin portal's dark theme down with it. A fallback is
+ * consulted only when nothing is inherited, which is exactly the condition.
+ */
+.pin-dialog {
+  width: min(480px, 100%);
+  max-height: 90dvh;
+  overflow: auto;
+  padding: 20px;
+  border-radius: 14px;
+  background: var(--ad-card, #ffffff);
+  border: 1px solid var(--ad-rule, #e6e3df);
+  color: var(--ad-ink, #14161a);
+  box-shadow: 0 24px 56px -20px rgba(20, 22, 26, 0.34);
+  animation: pin-dialog-in var(--pin-enter) var(--pin-ease) both;
+}
+
+@keyframes pin-dialog-in {
+  from { opacity: 0; transform: scale(0.97) translateY(6px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/*
+ * The expanded-chart dialog. Wider and shorter than the form dialogs, because
+ * what it holds is a chart that wants horizontal room, not a column of fields.
+ */
+.pin-dialog--wide {
+  width: min(1180px, 94vw);
+  max-width: none;
+}
+
+.pin-expand-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pin-expand-body {
+  margin-top: 14px;
+  /* Room for the tilted labels the card had to drop. */
+  min-height: 420px;
+}
+
+.pin-expand-body .ct-scroll {
+  --ct-fade: var(--ad-card, #ffffff);
+}
+
+.pin-dialog h2 {
+  margin: 0 0 3px;
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--ad-ink);
+}
+
+.pin-dialog-sub {
+  margin: 0 0 18px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--ad-ink-3);
+  text-wrap: pretty;
+}
+
+.pin-field { display: block; margin-bottom: 18px; }
+
+.pin-field > span {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ad-ink-3);
+}
+
+/* Inputs are inset — slightly darker than the card, so "type here" is read
+   from the fill rather than from a heavy border. */
+.pin-field input {
+  width: 100%;
+  padding: 9px 11px;
+  border: 1px solid var(--ad-rule-strong);
+  border-radius: 8px;
+  background: var(--ad-inset);
+  color: var(--ad-ink);
+  font-family: inherit;
+  font-size: 13.5px;
+}
+
+.pin-field input:focus-visible {
+  outline: 2px solid var(--ad-accent-edge);
+  outline-offset: 1px;
+  border-color: var(--ad-accent);
+  background: var(--ad-card);
+}
+
+.pin-visuals {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 6px;
+}
+
+.pin-visual {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 10px;
+  border: 1px solid var(--ad-rule);
+  border-radius: 8px;
+  background: var(--ad-card);
+  color: var(--ad-ink-2);
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--pin-fast) var(--pin-ease),
+              border-color var(--pin-fast) var(--pin-ease);
+}
+
+.pin-visual:hover { background: var(--ad-hover); }
+
+.pin-visual.is-on {
+  border-color: var(--ad-accent-edge);
+  background: var(--ad-accent-wash);
+  color: var(--ad-accent);
+  font-weight: 600;
+}
+
+.pin-visual.is-off {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--ad-inset);
+}
+
+.pin-visual input { accent-color: var(--ad-accent); }
+
+.pin-dialog-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.pin-dialog-error {
+  margin: 0 0 14px;
+  padding: 9px 11px;
+  border: 1px solid var(--ad-accent-edge);
+  border-radius: 8px;
+  background: var(--ad-accent-wash);
+  color: var(--ad-accent);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.pin-primary {
+  padding: 9px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--ad-accent);
+  color: #fff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--pin-fast) var(--pin-ease);
+}
+
+.pin-primary:hover { background: var(--ad-accent-hover); }
+.pin-primary:active { transform: scale(0.97); }
+.pin-primary[disabled] { opacity: 0.5; cursor: not-allowed; }
+
+.pin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 13px;
+  border: 1px solid var(--ad-rule);
+  border-radius: 8px;
+  background: var(--ad-card);
+  color: var(--ad-ink-2);
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 550;
+  cursor: pointer;
+  transition: background-color var(--pin-fast) var(--pin-ease),
+              border-color var(--pin-fast) var(--pin-ease);
+}
+
+.pin-btn:hover { background: var(--ad-hover); border-color: var(--ad-rule-strong); }
+.pin-btn:active { transform: scale(0.97); }
+.pin-btn[disabled] { opacity: 0.5; cursor: not-allowed; }
+
+/* ======================================================== empty state ==== */
+
+.pin-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 40px 20px;
+  border: 1px dashed var(--ad-rule-strong);
+  border-radius: 12px;
+  background: var(--ad-inset);
+  text-align: center;
+  color: var(--ad-ink-4);
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+.pin-empty strong { color: var(--ad-ink-2); font-size: 13.5px; font-weight: 600; }
+
+/* The refresh icon while a card's query is in flight. */
+@keyframes pin-spin { to { transform: rotate(360deg); } }
+.pin-spin { animation: pin-spin 900ms linear infinite; }
+
+/* ==================================================== reduced motion ===== */
+
+/*
+ * Movement goes; opacity and colour stay. A grid that reflows instantly is
+ * still perfectly usable — what is lost is only the sense of cards travelling,
+ * which is exactly the part this setting asks to be spared.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .pin-panel,
+  .pin-scrim,
+  .pin-menu,
+  .pin-dialog,
+  .pin-pop { animation-duration: 1ms; }
+
+  .pin-grid .react-grid-item { transition: none; }
+  .pin-spin { animation: none; }
+
+  .pin-icon-btn:active,
+  .pin-btn:active,
+  .pin-primary:active,
+  .pin-done:active,
+  .pin-row:active { transform: none; }
+}

@@ -1,0 +1,4616 @@
+{
+  "info": {
+    "_postman_id": "7ddb0848-301f-49b2-9a5c-e74cc58b4033",
+    "name": "AIMS Backend APIs",
+    "description": "AIMS Backend API Documentation\n\nAll modules for the Academic Information Management System.\n\n**Roles**: Super Admin, Admin, Teacher, Student, Parent, HR, Accountant, Library Staff\n\n**Modules**: Authentication, User Login, Student API, Student Profile, Student Filters, Teacher API, Timetable, Challan, Receipt, Fee Payment, Fee Report, Fee Status, GPA, CGPA Calculation, Teacher Assignment, Teacher Profile, Teacher Dashboard, Teacher Schedule, Student Exam, View Student Marks, Attendance, Student Documents, Marks, Parent, AI",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "56337771",
+    "_collection_link": "https://go.postman.co/collection/56337771-7ddb0848-301f-49b2-9a5c-e74cc58b4033?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "User Login",
+      "description": "Login endpoints for all roles in AIMS. Each request stores the auth token in the environment for use in other requests.",
+      "item": [
+        {
+          "name": "Super Admin Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) {",
+                  "    pm.environment.set('super_admin_token', jsonData.token);",
+                  "    pm.environment.set('auth_token', jsonData.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"system.administrator@aims.edu.pk\",\r\n    \"password\": \"SuperAdmin@1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/login",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) {",
+                  "    pm.environment.set('admin_token', jsonData.token);",
+                  "    pm.environment.set('auth_token', jsonData.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"admin1@aims.edu.pk\",\r\n    \"password\": \"Admin@1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/login",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Teacher Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) {",
+                  "    pm.environment.set('teacher_token', jsonData.token);",
+                  "    pm.environment.set('auth_token', jsonData.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"teacher1@aims.edu.pk\",\r\n    \"password\": \"Teacher@1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/login",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Student Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) {",
+                  "    pm.environment.set('student_token', jsonData.token);",
+                  "    pm.environment.set('auth_token', jsonData.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"student1@aims.edu.pk\",\r\n    \"password\": \"Student@1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/login",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Parent Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) {",
+                  "    pm.environment.set('parent_token', jsonData.token);",
+                  "    pm.environment.set('auth_token', jsonData.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"parent1@aims.edu.pk\",\r\n    \"password\": \"Parent@1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/login",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "HR Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) {",
+                  "    pm.environment.set('hr_token', jsonData.token);",
+                  "    pm.environment.set('auth_token', jsonData.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"nadia.rehman@aims.edu.pk\",\r\n    \"password\": \"Hr@1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/login",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Accountant Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) {",
+                  "    pm.environment.set('accountant_token', jsonData.token);",
+                  "    pm.environment.set('auth_token', jsonData.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"saima.akhtar@aims.edu.pk\",\r\n    \"password\": \"Accountant@1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/login",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Library Staff Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) {",
+                  "    pm.environment.set('library_token', jsonData.token);",
+                  "    pm.environment.set('auth_token', jsonData.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"rabia.nawaz@aims.edu.pk\",\r\n    \"password\": \"Library@1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/login",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fullName\": \"Ayesha Sajid\",\r\n    \"email\": \"ayesha@test.com\",\r\n    \"password\": \"Password123!\",\r\n    \"role_id\": 4\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/register",
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"ayesha@test.com\",\r\n    \"password\": \"Password123!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/login",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/auth/logout",
+              "path": [
+                "api",
+                "auth",
+                "logout"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/auth/profile",
+              "path": [
+                "api",
+                "auth",
+                "profile"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/auth/admin",
+              "path": [
+                "api",
+                "auth",
+                "admin"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"currentPassword\": \"Password123!\",\r\n    \"newPassword\": \"NewPassword123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/change-password",
+              "path": [
+                "api",
+                "auth",
+                "change-password"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Forget Password",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"ayesha@test.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/forgot-password",
+              "path": [
+                "api",
+                "auth",
+                "forgot-password"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Student API",
+      "description": "GET /api/students, GET /api/students/:id, POST /api/students, PUT /api/students/:id, DELETE /api/students/:id",
+      "item": [
+        {
+          "name": "Get All Students",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/students",
+              "path": [
+                "api",
+                "students"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Student By ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/students/1",
+              "path": [
+                "api",
+                "students",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Student",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"registration_number\": \"2024-CS-001\",\r\n    \"first_name\": \"Ayesha\",\r\n    \"last_name\": \"Sajid\",\r\n    \"cnic_bform\": \"61101-1234567-8\",\r\n    \"phone\": \"03001234567\",\r\n    \"dob\": \"2004-10-25\",\r\n    \"program_id\": 10,\r\n    \"batch_id\": 8,\r\n    \"section_id\": 6\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/students",
+              "path": [
+                "api",
+                "students"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Student",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"first_name\": \"Ayesha\",\r\n    \"last_name\": \"Sajid\",\r\n    \"phone\": \"03112223333\",\r\n    \"dob\": \"2004-10-25\",\r\n    \"program_id\": 10,\r\n    \"batch_id\": 8,\r\n    \"section_id\": 6,\r\n    \"academic_status\": \"Active\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/students/1",
+              "path": [
+                "api",
+                "students",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Student",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/students/1",
+              "path": [
+                "api",
+                "students",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Student Profile",
+      "description": "Student profile management - registration, documents, guardians",
+      "item": [
+        {
+          "name": "Register Student",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"registration_number\": \"2024-CS-001\",\r\n    \"first_name\": \"Ayesha\",\r\n    \"last_name\": \"Sajid\",\r\n    \"cnic_bform\": \"61101-1234567-8\",\r\n    \"phone\": \"03001234567\",\r\n    \"dob\": \"2004-10-25\",\r\n    \"program_id\": 10,\r\n    \"batch_id\": 8,\r\n    \"section_id\": 6\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/students/register",
+              "path": [
+                "api",
+                "students",
+                "register"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Student Profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/students/13",
+              "path": [
+                "api",
+                "students",
+                "13"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Student Document",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "student_id",
+                  "type": "text",
+                  "value": "13"
+                },
+                {
+                  "key": "doc_type",
+                  "type": "text",
+                  "value": "CNIC"
+                },
+                {
+                  "key": "document",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/students/upload-document",
+              "path": [
+                "api",
+                "students",
+                "upload-document"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Guardian",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/students/guardians/1",
+              "path": [
+                "api",
+                "students",
+                "guardians",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Student Filters",
+      "description": "Search and filter students by name, program, batch, section, status, and combined filters",
+      "item": [
+        {
+          "name": "Search Student",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/students/search",
+              "path": [
+                "api",
+                "students",
+                "search"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Filter by Name",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/students/search?search=Ali",
+              "path": [
+                "api",
+                "students",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "Ali"
+                }
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Filter by Program",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/students/search?program_id=1",
+              "path": [
+                "api",
+                "students",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "program_id",
+                  "value": "1"
+                }
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Filter by Batch",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/students/search?batch_id=2",
+              "path": [
+                "api",
+                "students",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "batch_id",
+                  "value": "2"
+                }
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Filter by Section",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/students/search?section_id=1",
+              "path": [
+                "api",
+                "students",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "section_id",
+                  "value": "1"
+                }
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Filter by Status",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/students/search?academic_status=Active",
+              "path": [
+                "api",
+                "students",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "academic_status",
+                  "value": "Active"
+                }
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Combined Filter",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/students/search?search=Ali&program_id=1&batch_id=2",
+              "path": [
+                "api",
+                "students",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "Ali"
+                },
+                {
+                  "key": "program_id",
+                  "value": "1"
+                },
+                {
+                  "key": "batch_id",
+                  "value": "2"
+                }
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Teacher API",
+      "description": "GET /api/teachers, GET /api/teachers/:id, POST /api/teachers, PUT /api/teachers/:id, DELETE /api/teachers/:id",
+      "item": [
+        {
+          "name": "Get All Teachers",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/teachers",
+              "path": [
+                "api",
+                "teachers"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Teacher By ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/teachers/1",
+              "path": [
+                "api",
+                "teachers",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Teacher",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"first_name\": \"Imran\",\r\n    \"last_name\": \"Sheikh\",\r\n    \"email\": \"imran.sheikh@aims.edu.pk\",\r\n    \"phone\": \"03001234567\",\r\n    \"department_id\": 1,\r\n    \"designation\": \"Lecturer\",\r\n    \"qualification\": \"MS Computer Science\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/teachers",
+              "path": [
+                "api",
+                "teachers"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Teacher",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"first_name\": \"Imran\",\r\n    \"last_name\": \"Sheikh\",\r\n    \"phone\": \"03009876543\",\r\n    \"designation\": \"Senior Lecturer\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/teachers/1",
+              "path": [
+                "api",
+                "teachers",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Teacher",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/teachers/1",
+              "path": [
+                "api",
+                "teachers",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Timetable API",
+      "description": "GET /api/timetables, GET /api/timetables/:id, POST /api/timetables, PUT /api/timetables/:id, DELETE /api/timetables/:id",
+      "item": [
+        {
+          "name": "Get All Timetables",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/timetables",
+              "path": [
+                "api",
+                "timetables"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Timetable By ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/timetables/1",
+              "path": [
+                "api",
+                "timetables",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Timetable",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"subject_id\": 1,\r\n    \"teacher_id\": 1,\r\n    \"section_id\": 1,\r\n    \"classroom_id\": 1,\r\n    \"day_of_week\": \"Monday\",\r\n    \"start_time\": \"09:00\",\r\n    \"end_time\": \"10:30\",\r\n    \"semester_id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/timetables",
+              "path": [
+                "api",
+                "timetables"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Timetable",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"day_of_week\": \"Tuesday\",\r\n    \"start_time\": \"10:00\",\r\n    \"end_time\": \"11:30\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/timetables/1",
+              "path": [
+                "api",
+                "timetables",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Timetable",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/timetables/1",
+              "path": [
+                "api",
+                "timetables",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Challan API",
+      "description": "GET /api/challans, GET /api/challans/:id, POST /api/challans, PUT /api/challans/:id, DELETE /api/challans/:id",
+      "item": [
+        {
+          "name": "Get All Challans",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/challans",
+              "path": [
+                "api",
+                "challans"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Challan By ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/challans/1",
+              "path": [
+                "api",
+                "challans",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Challan",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accountant_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"student_id\": 1,\r\n    \"semester_id\": 1,\r\n    \"amount\": 50000,\r\n    \"due_date\": \"2026-09-15\",\r\n    \"challan_type\": \"Tuition Fee\",\r\n    \"status\": \"Pending\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/challans",
+              "path": [
+                "api",
+                "challans"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Challan",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accountant_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"amount\": 55000,\r\n    \"status\": \"Paid\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/challans/1",
+              "path": [
+                "api",
+                "challans",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Challan",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/challans/1",
+              "path": [
+                "api",
+                "challans",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Receipt API",
+      "description": "GET /api/receipts, GET /api/receipts/:id, POST /api/receipts, PUT /api/receipts/:id, DELETE /api/receipts/:id",
+      "item": [
+        {
+          "name": "Get All Receipts",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/receipts",
+              "path": [
+                "api",
+                "receipts"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Receipt By ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/receipts/1",
+              "path": [
+                "api",
+                "receipts",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Receipt",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accountant_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"challan_id\": 1,\r\n    \"student_id\": 1,\r\n    \"amount_paid\": 50000,\r\n    \"payment_date\": \"2026-09-10\",\r\n    \"payment_method\": \"Bank Transfer\",\r\n    \"receipt_number\": \"REC-2026-001\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/receipts",
+              "path": [
+                "api",
+                "receipts"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Receipt",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accountant_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"amount_paid\": 55000,\r\n    \"payment_method\": \"Online\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/receipts/1",
+              "path": [
+                "api",
+                "receipts",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Receipt",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/receipts/1",
+              "path": [
+                "api",
+                "receipts",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Fee Payment API",
+      "description": "GET /api/fee-payments, GET /api/fee-payments/:id, POST /api/fee-payments, PUT /api/fee-payments/:id, DELETE /api/fee-payments/:id",
+      "item": [
+        {
+          "name": "Get All Fee Payments",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/fee-payments",
+              "path": [
+                "api",
+                "fee-payments"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Fee Payment By ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/fee-payments/1",
+              "path": [
+                "api",
+                "fee-payments",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Fee Payment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accountant_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"student_id\": 1,\r\n    \"challan_id\": 1,\r\n    \"amount\": 50000,\r\n    \"payment_date\": \"2026-09-10\",\r\n    \"payment_method\": \"Bank Transfer\",\r\n    \"transaction_id\": \"TXN-2026-001\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/fee-payments",
+              "path": [
+                "api",
+                "fee-payments"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Fee Payment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accountant_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"amount\": 55000,\r\n    \"payment_method\": \"Online\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/fee-payments/1",
+              "path": [
+                "api",
+                "fee-payments",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Fee Payment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/fee-payments/1",
+              "path": [
+                "api",
+                "fee-payments",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Fee Report API",
+      "description": "GET /api/fee-reports, GET /api/fee-reports/:id",
+      "item": [
+        {
+          "name": "Get All Fee Reports",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/fee-reports",
+              "path": [
+                "api",
+                "fee-reports"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Fee Report By ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/fee-reports/1",
+              "path": [
+                "api",
+                "fee-reports",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Fee Status API",
+      "description": "GET /api/fee-status, GET /api/fee-status/:id",
+      "item": [
+        {
+          "name": "Get All Fee Status",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/fee-status",
+              "path": [
+                "api",
+                "fee-status"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Fee Status By ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/fee-status/1",
+              "path": [
+                "api",
+                "fee-status",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "GPA API",
+      "description": "GET /api/gpa, GET /api/gpa/:id, POST /api/gpa, PUT /api/gpa/:id, DELETE /api/gpa/:id",
+      "item": [
+        {
+          "name": "Get All GPA",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/gpa",
+              "path": [
+                "api",
+                "gpa"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get GPA By ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/gpa/1",
+              "path": [
+                "api",
+                "gpa",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create GPA",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"student_id\": 1,\r\n    \"semester_id\": 1,\r\n    \"gpa\": 3.5,\r\n    \"total_credit_hours\": 18,\r\n    \"earned_credit_hours\": 18\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/gpa",
+              "path": [
+                "api",
+                "gpa"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update GPA",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"gpa\": 3.7,\r\n    \"earned_credit_hours\": 18\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/gpa/1",
+              "path": [
+                "api",
+                "gpa",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete GPA",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/gpa/1",
+              "path": [
+                "api",
+                "gpa",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "CGPA Calculation",
+      "description": "Calculate GPA per semester and cumulative CGPA for students",
+      "item": [
+        {
+          "name": "Calculate GPA",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"student_id\": 1,\r\n    \"semester_id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/results/calculate",
+              "path": [
+                "api",
+                "results",
+                "calculate"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Calculate CGPA",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/results/cgpa/1",
+              "path": [
+                "api",
+                "results",
+                "cgpa",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Publish Result",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/results/publish/1",
+              "path": [
+                "api",
+                "results",
+                "publish",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Transcript",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/results/transcript/1",
+              "path": [
+                "api",
+                "results",
+                "transcript",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Examination Report",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/results/report/51",
+              "path": [
+                "api",
+                "results",
+                "report",
+                "51"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Teacher Assignment API",
+      "description": "GET /api/teacher-assignments, GET /api/teacher-assignments/:id, POST /api/teacher-assignments, PUT /api/teacher-assignments/:id, DELETE /api/teacher-assignments/:id",
+      "item": [
+        {
+          "name": "Get All Teacher Assignments",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/teacher-assignments",
+              "path": [
+                "api",
+                "teacher-assignments"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Teacher Assignment By ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/teacher-assignments/1",
+              "path": [
+                "api",
+                "teacher-assignments",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Teacher Assignment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"teacher_id\": 1,\r\n    \"subject_id\": 1,\r\n    \"section_id\": 1,\r\n    \"semester_id\": 1,\r\n    \"academic_year\": \"2026-2027\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/teacher-assignments",
+              "path": [
+                "api",
+                "teacher-assignments"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Teacher Assignment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"section_id\": 2,\r\n    \"academic_year\": \"2026-2027\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/teacher-assignments/1",
+              "path": [
+                "api",
+                "teacher-assignments",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Teacher Assignment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/teacher-assignments/1",
+              "path": [
+                "api",
+                "teacher-assignments",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Teacher Profile API",
+      "description": "GET /api/teacher-profiles, GET /api/teacher-profiles/:id, POST /api/teacher-profiles, PUT /api/teacher-profiles/:id, DELETE /api/teacher-profiles/:id",
+      "item": [
+        {
+          "name": "Get All Teacher Profiles",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/teacher-profiles",
+              "path": [
+                "api",
+                "teacher-profiles"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Teacher Profile By ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/teacher-profiles/1",
+              "path": [
+                "api",
+                "teacher-profiles",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Teacher Profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"teacher_id\": 1,\r\n    \"bio\": \"Experienced CS lecturer\",\r\n    \"specialization\": \"Machine Learning\",\r\n    \"office_hours\": \"Mon-Wed 2-4 PM\",\r\n    \"office_location\": \"Room 302\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/teacher-profiles",
+              "path": [
+                "api",
+                "teacher-profiles"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Teacher Profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{teacher_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"bio\": \"Senior CS lecturer with 10 years experience\",\r\n    \"office_hours\": \"Mon-Fri 2-4 PM\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/teacher-profiles/1",
+              "path": [
+                "api",
+                "teacher-profiles",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Teacher Profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/teacher-profiles/1",
+              "path": [
+                "api",
+                "teacher-profiles",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Teacher Dashboard API",
+      "description": "GET /api/teacher-dashboard/:id",
+      "item": [
+        {
+          "name": "Get Teacher Dashboard",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{teacher_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/teacher-dashboard/1",
+              "path": [
+                "api",
+                "teacher-dashboard",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Teacher Schedule API",
+      "description": "GET /api/teacher-schedules, GET /api/teacher-schedules/:id, POST /api/teacher-schedules, PUT /api/teacher-schedules/:id, DELETE /api/teacher-schedules/:id",
+      "item": [
+        {
+          "name": "Get All Teacher Schedules",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/teacher-schedules",
+              "path": [
+                "api",
+                "teacher-schedules"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Teacher Schedule By ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{teacher_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/teacher-schedules/1",
+              "path": [
+                "api",
+                "teacher-schedules",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Teacher Schedule",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"teacher_id\": 1,\r\n    \"day_of_week\": \"Monday\",\r\n    \"start_time\": \"09:00\",\r\n    \"end_time\": \"10:30\",\r\n    \"subject_id\": 1,\r\n    \"room\": \"CS-Lab-1\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/teacher-schedules",
+              "path": [
+                "api",
+                "teacher-schedules"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Teacher Schedule",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"day_of_week\": \"Tuesday\",\r\n    \"start_time\": \"10:00\",\r\n    \"end_time\": \"11:30\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/teacher-schedules/1",
+              "path": [
+                "api",
+                "teacher-schedules",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Teacher Schedule",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/teacher-schedules/1",
+              "path": [
+                "api",
+                "teacher-schedules",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Student Exam",
+      "description": "Get Exam By ID, Create/Update/Delete exams",
+      "item": [
+        {
+          "name": "Create Exam",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"exam_name\": \"Mid Term 1\",\r\n    \"exam_type\": \"Mid-Term\",\r\n    \"semester_id\": 1,\r\n    \"subject_id\": 1,\r\n    \"exam_date\": \"2026-08-15\",\r\n    \"total_marks\": 50,\r\n    \"classroom_id\": 1,\r\n    \"invigilator_id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/exams",
+              "path": [
+                "api",
+                "exams"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Exams",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/exams",
+              "path": [
+                "api",
+                "exams"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Exam By ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/exams/1",
+              "path": [
+                "api",
+                "exams",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Exam",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"exam_name\": \"Final Examination\",\r\n    \"total_marks\": 100\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/exams/1",
+              "path": [
+                "api",
+                "exams",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Exam",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/exams/1",
+              "path": [
+                "api",
+                "exams",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "View Student Marks",
+      "description": "Enter, view, update, and verify student marks",
+      "item": [
+        {
+          "name": "Enter Marks",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{teacher_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"exam_id\": 51,\r\n    \"student_id\": 1,\r\n    \"obtained_marks\": 45,\r\n    \"entered_by\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/marks",
+              "path": [
+                "api",
+                "marks"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Student Marks",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/marks/student/1",
+              "path": [
+                "api",
+                "marks",
+                "student",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Marks",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{teacher_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"obtained_marks\": 48\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/marks/1",
+              "path": [
+                "api",
+                "marks",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify Marks",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"verified_by\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/marks/verify/1",
+              "path": [
+                "api",
+                "marks",
+                "verify",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "View Attendance",
+      "description": "Mark, view, update attendance and get attendance reports/percentages",
+      "item": [
+        {
+          "name": "Mark Attendance",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{teacher_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"student_id\": 18,\r\n    \"subject_id\": 1,\r\n    \"timetable_id\": 1,\r\n    \"att_date\": \"2026-07-24\",\r\n    \"status\": \"Present\",\r\n    \"marked_by\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/attendance",
+              "path": [
+                "api",
+                "attendance"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Student Attendance",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/attendance/student/13",
+              "path": [
+                "api",
+                "attendance",
+                "student",
+                "13"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Attendance",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{teacher_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"Late\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/attendance/5",
+              "path": [
+                "api",
+                "attendance",
+                "5"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Attendance Percentage",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/attendance/percentage/13",
+              "path": [
+                "api",
+                "attendance",
+                "percentage",
+                "13"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Attendance Report",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/attendance/report/1",
+              "path": [
+                "api",
+                "attendance",
+                "report",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Student Documents",
+      "item": [
+        {
+          "name": "Upload Student Document",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "student_id",
+                  "value": "13",
+                  "type": "text"
+                },
+                {
+                  "key": "doc_type",
+                  "value": "CNIC",
+                  "type": "text"
+                },
+                {
+                  "key": "document",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/students/upload-document",
+              "path": [
+                "api",
+                "students",
+                "upload-document"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Student Documents",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/students/documents/13",
+              "path": [
+                "api",
+                "students",
+                "documents",
+                "13"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Document",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/students/documents/13",
+              "path": [
+                "api",
+                "students",
+                "documents",
+                "13"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Parent",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"parent1@aims.edu.pk\",\r\n  \"password\": \"Parent@1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/parents/login",
+              "path": [
+                "api",
+                "parents",
+                "login"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{parent_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/parent/profile",
+              "path": [
+                "api",
+                "parent",
+                "profile"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Child Profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{parent_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/parent/children",
+              "path": [
+                "api",
+                "parent",
+                "children"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "View Attendance",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{parent_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/parent/attendance",
+              "path": [
+                "api",
+                "parent",
+                "attendance"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Fee Status",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{parent_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"parent1@aims.edu.pk\",\r\n  \"password\": \"Parent@1234\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/parent/fee-status",
+              "path": [
+                "api",
+                "parent",
+                "fee-status"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Challan",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{parent_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/parent/challan",
+              "path": [
+                "api",
+                "parent",
+                "challan"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Receipt",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{parent_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/parent/receipt",
+              "path": [
+                "api",
+                "parent",
+                "receipt"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Timetable",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{parent_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/parent/timetable",
+              "path": [
+                "api",
+                "parent",
+                "timetable"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Results",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{parent_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/parent/results",
+              "path": [
+                "api",
+                "parent",
+                "results"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CGPA",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{parent_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/parent/gpa-cgpa",
+              "path": [
+                "api",
+                "parent",
+                "gpa-cgpa"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Notification",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{parent_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/parent/notifications",
+              "path": [
+                "api",
+                "parent",
+                "notifications"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "AI",
+      "item": [
+        {
+          "name": "Predict Performance",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"student_id\": \"S00123\",\r\n  \"program\": \"BS Cyber Security\",\r\n  \"semester_number\": 4,\r\n  \"attendance_percentage\": 82,\r\n  \"assignment_submission_rate\": 0.85,\r\n  \"quiz_average\": 74,\r\n  \"midterm_marks\": 68,\r\n  \"previous_academic_score\": 76,\r\n  \"fee_payment_status\": \"paid\",\r\n  \"days_fee_overdue\": 0,\r\n  \"lms_login_count_per_week\": 5\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8080/predict-performance",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8080",
+              "path": [
+                "predict-performance"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Health",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:8080/health",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8080",
+              "path": [
+                "health"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Predict",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/ai/predict/1",
+              "path": [
+                "api",
+                "ai",
+                "predict",
+                "1"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Health (via Backend)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/ai/health",
+              "path": [
+                "api",
+                "ai",
+                "health"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Report",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/ai/reports",
+              "path": [
+                "api",
+                "ai",
+                "reports"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Fee Prediction",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Chat",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"student_id\": 1,\r\n    \"question\": \"What is my remaining fee?\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/ai/chat",
+              "path": [
+                "api",
+                "ai",
+                "chat"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "OCR",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/ai/ocr",
+              "path": [
+                "api",
+                "ai",
+                "ocr"
+              ],
+              "protocol": "http",
+              "port": "5000",
+              "host": [
+                "localhost"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": []
+}

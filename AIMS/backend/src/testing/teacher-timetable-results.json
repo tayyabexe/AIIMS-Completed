@@ -1,0 +1,930 @@
+[
+ {
+  "ep": "GET /api/teachers",
+  "test": "role 1 SuperAdmin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/teachers",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/teachers",
+  "test": "role 3 Teacher",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/teachers",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/teachers",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/teachers",
+  "test": "role 6 HR",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/teachers",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/teachers",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/teachers",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/teachers",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/teachers/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/teachers/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/teachers/:id",
+  "test": "role 3 Teacher",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/teachers/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/teachers/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/teachers/:id",
+  "test": "role 6 HR",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/teachers/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/teachers/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/teachers/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/teachers/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "PUT /api/teachers/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "allow",
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "PUT /api/teachers/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "PUT /api/teachers/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "PUT /api/teachers/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "PUT /api/teachers/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "PUT /api/teachers/:id",
+  "test": "role 6 HR",
+  "exp": "allow",
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "PUT /api/teachers/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "PUT /api/teachers/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "PUT /api/teachers/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "PUT /api/teachers/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "DELETE /api/teachers/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "allow",
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "DELETE /api/teachers/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "DELETE /api/teachers/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "DELETE /api/teachers/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "DELETE /api/teachers/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "DELETE /api/teachers/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "DELETE /api/teachers/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "DELETE /api/teachers/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "DELETE /api/teachers/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "DELETE /api/teachers/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/teachers",
+  "test": "role 1 SuperAdmin",
+  "exp": "allow",
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/teachers",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/teachers",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/teachers",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/teachers",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/teachers",
+  "test": "role 6 HR",
+  "exp": "allow",
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/teachers",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/teachers",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/teachers",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/teachers",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/teachers",
+  "test": "create",
+  "exp": 201,
+  "got": 409,
+  "pass": false,
+  "note": "{\"success\":false,\"message\":\"Teacher already exists for this "
+ },
+ {
+  "ep": "POST /api/teachers",
+  "test": "empty body",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/teachers",
+  "test": "no password_hash",
+  "exp": "absent",
+  "got": "absent",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/timetables",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/timetables",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/timetables",
+  "test": "role 3 Teacher",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/timetables",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/timetables",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/timetables",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/timetables",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/timetables",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/timetables",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/timetables",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/timetables/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/timetables/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/timetables/:id",
+  "test": "role 3 Teacher",
+  "exp": "allow",
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/timetables/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 200,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/timetables/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/timetables/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/timetables/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/timetables/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/timetables/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/timetables/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "PUT /api/timetables/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 404,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "ep": "PUT /api/timetables/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "PUT /api/timetables/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "PUT /api/timetables/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "PUT /api/timetables/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "PUT /api/timetables/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "PUT /api/timetables/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "PUT /api/timetables/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "PUT /api/timetables/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "PUT /api/timetables/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "DELETE /api/timetables/:id",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 404,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "ep": "DELETE /api/timetables/:id",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "DELETE /api/timetables/:id",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "DELETE /api/timetables/:id",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "DELETE /api/timetables/:id",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "DELETE /api/timetables/:id",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "DELETE /api/timetables/:id",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "DELETE /api/timetables/:id",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "DELETE /api/timetables/:id",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "DELETE /api/timetables/:id",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/timetables",
+  "test": "role 1 SuperAdmin",
+  "exp": "403",
+  "got": 400,
+  "pass": false,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/timetables",
+  "test": "role 2 Admin",
+  "exp": "allow",
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/timetables",
+  "test": "role 3 Teacher",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/timetables",
+  "test": "role 4 Student",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/timetables",
+  "test": "role 5 Parent",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/timetables",
+  "test": "role 6 HR",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/timetables",
+  "test": "role 7 Accountant",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/timetables",
+  "test": "role 8 Library",
+  "exp": "403",
+  "got": 403,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/timetables",
+  "test": "no token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/timetables",
+  "test": "bad token",
+  "exp": 401,
+  "got": 401,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/timetables",
+  "test": "create",
+  "exp": 201,
+  "got": 201,
+  "pass": true,
+  "note": "id=92"
+ },
+ {
+  "ep": "POST /api/timetables",
+  "test": "DB row exists",
+  "exp": "found",
+  "got": "found",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/timetables",
+  "test": "DB day_of_week",
+  "exp": "Friday",
+  "got": "Friday",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "GET /api/timetables/:id",
+  "test": "read back",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "PUT /api/timetables/:id",
+  "test": "update",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "PUT /api/timetables/:id",
+  "test": "DB day_of_week",
+  "exp": "Saturday",
+  "got": "Saturday",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "DELETE /api/timetables/:id",
+  "test": "delete",
+  "exp": 200,
+  "got": 200,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "DELETE /api/timetables/:id",
+  "test": "DB removed",
+  "exp": "removed",
+  "got": "hard",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "DELETE /api/timetables/:id",
+  "test": "double delete",
+  "exp": 404,
+  "got": 404,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/timetables",
+  "test": "empty body",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/timetables",
+  "test": "invalid day_of_week",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/timetables",
+  "test": "end before start",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ },
+ {
+  "ep": "POST /api/timetables",
+  "test": "nonexistent subject_id",
+  "exp": 400,
+  "got": 400,
+  "pass": true,
+  "note": ""
+ }
+]

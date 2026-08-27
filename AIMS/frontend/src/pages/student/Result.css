@@ -1,0 +1,1037 @@
+/* ====================================================
+   Result.css — Academic Results Page Styles
+   ==================================================== */
+
+.result-page {
+  padding: 24px 32px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.result-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.result-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #16181d;
+  margin-bottom: 4px;
+}
+
+.result-subtitle {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* ── Semester pills ── */
+.sem-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sem-pill {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  color: #4b5563;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sem-pill:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.sem-pill.active {
+  background: #b91c2c;
+  border-color: #b91c2c;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(185, 28, 44, 0.25);
+}
+
+/* ── Overview grid ── */
+.overview-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 20px;
+}
+
+.overview-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+/* ── CGPA ring card ── */
+.cgpa-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.cgpa-ring-wrap {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin-bottom: 10px;
+}
+
+.cgpa-ring-wrap svg {
+  width: 100%;
+  height: 100%;
+}
+
+.cgpa-ring-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cgpa-value {
+  font-family: 'Outfit', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #16181d;
+}
+
+.cgpa-label {
+  font-size: 11.5px;
+  color: #9ca3af;
+}
+
+.cgpa-stats-row {
+  display: flex;
+  gap: 24px;
+  margin-top: 6px;
+}
+
+.cgpa-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cgpa-stat-val {
+  font-size: 18px;
+  font-weight: 700;
+  color: #16181d;
+}
+
+.cgpa-stat-lbl {
+  font-size: 11px;
+  color: #9ca3af;
+  font-weight: 600;
+}
+
+/* ── Summary stat boxes ── */
+.summary-card-wide {
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.summary-stat-box {
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.summary-stat-box.green {
+  background: #e3f6ea;
+}
+
+.summary-stat-box.purple {
+  background: #f0e6ff;
+}
+
+.summary-stat-box.orange {
+  background: #fdf1de;
+}
+
+.summary-stat-box.blue {
+  background: #dbeafe;
+}
+
+.summary-stat-value {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.summary-stat-box.green .summary-stat-value {
+  color: #16a34a;
+}
+
+.summary-stat-box.purple .summary-stat-value {
+  color: #7c3aed;
+}
+
+.summary-stat-box.orange .summary-stat-value {
+  color: #d97706;
+}
+
+.summary-stat-box.blue .summary-stat-value {
+  color: #2563eb;
+}
+
+.summary-stat-label {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+/* ── Grade distribution ── */
+.grade-dist-title {
+  margin-bottom: 12px;
+}
+
+.grade-dist {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  height: 130px;
+  padding-top: 8px;
+}
+
+.grade-bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+.grade-bar-count {
+  font-size: 11px;
+  font-weight: 700;
+  color: #4b5563;
+  margin-bottom: 4px;
+}
+
+.grade-bar-track {
+  width: 100%;
+  max-width: 32px;
+  height: 80px;
+  background: #f3f4f6;
+  border-radius: 6px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.grade-bar-fill {
+  width: 100%;
+  border-radius: 6px;
+  transition: height 0.5s ease;
+  min-height: 4px;
+}
+
+.grade-bar-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #6b7280;
+  margin-top: 6px;
+}
+
+/* ── Result table ── */
+.table-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 22px 24px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  overflow-x: auto;
+}
+
+.table-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.table-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.table-legend span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.dot-legend {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-legend.excellent {
+  background: #16a34a;
+}
+
+.dot-legend.good {
+  background: #2563eb;
+}
+
+.dot-legend.average {
+  background: #d97706;
+}
+
+.dot-legend.poor {
+  background: #dc2626;
+}
+
+.result-table {
+  min-width: 800px;
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 0.7fr 1.6fr 0.9fr 1.1fr 1fr 1fr 1.1fr 0.7fr 0.8fr 0.8fr;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f2f4;
+  font-size: 12.5px;
+  border-radius: 6px;
+}
+
+.table-row:last-child {
+  border-bottom: none;
+}
+
+.table-head {
+  color: #9ca3af;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border-bottom: 1px solid #eceef2;
+}
+
+/* Row highlight classes */
+.row-excellent {
+  background: transparent;
+}
+
+.row-excellent:hover {
+  background: #f0fdf4;
+}
+
+.row-good:hover {
+  background: #eff6ff;
+}
+
+.row-average:hover {
+  background: #fffbeb;
+}
+
+.row-poor:hover {
+  background: #fef2f2;
+}
+
+.cell-code {
+  font-weight: 700;
+  color: #b91c2c;
+}
+
+.cell-subject {
+  color: #16181d;
+  font-weight: 600;
+}
+
+.cell-internal {
+  color: #4b5563;
+}
+
+.cell-external {
+  color: #4b5563;
+}
+
+.cell-total {
+  font-weight: 700;
+  color: #16181d;
+}
+
+/* Grade colors */
+.cell-grade {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.grade-Ap {
+  color: #16a34a;
+}
+
+.grade-A {
+  color: #22c55e;
+}
+
+.grade-Bp {
+  color: #2563eb;
+}
+
+.grade-B {
+  color: #7c3aed;
+}
+
+.grade-Cp {
+  color: #d97706;
+}
+
+.grade-C {
+  color: #ea580c;
+}
+
+.grade-D {
+  color: #9ca3af;
+}
+
+.grade-F {
+  color: #dc2626;
+}
+
+.cell-gp {
+  font-weight: 700;
+  color: #4b5563;
+}
+
+.status-pill {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+.status-pill.good {
+  background: #e3f6ea;
+  color: #16a34a;
+}
+
+.status-pill.low {
+  background: #fbe6e8;
+  color: #dc2626;
+}
+
+.table-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding: 14px 0 0;
+  margin-top: 6px;
+  border-top: 2px solid #f1f2f4;
+}
+
+.table-footer-item {
+  font-size: 13px;
+  color: #4b5563;
+}
+
+.table-footer-item strong {
+  color: #16181d;
+}
+
+.cgpa-highlight {
+  color: #16a34a;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* ── Pagination ── */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 0 4px;
+  flex-wrap: wrap;
+}
+
+.pagination-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  color: #4b5563;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  color: #16181d;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pagination-pages {
+  display: flex;
+  gap: 6px;
+}
+
+.pagination-page {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  color: #4b5563;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination-page:hover:not(.active) {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.pagination-page.active {
+  background: #b91c2c;
+  border-color: #b91c2c;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(185, 28, 44, 0.25);
+}
+
+.pagination-info {
+  font-size: 12px;
+  color: #9ca3af;
+  font-weight: 600;
+  margin-left: 8px;
+}
+
+@media (max-width: 640px) {
+  .pagination {
+    gap: 8px;
+  }
+  .pagination-btn {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+  .pagination-page {
+    width: 30px;
+    height: 30px;
+    font-size: 11px;
+  }
+  .pagination-info {
+    width: 100%;
+    text-align: center;
+    margin-left: 0;
+  }
+}
+
+/* ── Achievement card ── */
+.achievement-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 22px 24px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+/* ── Achievement card ── */
+.achievement-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.achievement-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.achievement-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.achievement-icon svg {
+  width: 17px;
+  height: 17px;
+}
+
+.achievement-icon.award {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.achievement-icon.check {
+  background: #d1fae5;
+  color: #16a34a;
+}
+
+.achievement-icon.star {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.achievement-icon.warning {
+  background: #fbe6e8;
+  color: #dc2626;
+}
+
+.achievement-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.achievement-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #16181d;
+}
+
+.achievement-value {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* ── Semester progress bar ── */
+.cgpa-bar-block {
+  border-top: 1px solid #f1f2f4;
+  padding-top: 16px;
+}
+
+.sem-progress-bar {
+  width: 100%;
+}
+
+.sem-progress-track {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 32px;
+  position: relative;
+}
+
+.sem-progress-seg {
+  height: 100%;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.sem-progress-seg.filled {
+  background: #b91c2c;
+}
+
+.sem-progress-seg:not(.filled) {
+  background: #eceef2;
+}
+
+.sem-progress-label {
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.sem-progress-labels {
+  display: flex;
+  font-size: 10.5px;
+  color: #9ca3af;
+  padding-top: 4px;
+}
+
+/* ── Card title ── */
+.card-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #16181d;
+  display: block;
+  margin-bottom: 16px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+  .overview-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .result-title {
+    font-size: 20px;
+  }
+
+  .cgpa-ring-wrap {
+    width: 120px;
+    height: 120px;
+  }
+
+  .cgpa-value {
+    font-size: 22px;
+  }
+
+  .grade-bar-track {
+    max-width: 24px;
+    height: 60px;
+  }
+
+  .table-row {
+    font-size: 11.5px;
+    gap: 6px;
+  }
+
+  .summary-stat-value {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .result-page {
+    padding: 14px;
+  }
+
+  .result-title {
+    font-size: 18px;
+  }
+
+  .result-page-header {
+    flex-direction: column;
+  }
+
+  .sem-pills {
+    width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sem-pill {
+    white-space: nowrap;
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+
+  .summary-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .summary-stat-box {
+    padding: 10px 12px;
+  }
+
+  .summary-stat-value {
+    font-size: 16px;
+  }
+
+  .overview-card {
+    padding: 16px;
+  }
+
+  .cgpa-ring-wrap {
+    width: 110px;
+    height: 110px;
+  }
+
+  .cgpa-value {
+    font-size: 20px;
+  }
+
+  .table-legend {
+    display: none;
+  }
+
+  .cgpa-stats-row {
+    gap: 14px;
+  }
+
+  .cgpa-stat-val {
+    font-size: 14px;
+  }
+
+  .grade-dist {
+    height: 100px;
+    gap: 10px;
+  }
+
+  .grade-bar-track {
+    max-width: 22px;
+    height: 55px;
+  }
+
+  .table-card {
+    padding: 16px;
+  }
+
+  .table-row {
+    font-size: 10.5px;
+    gap: 5px;
+  }
+
+  .achievement-card {
+    padding: 16px;
+  }
+
+  .achievement-item {
+    gap: 10px;
+  }
+
+  .achievement-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .achievement-label {
+    font-size: 12px;
+  }
+
+  .achievement-value {
+    font-size: 11px;
+  }
+}
+/* ── Empty / loading / error states ────────────────────────────── */
+.result-empty-card {
+  padding: 3rem 2rem;
+  text-align: center;
+  background-color: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  margin-top: 1rem;
+}
+
+.result-empty-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #f8fafc;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #cbd5e1;
+  margin-bottom: 1rem;
+}
+
+.result-empty-icon svg { width: 26px; height: 26px; }
+
+.result-empty-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+}
+
+.result-empty-text {
+  font-size: 0.88rem;
+  color: #64748b;
+  margin-top: 6px;
+}
+
+.result-inline-empty {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0.5rem 0;
+}
+
+/* The small caption under the GPA ring. It used to explain that the GPA above
+   it had been computed in the browser because no result was published; that
+   provisional figure is gone, and the caption now carries the publication date
+   of the real one. */
+.result-note {
+  font-size: 0.72rem;
+  color: #64748b;
+  text-align: center;
+  margin: 0.4rem 0 0;
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   AWAITING-RESULT STATES  (Tasks 8, 9, 10)
+   --------------------------------------------------------------------------
+   The page now distinguishes three things it used to render identically as
+   emptiness: a course that has not been marked, a semester whose result the
+   institute has not published, and a figure that genuinely does not exist.
+
+   These styles are deliberately calm — amber and slate, not red. Waiting for a
+   result is the normal state of a semester in progress, and a student opening
+   this page mid-term should not be met with something that reads as an alert.
+   ========================================================================== */
+
+/* ── GPA card, unpublished state ──
+   Replaces the ring entirely rather than greying it out. A dimmed "0.00" is
+   still a number on the card where a student reads their standing. */
+.gpa-pending {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  padding: 22px 12px 18px;
+}
+
+.gpa-pending-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #fdf1de;
+  color: #d97706;
+}
+
+.gpa-pending-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.gpa-pending-title {
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #16181d;
+}
+
+.gpa-pending-text {
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: #6b7280;
+  max-width: 30ch;
+}
+
+/* ── "Awaiting result" summary tile ── */
+.summary-stat-box.amber {
+  background: #fdf1de;
+}
+
+.summary-stat-box.amber .summary-stat-value {
+  color: #d97706;
+}
+
+/* ── Banner above the table ──
+   States once, in a sentence, what a column of dashes cannot. */
+.awaiting-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 12px 0 4px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  background: #fffbf2;
+  border: 1px solid #fce7c2;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #92400e;
+}
+
+.awaiting-banner strong {
+  color: #78350f;
+}
+
+.awaiting-banner-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: #d97706;
+  margin-top: 1px;
+}
+
+.awaiting-banner-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ── Table row for a registered course with nothing released ──
+   Tinted, not hidden: the course IS on the student's record, and the row is
+   the evidence of that. The muted text is what says the score is not in yet. */
+.row-awaiting {
+  background: #fffdf8;
+  color: #9ca3af;
+}
+
+.row-awaiting:hover {
+  background: #fffbf2;
+}
+
+.row-awaiting .cell-code,
+.row-awaiting .cell-subject {
+  color: #4b5563;
+}
+
+.status-pill.awaiting {
+  background: #fdf1de;
+  color: #b45309;
+}
+
+/* ── Semester pill: a dot marks a semester whose result is not out ── */
+.sem-pill-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-left: 6px;
+  border-radius: 50%;
+  background: #d97706;
+  vertical-align: middle;
+}
+
+.sem-pill.active .sem-pill-dot {
+  background: #ffffff;
+}
+
+/* ── A CGPA that has not been published is a phrase, not a zero ── */
+.cgpa-highlight.muted {
+  color: #9ca3af;
+  font-size: 13px;
+  font-weight: 600;
+}

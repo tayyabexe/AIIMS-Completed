@@ -1,0 +1,1041 @@
+/* ══════════════════════════════════════════════════
+   TimeTable.css — Weekly & Day Schedule Views
+   ══════════════════════════════════════════════════ */
+
+/* ── Page container ── */
+.tt-page {
+  flex: 1;
+  padding: 28px 32px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: #f4f5f7;
+}
+
+/* ── Page header ── */
+.tt-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.tt-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: #16181d;
+  letter-spacing: -0.3px;
+  margin-bottom: 4px;
+}
+
+.tt-subtitle {
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.tt-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* ── View toggle (Week / Day) ── */
+.view-toggle {
+  display: flex;
+  background: #e5e7eb;
+  border-radius: 8px;
+  padding: 2px;
+  gap: 1px;
+}
+
+.toggle-btn {
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.toggle-btn.active {
+  background: #ffffff;
+  color: #16181d;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.toggle-btn:hover:not(.active) {
+  color: #374151;
+}
+
+/* ── Print button ── */
+.tt-print-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #374151;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.tt-print-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.tt-print-btn:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+/* ── Stats row ── */
+.tt-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.tt-stat-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.tt-stat-value {
+  font-size: 26px;
+  font-weight: 800;
+  color: #16181d;
+  letter-spacing: -0.5px;
+}
+
+.tt-stat-label {
+  font-size: 12.5px;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+/* ── Main content grid ── */
+.tt-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 20px;
+  align-items: start;
+}
+
+/* ── Schedule card ── */
+.tt-schedule-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Week date strip ──
+   A single compact line naming the week on show. It replaced a row of tall
+   clickable day pills: the table below already lists every day as its own row,
+   so the pills duplicated it and only added height. */
+.tt-week-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 14px;
+  padding: 11px 18px 0;
+  font-size: 11.5px;
+}
+
+.tt-week-day {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  color: #98a2b3;
+  white-space: nowrap;
+}
+
+.wd-name {
+  font-weight: 700;
+  color: #667085;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.wd-date {
+  font-weight: 600;
+}
+
+/* Today is the only thing the strip needs to call out. */
+.tt-week-day.is-today {
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: #b91c2c;
+}
+
+.tt-week-day.is-today .wd-name,
+.tt-week-day.is-today .wd-date {
+  color: #ffffff;
+}
+
+/* ── Day picker (day view only) ── */
+.tt-day-select {
+  padding: 6px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #16181d;
+  font-size: 12.5px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.tt-day-select:focus-visible {
+  outline: 2px solid #b91c2c;
+  outline-offset: 1px;
+}
+
+/* ══════════════════════════════════════════════════
+   The timetable table — rows are days, columns are slots
+   ══════════════════════════════════════════════════ */
+
+/* The table scrolls sideways rather than compressing its columns: with six day
+   rows and five period columns there is no width at which every timing still
+   fits on one line, so the columns keep a readable minimum and the container
+   scrolls. */
+.tt-table-wrap {
+  padding: 14px 16px 18px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd2dc transparent;
+}
+
+.tt-table-wrap::-webkit-scrollbar {
+  height: 9px;
+}
+
+.tt-table-wrap::-webkit-scrollbar-track {
+  background: #f2f4f7;
+  border-radius: 999px;
+}
+
+.tt-table-wrap::-webkit-scrollbar-thumb {
+  background: #cbd2dc;
+  border-radius: 999px;
+}
+
+.tt-table-wrap::-webkit-scrollbar-thumb:hover {
+  background: #aeb7c4;
+}
+
+/* `max-content` lets the columns take their natural (min-)width and the table
+   overflow the wrapper; `min-width: 100%` keeps it filling the card when there
+   is room to spare. Auto layout — not `fixed` — so the min-widths below win. */
+.tt-table {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+/* ── Column headers: Slot 1..N with their period ── */
+.tt-table thead th {
+  background: #f8f9fb;
+  padding: 9px 8px;
+  text-align: center;
+  border-bottom: 2px solid #e3e6ec;
+  border-right: 1px solid #eceef2;
+}
+
+.tt-table thead th:last-child {
+  border-right: none;
+}
+
+/* Wide enough that "8:30 AM – 10:00 AM" never wraps or truncates. */
+.tt-slot-head {
+  min-width: 172px;
+}
+
+.slot-num {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #16181d;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.slot-time {
+  display: block;
+  margin-top: 2px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #98a2b3;
+  white-space: nowrap;
+}
+
+/* The period running right now. */
+.tt-slot-head.slot-head-now {
+  background: #fdeaec;
+  border-bottom-color: #b91c2c;
+}
+
+.tt-slot-head.slot-head-now .slot-num,
+.tt-slot-head.slot-head-now .slot-time {
+  color: #b91c2c;
+}
+
+/* ── The daily break: a narrow, non-bookable column ── */
+.tt-table thead th.tt-slot-head.is-break {
+  width: 62px;
+  min-width: 62px;
+  background: #f2f4f7;
+  padding: 9px 4px;
+}
+
+.tt-slot-head.is-break .slot-num {
+  font-size: 10px;
+  color: #667085;
+}
+
+.tt-cell-break {
+  width: 62px;
+  min-width: 62px;
+  background: repeating-linear-gradient(
+    -45deg,
+    #f7f8fa,
+    #f7f8fa 5px,
+    #eef0f4 5px,
+    #eef0f4 10px
+  );
+  text-align: center;
+  vertical-align: middle;
+  padding: 4px !important;
+}
+
+.cell-break-label {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #98a2b3;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+/* ── The Day / Time corner cells ──
+   The day column is pinned to the left edge so it stays on screen while the
+   periods scroll past; without it you lose track of which row you are reading. */
+.tt-corner {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  width: 132px;
+  min-width: 132px;
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #98a2b3;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: #f8f9fb;
+  box-shadow: 2px 0 0 #e3e6ec, 6px 0 8px -6px rgba(16, 24, 40, 0.18);
+}
+
+/* ── Row headers: the day name ── */
+.tt-day-head-cell {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  width: 132px;
+  min-width: 132px;
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: middle;
+  background: #fbfbfc;
+  border-bottom: 1px solid #eceef2;
+  box-shadow: 2px 0 0 #e3e6ec, 6px 0 8px -6px rgba(16, 24, 40, 0.18);
+}
+
+.day-name {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #16181d;
+}
+
+.day-date {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #9ca3af;
+  margin-top: 1px;
+}
+
+.day-today-tag {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: #b91c2c;
+  color: #fff;
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── Body cells ── */
+.tt-cell {
+  min-width: 172px;
+  padding: 8px 9px;
+  vertical-align: top;
+  border-bottom: 1px solid #eceef2;
+  border-right: 1px solid #eceef2;
+  height: 74px;
+}
+
+.tt-cell:last-child {
+  border-right: none;
+}
+
+.tt-cell-free {
+  text-align: center;
+  vertical-align: middle;
+  background: #fcfcfd;
+}
+
+.cell-free-mark {
+  font-size: 13px;
+  color: #d0d5dd;
+  font-weight: 600;
+}
+
+/* A booked period: the subject's colour as a soft fill plus an accent edge,
+   so a whole week of classes stays legible instead of shouting. */
+.tt-cell-class {
+  border-left: 3px solid;
+}
+
+.cell-code {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+.cell-subject {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: 1px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #344054;
+}
+
+.cell-meta {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 3px;
+  font-size: 10px;
+  font-weight: 500;
+  color: #667085;
+  min-width: 0;
+}
+
+.cell-meta > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cell-meta svg {
+  width: 11px;
+  height: 11px;
+  flex-shrink: 0;
+}
+
+/* ── Today's row, and the class running right now ── */
+.tt-row-today .tt-day-head-cell {
+  background: #b91c2c;
+  box-shadow: 2px 0 0 #8f1522, 6px 0 8px -6px rgba(16, 24, 40, 0.18);
+}
+
+.tt-row-today .day-name,
+.tt-row-today .day-date {
+  color: #ffffff;
+}
+
+.tt-row-today .day-date {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.tt-row-today .day-today-tag {
+  background: #ffffff;
+  color: #b91c2c;
+}
+
+.tt-row-today .tt-cell {
+  box-shadow: inset 0 1px 0 rgba(185, 28, 44, 0.14), inset 0 -1px 0 rgba(185, 28, 44, 0.14);
+}
+
+.tt-row-today .tt-cell-free {
+  background: #fef7f7;
+}
+
+.tt-cell.cell-now {
+  outline: 2px solid #b91c2c;
+  outline-offset: -2px;
+  position: relative;
+}
+
+.tt-cell.cell-past {
+  opacity: 0.55;
+  filter: saturate(0.6);
+}
+
+/* ══════════════════════════════════════════════════
+   Day view — the selected day's row unrolled
+   ══════════════════════════════════════════════════ */
+
+.tt-table-day {
+  min-width: 720px;
+}
+
+.tt-table-day thead th {
+  text-align: left;
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #98a2b3;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 10px 12px;
+}
+
+.tt-table-day tbody td {
+  padding: 11px 12px;
+  font-size: 12px;
+  color: #344054;
+  border-bottom: 1px solid #eceef2;
+  vertical-align: middle;
+}
+
+.tt-table-day tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.tt-table-day tbody tr.cell-now {
+  background: #fdeaec;
+}
+
+.tt-table-day tbody tr.cell-past {
+  opacity: 0.6;
+}
+
+.tt-table-day .td-slot {
+  width: 56px;
+  font-weight: 800;
+  color: #16181d;
+}
+
+.tt-table-day .td-time {
+  width: 150px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tt-table-day .td-code {
+  width: 90px;
+  font-weight: 800;
+}
+
+.tt-table-day .td-subject {
+  font-weight: 600;
+  color: #16181d;
+}
+
+.tt-day-empty {
+  text-align: center;
+  color: #9ca3af;
+  padding: 28px 12px !important;
+}
+
+.td-badge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.badge-now {
+  background: #b91c2c;
+  color: #fff;
+}
+
+.badge-done {
+  background: #f2f4f7;
+  color: #98a2b3;
+}
+
+.badge-next {
+  background: #e7f7ee;
+  color: #1f9d55;
+}
+
+/* The last day row closes the table, so it drops its divider. */
+.tt-table tbody tr:last-child .tt-cell,
+.tt-table tbody tr:last-child .tt-day-head-cell {
+  border-bottom: none;
+}
+
+/* ── Legend ── */
+.tt-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 18px;
+  border-top: 1px solid #eceef2;
+  background: #fafbfc;
+}
+
+.tt-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.legend-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+  border: 1.5px solid;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════════════
+   Right sidebar
+   ══════════════════════════════════════════════════ */
+
+.tt-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── Upcoming classes ── */
+.tt-upcoming-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
+}
+
+.tt-upcoming-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.card-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #16181d;
+}
+
+.upcoming-count {
+  background: #b91c2c;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tt-upcoming-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tt-upcoming-item {
+  display: flex;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.tt-upcoming-item:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.upcoming-day-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 42px;
+  padding: 4px 0;
+}
+
+.upcoming-day {
+  font-size: 13px;
+  font-weight: 700;
+  color: #16181d;
+  text-transform: uppercase;
+}
+
+.upcoming-date {
+  font-size: 10px;
+  font-weight: 600;
+  color: #9ca3af;
+}
+
+.upcoming-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.upcoming-subject {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #16181d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.upcoming-code {
+  font-size: 11px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.upcoming-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 3px;
+}
+
+.upcoming-meta span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.upcoming-meta svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* ── Summary card ── */
+.tt-summary-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
+}
+
+.tt-summary-body {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tt-summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.tt-summary-row:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.tt-summary-row.accent {
+  background: #fef2f2;
+  margin: 0 -18px;
+  padding: 10px 18px;
+  border-radius: 0 0 14px 14px;
+  border-bottom: none;
+}
+
+.summary-row-label {
+  font-size: 12.5px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.summary-row-value {
+  font-size: 13px;
+  font-weight: 700;
+  color: #16181d;
+}
+
+.summary-row-value.green {
+  color: #16a34a;
+}
+
+/* ── Note card ── */
+.tt-note-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #fefce8;
+  border: 1px solid #fde68a;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #92400e;
+}
+
+.tt-note-card svg {
+  width: 18px;
+  height: 18px;
+  color: #d97706;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.tt-note-text strong {
+  font-weight: 700;
+}
+
+/* ══════════════════════════════════════════════════
+   Responsive
+   ══════════════════════════════════════════════════ */
+
+@media (max-width: 1200px) {
+  .tt-content-grid {
+    grid-template-columns: 1fr;
+  }
+  .tt-sidebar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .tt-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .tt-sidebar {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .tt-page {
+    padding: 14px;
+  }
+  .tt-page-header {
+    flex-direction: column;
+  }
+  .tt-header-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .tt-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .tt-stat-card {
+    padding: 12px 14px;
+  }
+  .tt-stat-value {
+    font-size: 18px;
+  }
+  .tt-week-strip {
+    gap: 3px 10px;
+    padding: 10px 14px 0;
+    font-size: 10.5px;
+  }
+  /* The table keeps its min-width and scrolls sideways rather than crushing
+     the slot columns into unreadable slivers. */
+  .tt-table-wrap {
+    padding: 10px 10px 14px;
+  }
+  /* The pinned day column narrows on phones, but the period columns keep
+     their readable width and scroll. */
+  .tt-corner,
+  .tt-day-head-cell {
+    width: 88px;
+    min-width: 88px;
+  }
+  .tt-day-head-cell {
+    padding: 8px 9px;
+  }
+  .tt-slot-head,
+  .tt-cell {
+    min-width: 150px;
+  }
+  .tt-cell {
+    padding: 6px 7px;
+    height: 68px;
+  }
+  .cell-code {
+    font-size: 10.5px;
+  }
+  .cell-subject {
+    font-size: 10px;
+  }
+  .tt-legend {
+    gap: 8px;
+    padding: 10px 14px;
+  }
+  .tt-legend-item {
+    font-size: 10px;
+  }
+  .tt-upcoming-card,
+  .tt-summary-card {
+    padding: 14px;
+  }
+  .tt-note-card {
+    padding: 12px;
+    font-size: 11px;
+  }
+  .tt-print-btn span {
+    display: none;
+  }
+}
+
+/* ── Live "now" strip, loading / error / empty states ──
+   Added when this page moved off its hardcoded WEEK_SCHEDULE constant and onto
+   GET /api/timetables/current. */
+
+.tt-now-bar {
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #f9fafb;
+  font-size: 13px;
+}
+
+.tt-now-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #15803d;
+  font-weight: 600;
+}
+
+.tt-now-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #15803d;
+  animation: ttNowPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes ttNowPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+.tt-now-next {
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.tt-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 300px;
+  padding: 48px 20px;
+  text-align: center;
+}
+
+.tt-state svg {
+  width: 44px;
+  height: 44px;
+  color: #d1d5db;
+}
+
+.tt-state p {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #6b7280;
+}
+
+.tt-state span {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+.tt-state.error p {
+  color: #b91c2c;
+}
+
+.tt-state.error svg {
+  color: #f0a3a3;
+}
+
+.tt-state button {
+  margin-top: 10px;
+}
+
+.tt-spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #b91c2c;
+  border-radius: 50%;
+  animation: ttSpin 0.7s linear infinite;
+}
+
+@keyframes ttSpin {
+  to { transform: rotate(360deg); }
+}
+
+.tt-upcoming-empty {
+  font-size: 13px;
+  color: #9ca3af;
+  padding: 10px 2px;
+}

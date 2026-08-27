@@ -1,0 +1,727 @@
+.attendance-page {
+    padding: 24px 32px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.attendance-page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.attendance-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #16181d;
+    margin-bottom: 4px;
+}
+
+.attendance-subtitle {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.filter-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.filter-pill {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    color: #4b5563;
+    font-size: 12.5px;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-pill:hover {
+    background: #f9fafb;
+}
+
+.filter-pill.active {
+    background: #b91c2c;
+    border-color: #b91c2c;
+    color: #ffffff;
+}
+
+/* Warning banner */
+.warning-banner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fdeeee;
+    border: 1px solid #f6c9c9;
+    border-radius: 12px;
+    padding: 14px 18px;
+    color: #b91c2c;
+}
+
+.warning-banner svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.warning-text {
+    font-size: 12.5px;
+    color: #7a1620;
+}
+
+.warning-text strong {
+    margin-right: 8px;
+}
+
+/* Card title (shared) */
+.card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #16181d;
+    display: block;
+    margin-bottom: 16px;
+}
+
+/* Overview grid */
+.overview-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 20px;
+}
+
+.overview-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.ring-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.ring-wrap {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    margin-bottom: 12px;
+}
+
+.ring-wrap svg {
+    width: 100%;
+    height: 100%;
+}
+
+.ring-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ring-pct {
+    font-size: 26px;
+    font-weight: 700;
+    color: #16181d;
+}
+
+.ring-label {
+    font-size: 11.5px;
+    color: #9ca3af;
+}
+
+.min-required {
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+.summary-card-wide {
+    display: flex;
+    flex-direction: column;
+}
+
+.summary-stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.summary-stat-box {
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.summary-stat-box.green {
+    background: #e3f6ea;
+}
+
+.summary-stat-box.red {
+    background: #fbe6e8;
+}
+
+.summary-stat-box.orange {
+    background: #fdf1de;
+}
+
+.summary-stat-box.purple {
+    background: #ece8fb;
+}
+
+.summary-stat-value {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.summary-stat-box.green .summary-stat-value {
+    color: #16a34a;
+}
+
+.summary-stat-box.red .summary-stat-value {
+    color: #dc2626;
+}
+
+.summary-stat-box.orange .summary-stat-value {
+    color: #d97706;
+}
+
+.summary-stat-box.purple .summary-stat-value {
+    color: #7c3aed;
+}
+
+.summary-stat-label {
+    font-size: 12px;
+    color: #6b7280;
+    font-weight: 600;
+}
+
+.trend-title {
+    margin-bottom: 10px;
+}
+
+.trend-chart {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.trend-chart svg {
+    width: 100%;
+    height: 70px;
+}
+
+.trend-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #9ca3af;
+    padding: 4px 2px 0;
+}
+
+/* Subject-wise table */
+.table-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 22px 24px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    overflow-x: auto;
+}
+
+.attendance-table {
+    min-width: 760px;
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 0.7fr 1.4fr 1fr 0.7fr 0.7fr 0.6fr 0.6fr 1.3fr 0.9fr;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f1f2f4;
+    font-size: 12.5px;
+}
+
+.table-row:last-child {
+    border-bottom: none;
+}
+
+.table-head {
+    color: #9ca3af;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    border-bottom: 1px solid #eceef2;
+}
+
+.cell-code {
+    font-weight: 700;
+    color: #b91c2c;
+}
+
+.cell-subject {
+    color: #16181d;
+    font-weight: 600;
+}
+
+.cell-present {
+    color: #16a34a;
+    font-weight: 700;
+}
+
+.cell-absent {
+    color: #dc2626;
+    font-weight: 700;
+}
+
+.cell-late {
+    color: #d97706;
+    font-weight: 700;
+}
+
+.cell-leave {
+    color: #7c3aed;
+    font-weight: 700;
+}
+
+.cell-pct {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    color: #16181d;
+}
+
+.mini-progress-track {
+    width: 70px;
+    height: 6px;
+    background: #eceef2;
+    border-radius: 4px;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.mini-progress-fill {
+    display: block;
+    height: 100%;
+    border-radius: 4px;
+}
+
+.mini-progress-fill.good {
+    background: #16a34a;
+}
+
+.mini-progress-fill.low {
+    background: #dc2626;
+}
+
+.status-pill {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 8px;
+}
+
+.status-pill.good {
+    background: #e3f6ea;
+    color: #16a34a;
+}
+
+.status-pill.low {
+    background: #fbe6e8;
+    color: #dc2626;
+}
+
+/* An enrolled course with no session marked against it yet. */
+.status-pill.none {
+    background: #f1f3f6;
+    color: #6b7280;
+}
+
+/* Bottom grid: bar chart + calendar */
+.bottom-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 20px;
+}
+
+.chart-card,
+.calendar-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 22px 24px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.bar-chart {
+    display: flex;
+    gap: 12px;
+    height: 220px;
+}
+
+.bar-chart-axis {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 10.5px;
+    color: #9ca3af;
+    padding-bottom: 24px;
+}
+
+.bar-chart-bars {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    border-left: 1px solid #eceef2;
+    border-bottom: 1px solid #eceef2;
+    padding-left: 12px;
+}
+
+.bar-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+}
+
+.bar-value {
+    font-size: 11px;
+    font-weight: 700;
+    color: #16181d;
+    margin-bottom: 4px;
+}
+
+.bar {
+    width: 100%;
+    max-width: 34px;
+    background: #b91c2c;
+    border-radius: 4px 4px 0 0;
+}
+
+.bar-label {
+    font-size: 10.5px;
+    color: #6b7280;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+/* Calendar */
+.calendar-header-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.calendar-month {
+    font-size: 12px;
+    color: #9ca3af;
+    font-weight: 600;
+}
+
+/* Month paging. Every month with marked sessions is reachable, so the arrows
+   are disabled at the ends of the record rather than hidden. */
+.calendar-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.calendar-nav-btn {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    background: #fff;
+    color: #4b5563;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.calendar-nav-btn:hover:not(:disabled) {
+    background: #f3f4f6;
+    color: #16181d;
+}
+
+.calendar-nav-btn:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.calendar-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin: 4px 0 16px;
+}
+
+.calendar-legend span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11.5px;
+    color: #6b7280;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot.present {
+    background: #16a34a;
+}
+
+.dot.absent {
+    background: #dc2626;
+}
+
+.dot.late {
+    background: #d97706;
+}
+
+.dot.leave {
+    background: #7c3aed;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+}
+
+.calendar-day-head {
+    text-align: center;
+    font-size: 10.5px;
+    color: #9ca3af;
+    font-weight: 700;
+    padding-bottom: 4px;
+}
+
+.calendar-cell {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #16181d;
+}
+
+.calendar-cell.blank {
+    background: transparent;
+}
+
+.calendar-cell.present {
+    background: #e3f6ea;
+    color: #15803d;
+}
+
+.calendar-cell.absent {
+    background: #fbe1e3;
+    color: #b91c2c;
+}
+
+.calendar-cell.late {
+    background: #fdf1de;
+    color: #b45309;
+}
+
+.calendar-cell.leave {
+    background: #ece8fb;
+    color: #6d28d9;
+}
+
+.calendar-cell.holiday {
+    background: #eef2f7;
+    color: #64748b;
+}
+
+/* A day inside the month that has no marked session — a weekend, a break, or a
+   day this student's timetable had no class. It is not an absence. */
+.calendar-cell.no-class {
+    background: #fafafa;
+    color: #c3c7cd;
+    font-weight: 500;
+}
+
+.dot.holiday {
+    background: #94a3b8;
+}
+
+/* Loading, error and empty states */
+.attendance-state {
+    background: #fff;
+    border: 1px solid #eceef2;
+    border-radius: 14px;
+    padding: 28px 24px;
+    text-align: center;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.attendance-inline-empty {
+    margin: 0;
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+.ring-note {
+    margin-top: 4px;
+    font-size: 11px;
+    color: #9ca3af;
+    text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+    .overview-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .bottom-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 900px) {
+    .attendance-title {
+        font-size: 20px;
+    }
+
+    .table-row {
+        font-size: 11.5px;
+        gap: 6px;
+    }
+
+    .mini-progress-track {
+        width: 50px;
+    }
+
+    .ring-wrap {
+        width: 120px;
+        height: 120px;
+    }
+
+    .ring-pct {
+        font-size: 22px;
+    }
+
+    .summary-stat-value {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 640px) {
+    .attendance-page {
+        padding: 14px;
+    }
+
+    .attendance-title {
+        font-size: 18px;
+    }
+
+    .attendance-page-header {
+        flex-direction: column;
+    }
+
+    .summary-stats-row {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .summary-stat-box {
+        padding: 10px 12px;
+    }
+
+    .summary-stat-value {
+        font-size: 16px;
+    }
+
+    .warning-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px 14px;
+    }
+
+    .warning-text {
+        font-size: 11px;
+    }
+
+    .filter-pills {
+        width: 100%;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 4px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .filter-pill {
+        white-space: nowrap;
+        font-size: 11px;
+        padding: 5px 12px;
+    }
+
+    .overview-card {
+        padding: 16px;
+    }
+
+    .ring-wrap {
+        width: 110px;
+        height: 110px;
+    }
+
+    .ring-pct {
+        font-size: 20px;
+    }
+
+    .table-row {
+        grid-template-columns: 0.6fr 1fr 0.6fr 0.6fr 0.6fr 0.5fr 0.5fr 0.9fr 0.7fr;
+        font-size: 10px;
+        gap: 4px;
+    }
+
+    .table-head {
+        font-size: 9px;
+    }
+
+    .bar-chart {
+        height: 180px;
+    }
+
+    .calendar-cell {
+        font-size: 10px;
+    }
+
+    .chart-card,
+    .calendar-card {
+        padding: 16px;
+    }
+}

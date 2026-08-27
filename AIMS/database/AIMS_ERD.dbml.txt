@@ -1,0 +1,1227 @@
+// ============================================================
+// AIMS - Entity Relationship Diagram
+//
+// Format: DBML (Database Markup Language) - NOT Mermaid, NOT SQL.
+//
+// HOW TO VIEW THIS:
+//   1. Open https://dbdiagram.io
+//   2. Paste the entire contents of this file into the left-hand editor
+//   3. The diagram renders on the right; drag tables to rearrange,
+//      and use Export to save a PNG or PDF
+//
+// Generated from the LIVE database (aims_db) on 2026-08-27T15:32:07.798Z
+// Do not hand-edit: re-run `node scripts/generate_erd_dbml.js` instead,
+// otherwise the diagram drifts away from the real schema.
+//
+// Contents: 58 tables, 111 foreign keys, 45 enums.
+// The database also has 21 views and 4 stored routines,
+// which DBML cannot represent; they are listed as a note at the end.
+// ============================================================
+
+Table academic_terms {
+  term_id int [pk, increment]
+  term_code varchar(30) [unique, not null]
+  term_name varchar(80) [not null]
+  start_date date [not null]
+  end_date date [not null]
+  status academic_terms_status_enum [not null, default: 'Planned']
+  is_deleted boolean [not null, default: false]
+  created_at datetime [not null, default: `CURRENT_TIMESTAMP`]
+  active_flag tinyint [unique]
+
+  indexes {
+    (status, is_deleted)
+  }
+}
+
+Table ai_predictions {
+  prediction_id int [pk, increment]
+  student_id int [not null]
+  model_id int [not null]
+  prediction_type ai_predictions_prediction_type_enum [not null]
+  predicted_value decimal(6,2)
+  risk_level ai_predictions_risk_level_enum
+  confidence_score decimal(5,2)
+  generated_at datetime [default: `CURRENT_TIMESTAMP`]
+}
+
+Table analytics_dashboard_cards {
+  card_id int [pk, increment]
+  user_id int [not null]
+  surface analytics_dashboard_cards_surface_enum [not null]
+  saved_query_id int
+  builtin_key varchar(60)
+  visual varchar(20)
+  grid_x int [not null, default: '0']
+  grid_y int [not null, default: '0']
+  grid_w int [not null, default: '6']
+  grid_h int [not null, default: '8']
+  created_at datetime [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at datetime [not null, default: `CURRENT_TIMESTAMP`]
+  user_sized boolean [not null, default: false]
+  breakpoint analytics_dashboard_cards_breakpoint_enum [not null, default: 'lg']
+
+  indexes {
+    (user_id, surface, breakpoint)
+  }
+}
+
+Table announcement_targets {
+  target_id int [pk, increment]
+  announcement_id int [not null]
+  role_id int
+  program_id int
+  batch_id int
+  section_id int
+  semester_id int
+  user_id int
+  created_at datetime [not null, default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    (batch_id, section_id, program_id, semester_id)
+  }
+}
+
+Table announcements {
+  announcement_id int [pk, increment]
+  title varchar(150) [not null]
+  content text [not null]
+  target_role varchar(50) [not null]
+  posted_by int [not null]
+  created_at datetime [default: `CURRENT_TIMESTAMP`]
+}
+
+Table assistant_conversations {
+  conversation_id int [pk, increment]
+  user_id int [not null]
+  role_id int [not null]
+  title varchar(150) [not null, default: 'New conversation']
+  portal varchar(20)
+  is_archived boolean [not null, default: false]
+  created_at datetime [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at datetime [not null, default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    (user_id, updated_at)
+  }
+}
+
+Table assistant_messages {
+  message_id int [pk, increment]
+  conversation_id int [not null]
+  role assistant_messages_role_enum [not null]
+  content mediumtext
+  tool_calls json
+  tool_name varchar(64)
+  response_type assistant_messages_response_type_enum
+  response_payload json
+  token_count int
+  latency_ms int
+  created_at datetime [not null, default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    (conversation_id, created_at)
+  }
+}
+
+Table assistant_query_log {
+  log_id int [pk, increment]
+  conversation_id int
+  user_id int [not null]
+  role_id int [not null]
+  tool_name varchar(64) [not null]
+  tool_args json
+  resolved_scope json
+  executed_sql text
+  row_count int
+  duration_ms int
+  outcome assistant_query_log_outcome_enum [not null, default: 'success']
+  error_message varchar(500)
+  created_at datetime [not null, default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    (outcome, created_at)
+    (user_id, created_at)
+  }
+}
+
+Table attendance {
+  attendance_id int [pk, increment]
+  student_id int [not null]
+  subject_id int [not null]
+  timetable_id int [not null]
+  att_date date [not null]
+  status attendance_status_enum [not null]
+  marked_by int [not null]
+  created_at datetime [default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    (student_id, subject_id, att_date)
+    (student_id, timetable_id, att_date) [unique]
+  }
+}
+
+Table audit_logs {
+  log_id int [pk, increment]
+  user_id int [not null]
+  action varchar(100) [not null]
+  module varchar(50) [not null]
+  entity_affected varchar(100)
+  old_value json
+  new_value json
+  action_timestamp datetime [default: `CURRENT_TIMESTAMP`]
+  ip_address varchar(45)
+}
+
+Table batches {
+  batch_id int [pk, increment]
+  program_id int [not null]
+  batch_name varchar(50) [not null]
+  start_year year [not null]
+  end_year year [not null]
+  is_deleted boolean [default: false]
+}
+
+Table book_issues {
+  issue_id int [pk, increment]
+  book_id int [not null]
+  borrower_user_id int [not null]
+  issue_date date [not null]
+  due_date date [not null]
+  return_date date
+  fine_amount decimal(8,2) [default: '0.00']
+}
+
+Table books {
+  book_id int [pk, increment]
+  isbn varchar(20) [unique, not null]
+  title varchar(200) [not null]
+  author varchar(150)
+  category varchar(80)
+  total_copies int [not null, default: '1']
+  available_copies int [not null, default: '1']
+  is_deleted boolean [default: false]
+}
+
+Table classrooms {
+  classroom_id int [pk, increment]
+  room_name varchar(50) [not null]
+  building varchar(50) [not null]
+  capacity int [not null]
+  is_deleted boolean [default: false]
+  room_type classrooms_room_type_enum [not null, default: 'Lecture']
+
+  indexes {
+    (room_type, capacity)
+    (room_name, building) [unique]
+  }
+}
+
+Table course_offerings {
+  offering_id int [pk, increment]
+  term_id int [not null]
+  section_id int [not null]
+  subject_id int [not null]
+  teacher_id int
+  sessions_per_week tinyint [note: 'NULL = follow subjects.sessions_per_week. Set only to override for this term.']
+  required_room_type course_offerings_required_room_type_enum
+  max_seats int
+  status course_offerings_status_enum [not null, default: 'Draft']
+  is_deleted boolean [not null, default: false]
+  created_at datetime [not null, default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    (teacher_id, term_id)
+    (term_id, status, is_deleted)
+    (term_id, section_id, subject_id) [unique]
+  }
+}
+
+Table dashboard_widgets {
+  widget_id int [pk, increment]
+  role_id int [not null]
+  widget_type varchar(50) [not null]
+  config_json json
+}
+
+Table departments {
+  department_id int [pk, increment]
+  department_name varchar(100) [unique, not null]
+  head_employee_id int
+  is_deleted boolean [default: false]
+}
+
+Table employee_documents {
+  doc_id int [pk, increment]
+  employee_id int [not null]
+  doc_type varchar(50) [not null]
+  file_url varchar(255) [not null]
+  verified boolean [default: false]
+}
+
+Table employees {
+  employee_id int [pk, increment]
+  user_id int [unique, not null]
+  employee_code varchar(20) [unique, not null]
+  first_name varchar(100) [not null]
+  last_name varchar(100) [not null]
+  department_id int [not null]
+  designation varchar(100)
+  basic_salary decimal(12,2) [not null]
+  hire_date date [not null]
+  employment_status employees_employment_status_enum [default: 'Active']
+  is_deleted boolean [default: false]
+}
+
+Table enrollments {
+  enrollment_id int [pk, increment]
+  student_id int [not null]
+  subject_id int [not null]
+  semester_id int [not null]
+  enrollment_date date [not null]
+  status enrollments_status_enum [default: 'Active']
+  offering_id int
+  term_id int
+
+  indexes {
+    (offering_id, status)
+    (student_id, subject_id, semester_id, term_id) [unique]
+  }
+}
+
+Table exams {
+  exam_id int [pk, increment]
+  exam_name varchar(100) [not null]
+  exam_type exams_exam_type_enum [not null]
+  semester_id int [not null]
+  subject_id int [not null]
+  exam_date date [not null]
+  total_marks int [not null]
+  classroom_id int
+  invigilator_id int
+}
+
+Table fee_payments {
+  fee_payment_id int [pk, increment]
+  fee_voucher_id int [not null]
+  receipt_number varchar(30) [unique]
+  amount_paid decimal(12,2) [not null]
+  payment_method fee_payments_payment_method_enum [not null, default: 'Other']
+  payment_date date
+  is_late boolean [not null, default: false]
+  status fee_payments_status_enum [not null, default: 'Verified']
+  recorded_by int
+  submitted_by int
+  created_at datetime [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at datetime [not null, default: `CURRENT_TIMESTAMP`]
+  verified_at datetime [note: 'When the accounts office approved or refused this payment']
+  verified_by int [note: 'The user who decided this payment; NULL for rows decided before this was tracked']
+}
+
+Table fee_structures {
+  fee_structure_id int [pk, increment]
+  program_id int [not null]
+  semester_id int [not null]
+  fee_category varchar(50) [not null]
+  amount decimal(12,2) [not null]
+}
+
+Table fee_vouchers {
+  fee_voucher_id int [pk, increment]
+  student_id int [not null]
+  fee_structure_id int
+  semester_id int
+  voucher_number varchar(30) [unique, not null]
+  issue_date date
+  due_date date
+  total_payable decimal(12,2) [not null, default: '0.00']
+  amount_paid decimal(12,2) [not null, default: '0.00']
+  remaining_balance decimal(12,2) [not null, default: '0.00']
+  status fee_vouchers_status_enum [not null, default: 'Unpaid']
+  created_at datetime [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at datetime [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Table gpa {
+  gpa_id int [pk, increment]
+  student_id int [not null]
+  semester_id int [not null]
+  gpa decimal(3,2) [not null]
+  cgpa decimal(3,2) [not null]
+}
+
+Table grades {
+  grade_id int [pk, increment]
+  grade_letter varchar(5) [unique, not null]
+  min_percentage decimal(5,2) [not null]
+  max_percentage decimal(5,2) [not null]
+  grade_point decimal(3,2) [not null]
+}
+
+Table leave_requests {
+  leave_id int [pk, increment]
+  user_id int [not null]
+  leave_type varchar(50) [not null]
+  start_date date [not null]
+  end_date date [not null]
+  status leave_requests_status_enum [default: 'Pending']
+  approved_by int
+}
+
+Table marks {
+  mark_id int [pk, increment]
+  exam_id int [not null]
+  student_id int [not null]
+  obtained_marks decimal(6,2) [not null]
+  entered_by int [not null]
+  verified_by int
+  status marks_status_enum [default: 'Draft']
+
+  indexes {
+    (exam_id, student_id) [unique]
+  }
+}
+
+Table meeting_requests {
+  request_id int [pk, increment]
+  parent_id int [not null]
+  teacher_id int [not null]
+  requested_date datetime [not null]
+  status meeting_requests_status_enum [default: 'Pending']
+  notes varchar(255)
+}
+
+Table notifications {
+  notification_id int [pk, increment]
+  user_id int [not null]
+  message varchar(255) [not null]
+  type varchar(50) [not null]
+  is_read boolean [default: false]
+  created_at datetime [default: `CURRENT_TIMESTAMP`]
+  title varchar(120) [not null, default: 'Notification', note: 'Heading for the row, composed by whichever service emitted it']
+  link varchar(255) [note: 'In-portal route this notification is about; NULL when there is nothing to open']
+  priority varchar(16) [not null, default: 'normal', note: 'low | normal | high — drives the tone the portals render']
+
+  indexes {
+    (user_id, created_at)
+    (user_id, is_read)
+  }
+}
+
+Table parents {
+  parent_id int [pk, increment]
+  user_id int [unique, not null]
+  first_name varchar(100) [not null]
+  last_name varchar(100) [not null]
+  phone varchar(20)
+  occupation varchar(100)
+  is_deleted boolean [default: false]
+}
+
+Table payroll {
+  payroll_id int [pk, increment]
+  employee_id int [not null]
+  month char(7) [not null]
+  basic_salary decimal(12,2) [not null]
+  allowances decimal(12,2) [default: '0.00']
+  deductions decimal(12,2) [default: '0.00']
+  net_salary decimal(12,2) [not null]
+  generated_at datetime [default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    (employee_id, month) [unique]
+  }
+}
+
+Table performance_evaluations {
+  evaluation_id int [pk, increment]
+  employee_id int [not null]
+  evaluation_period varchar(50) [not null]
+  rating performance_evaluations_rating_enum [not null]
+  remarks varchar(255)
+  evaluated_by int [not null]
+}
+
+Table permissions {
+  permission_id int [pk, increment]
+  permission_name varchar(100) [unique, not null]
+  module varchar(50) [not null]
+
+  Note: 'NOT READ BY THE APPLICATION. Authorisation is role-id only, in middlewares/rbac.middleware.js. Seeded and kept for referential completeness and for a future permission-level check. See GAPS_AND_LIMITATIONS.md section 6.'
+}
+
+Table prediction_history {
+  history_id int [pk, increment]
+  prediction_id int [not null]
+  student_id int [not null]
+  predicted_value decimal(6,2)
+  risk_level prediction_history_risk_level_enum
+  confidence_score decimal(5,2)
+  recorded_at datetime [default: `CURRENT_TIMESTAMP`]
+}
+
+Table prediction_models {
+  model_id int [pk, increment]
+  model_name varchar(100) [not null]
+  model_type prediction_models_model_type_enum [not null]
+  version varchar(20) [not null]
+  trained_on datetime [not null]
+  accuracy_score decimal(5,2)
+  is_active boolean [default: true]
+  created_at datetime [default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    (model_name, version) [unique]
+  }
+}
+
+Table programs {
+  program_id int [pk, increment]
+  department_id int [not null]
+  program_name varchar(150) [not null]
+  duration_semesters int [not null]
+  is_deleted boolean [default: false]
+
+  indexes {
+    (department_id, program_name) [unique]
+  }
+}
+
+Table reports {
+  report_id int [pk, increment]
+  report_type varchar(100) [not null]
+  generated_by int [not null]
+  generated_at datetime [default: `CURRENT_TIMESTAMP`]
+  file_url varchar(255)
+  format reports_format_enum [not null]
+}
+
+Table results {
+  result_id int [pk, increment]
+  student_id int [not null]
+  semester_id int [not null]
+  gpa decimal(3,2)
+  cgpa decimal(3,2)
+  published_at datetime
+  status results_status_enum [default: 'Pending']
+
+  indexes {
+    (student_id, semester_id) [unique]
+  }
+}
+
+Table role_permissions {
+  role_id int [pk]
+  permission_id int [pk]
+
+  Note: 'NOT READ BY THE APPLICATION. Authorisation is role-id only, in middlewares/rbac.middleware.js. Seeded and kept for referential completeness and for a future permission-level check. See GAPS_AND_LIMITATIONS.md section 6.'
+}
+
+Table roles {
+  role_id int [pk, increment]
+  role_name varchar(50) [unique, not null]
+  description varchar(255)
+}
+
+Table saved_analytics_queries {
+  saved_query_id int [pk, increment]
+  user_id int [not null]
+  name varchar(120) [not null]
+  question text [not null]
+  corrected_question text
+  source_kind saved_analytics_queries_source_kind_enum [not null]
+  tool_name varchar(80)
+  tool_args json
+  sql_text text
+  title varchar(200)
+  visuals json [not null]
+  default_visual varchar(20) [not null]
+  axes json
+  created_at datetime [not null, default: `CURRENT_TIMESTAMP`]
+  updated_at datetime [not null, default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    (user_id, name) [unique]
+  }
+}
+
+Table scholarships {
+  scholarship_id int [pk, increment]
+  student_id int [not null]
+  semester_id int [not null]
+  scholarship_type varchar(50) [not null]
+  discount_percentage decimal(5,2) [not null]
+  approved_by int [not null]
+}
+
+Table sections {
+  section_id int [pk, increment]
+  batch_id int [not null]
+  section_name varchar(10) [not null]
+  capacity int [default: '40']
+  is_deleted boolean [default: false]
+}
+
+Table semesters {
+  semester_id int [pk, increment]
+  program_id int [not null]
+  semester_number int [not null]
+  start_date date [not null]
+  end_date date [not null]
+  is_archived boolean [default: false]
+}
+
+Table student_documents {
+  doc_id int [pk, increment]
+  student_id int [not null]
+  doc_type student_documents_doc_type_enum [not null]
+  file_url varchar(255) [note: 'Legacy disk path. NULL for documents stored as file_data.']
+  verified boolean [default: false]
+  uploaded_at datetime [not null, default: `CURRENT_TIMESTAMP`]
+  file_data mediumblob [note: 'Document bytes. NULL means fall back to the file_url path.']
+  file_mime varchar(100) [note: 'Content-Type for file_data']
+  file_name varchar(255) [note: 'Original filename, for the Content-Disposition on download']
+  file_size int [note: 'Byte length of file_data']
+  file_checksum varchar(64) [note: 'SHA-256 of file_data, served as the HTTP ETag']
+}
+
+Table student_guardians {
+  student_id int [pk]
+  parent_id int [pk]
+  relationship student_guardians_relationship_enum [not null]
+}
+
+Table students {
+  student_id int [pk, increment]
+  user_id int [unique]
+  registration_number varchar(30) [unique, not null]
+  first_name varchar(100) [not null]
+  last_name varchar(100) [not null]
+  cnic_bform varchar(20) [unique, not null]
+  phone varchar(20)
+  dob date
+  program_id int [not null]
+  batch_id int [not null]
+  section_id int
+  academic_status students_academic_status_enum [default: 'Pending Verification']
+  is_deleted boolean [default: false]
+  created_at datetime [default: `CURRENT_TIMESTAMP`]
+  updated_at datetime [default: `CURRENT_TIMESTAMP`]
+  gender students_gender_enum
+  current_semester_id int
+  address varchar(255)
+  nationality varchar(50)
+  blood_group students_blood_group_enum
+
+  indexes {
+    (first_name, last_name)
+  }
+}
+
+Table subjects {
+  subject_id int [pk, increment]
+  subject_code varchar(20) [unique, not null]
+  subject_name varchar(150) [not null]
+  credit_hours int [not null]
+  semester_id int [not null]
+  prerequisite_subject_id int
+  is_deleted boolean [default: false]
+  required_room_type subjects_required_room_type_enum
+  sessions_per_week int [not null, default: '2']
+}
+
+Table teacher_assignments {
+  assignment_id int [pk, increment]
+  teacher_id int [not null]
+  subject_id int [not null]
+  batch_id int [not null]
+  section_id int [not null]
+  assigned_date date [not null]
+}
+
+Table teacher_attendance {
+  teacher_attendance_id int [pk, increment]
+  employee_id int [not null]
+  att_date date [not null]
+  check_in time
+  check_out time
+  status teacher_attendance_status_enum [default: 'Present']
+
+  indexes {
+    (employee_id, att_date) [unique]
+  }
+}
+
+Table teacher_profiles {
+  teacher_id int [pk]
+  qualification varchar(200)
+  specialization varchar(200)
+  experience_years int
+  bio text
+}
+
+Table teacher_schedules {
+  schedule_id int [pk, increment]
+  teacher_id int [not null]
+  subject_id int [not null]
+  day varchar(20) [not null]
+  start_time time [not null]
+  end_time time [not null]
+  room varchar(50)
+}
+
+Table teacher_subjects {
+  teacher_id int [pk]
+  subject_id int [pk]
+}
+
+Table teachers {
+  teacher_id int [pk, increment]
+  employee_id int [not null]
+  specialization varchar(150)
+  is_deleted boolean [default: false]
+}
+
+Table timetables {
+  timetable_id int [pk, increment]
+  subject_id int [not null]
+  section_id int [not null]
+  teacher_id int [not null]
+  classroom_id int [not null]
+  day_of_week timetables_day_of_week_enum [not null]
+  start_time time [not null]
+  end_time time [not null]
+  offering_id int
+  term_id int
+
+  indexes {
+    (section_id, day_of_week, start_time)
+    (teacher_id, day_of_week, start_time)
+    (term_id, classroom_id, day_of_week, start_time) [unique]
+    (term_id, section_id, day_of_week, start_time) [unique]
+    (term_id, teacher_id, day_of_week, start_time) [unique]
+  }
+}
+
+Table user_preferences {
+  user_id int [pk]
+  preferences json [not null]
+  updated_at datetime [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Table users {
+  user_id int [pk, increment]
+  email varchar(255) [unique, not null]
+  password_hash varchar(255) [not null]
+  role_id int [not null]
+  phone varchar(20)
+  profile_picture varchar(255)
+  is_active boolean [default: true]
+  email_verified boolean [default: true]
+  failed_login_attempts int [default: '0']
+  last_login datetime
+  last_password_change datetime
+  is_deleted boolean [default: false]
+  created_at datetime [default: `CURRENT_TIMESTAMP`]
+  updated_at datetime [default: `CURRENT_TIMESTAMP`]
+  must_change_password boolean [not null, default: false, note: 'Set when an admin issued this password; cleared once the user picks their own']
+  credentials_issued_at datetime [note: 'When admin-generated credentials were last issued for this account']
+  profile_picture_data mediumblob [note: 'Avatar bytes. NULL means fall back to the profile_picture path.']
+  profile_picture_mime varchar(100) [note: 'Content-Type for profile_picture_data, e.g. image/webp']
+  profile_picture_size int [note: 'Byte length of profile_picture_data, so listings need not read the blob']
+  profile_picture_checksum varchar(64) [note: 'SHA-256 of profile_picture_data, served as the HTTP ETag']
+  profile_picture_updated_at datetime [note: 'When the avatar bytes were last replaced; served as Last-Modified']
+  full_name varchar(150) [note: 'Display name for the account holder. Backfilled from the role record (students/employees/parents) where one exists; set directly for accounts that have none, such as administrators.']
+  locked_at datetime
+}
+
+// ============================================================
+// Enums (45)
+// ============================================================
+
+Enum academic_terms_status_enum {
+  "Planned"
+  "Active"
+  "Closed"
+}
+
+Enum ai_predictions_prediction_type_enum {
+  "Performance"
+  "Fee Default"
+  "Attendance Risk"
+}
+
+Enum ai_predictions_risk_level_enum {
+  "Low"
+  "Medium"
+  "High"
+  "Critical"
+}
+
+Enum analytics_dashboard_cards_surface_enum {
+  "dashboard"
+  "ai_insights"
+  "faculty_insights"
+  "faculty_dashboard"
+  "faculty_attendance"
+}
+
+Enum analytics_dashboard_cards_breakpoint_enum {
+  "lg"
+  "sm"
+}
+
+Enum assistant_messages_role_enum {
+  "user"
+  "assistant"
+  "tool"
+  "system"
+}
+
+Enum assistant_messages_response_type_enum {
+  "answer"
+  "table"
+  "chart"
+  "knowledge"
+  "error"
+  "capabilities"
+  "scope"
+}
+
+Enum assistant_query_log_outcome_enum {
+  "success"
+  "refused"
+  "error"
+}
+
+Enum attendance_status_enum {
+  "Present"
+  "Absent"
+  "Late"
+  "Leave"
+  "Holiday"
+}
+
+Enum classrooms_room_type_enum {
+  "Lecture"
+  "Lab"
+  "Auditorium"
+  "Seminar"
+}
+
+Enum course_offerings_required_room_type_enum {
+  "Lecture"
+  "Lab"
+  "Auditorium"
+  "Seminar"
+}
+
+Enum course_offerings_status_enum {
+  "Draft"
+  "Scheduled"
+  "Active"
+  "Completed"
+  "Cancelled"
+}
+
+Enum employees_employment_status_enum {
+  "Active"
+  "On Leave"
+  "Terminated"
+  "Retired"
+}
+
+Enum enrollments_status_enum {
+  "Active"
+  "Completed"
+  "Dropped"
+}
+
+Enum exams_exam_type_enum {
+  "Quiz"
+  "Assignment"
+  "Mid-Term"
+  "Final"
+  "Practical"
+  "Viva"
+}
+
+Enum fee_payments_payment_method_enum {
+  "Cash"
+  "Bank Transfer"
+  "Card"
+  "Mobile Wallet"
+  "Online"
+  "Cheque"
+  "Other"
+}
+
+Enum fee_payments_status_enum {
+  "Pending"
+  "Verified"
+  "Rejected"
+}
+
+Enum fee_vouchers_status_enum {
+  "Unpaid"
+  "Partial"
+  "Paid"
+  "Overdue"
+  "Cancelled"
+}
+
+Enum leave_requests_status_enum {
+  "Pending"
+  "Approved"
+  "Rejected"
+}
+
+Enum marks_status_enum {
+  "Draft"
+  "Verified"
+  "Published"
+}
+
+Enum meeting_requests_status_enum {
+  "Pending"
+  "Approved"
+  "Rejected"
+  "Completed"
+}
+
+Enum performance_evaluations_rating_enum {
+  "Excellent"
+  "Good"
+  "Average"
+  "Poor"
+}
+
+Enum prediction_history_risk_level_enum {
+  "Low"
+  "Medium"
+  "High"
+  "Critical"
+}
+
+Enum prediction_models_model_type_enum {
+  "Performance"
+  "Fee Default"
+  "Attendance Risk"
+}
+
+Enum reports_format_enum {
+  "PDF"
+  "Excel"
+  "CSV"
+}
+
+Enum results_status_enum {
+  "Pending"
+  "Published"
+}
+
+Enum saved_analytics_queries_source_kind_enum {
+  "tool"
+  "sql"
+}
+
+Enum student_documents_doc_type_enum {
+  "CNIC"
+  "B-Form"
+  "Photo"
+  "Certificate"
+  "Transcript"
+  "Medical"
+  "Admission Form"
+  "Fee Challan"
+  "Result Card"
+  "Other"
+}
+
+Enum student_guardians_relationship_enum {
+  "Father"
+  "Mother"
+  "Guardian"
+}
+
+Enum students_academic_status_enum {
+  "Pending Verification"
+  "Active"
+  "Suspended"
+  "Withdrawn"
+  "Graduated"
+  "Alumni"
+}
+
+Enum students_gender_enum {
+  "Male"
+  "Female"
+  "Other"
+}
+
+Enum students_blood_group_enum {
+  "A+"
+  "A-"
+  "B+"
+  "B-"
+  "AB+"
+  "AB-"
+  "O+"
+  "O-"
+}
+
+Enum subjects_required_room_type_enum {
+  "Lecture"
+  "Lab"
+  "Auditorium"
+  "Seminar"
+}
+
+Enum teacher_attendance_status_enum {
+  "Present"
+  "Absent"
+  "Late"
+  "Leave"
+}
+
+Enum timetables_day_of_week_enum {
+  "Monday"
+  "Tuesday"
+  "Wednesday"
+  "Thursday"
+  "Friday"
+  "Saturday"
+}
+
+Enum vw_at_risk_students_academic_status_enum {
+  "Pending Verification"
+  "Active"
+  "Suspended"
+  "Withdrawn"
+  "Graduated"
+  "Alumni"
+}
+
+Enum vw_exam_schedule_full_exam_type_enum {
+  "Quiz"
+  "Assignment"
+  "Mid-Term"
+  "Final"
+  "Practical"
+  "Viva"
+}
+
+Enum vw_fee_defaulters_status_enum {
+  "Unpaid"
+  "Partial"
+  "Paid"
+  "Overdue"
+  "Cancelled"
+}
+
+Enum vw_student_fee_status_status_enum {
+  "Unpaid"
+  "Partial"
+  "Paid"
+  "Overdue"
+  "Cancelled"
+}
+
+Enum vw_student_profile_full_gender_enum {
+  "Male"
+  "Female"
+  "Other"
+}
+
+Enum vw_student_profile_full_academic_status_enum {
+  "Pending Verification"
+  "Active"
+  "Suspended"
+  "Withdrawn"
+  "Graduated"
+  "Alumni"
+}
+
+Enum vw_student_subject_marks_exam_type_enum {
+  "Quiz"
+  "Assignment"
+  "Mid-Term"
+  "Final"
+  "Practical"
+  "Viva"
+}
+
+Enum vw_student_timetable_day_of_week_enum {
+  "Monday"
+  "Tuesday"
+  "Wednesday"
+  "Thursday"
+  "Friday"
+  "Saturday"
+}
+
+Enum vw_teacher_class_roster_enrollment_status_enum {
+  "Active"
+  "Completed"
+  "Dropped"
+}
+
+Enum vw_upcoming_exams_exam_type_enum {
+  "Quiz"
+  "Assignment"
+  "Mid-Term"
+  "Final"
+  "Practical"
+  "Viva"
+}
+
+// ============================================================
+// Relationships (111 foreign keys)
+//   >  many-to-one   (the child side holds the key)
+// ============================================================
+
+Ref: ai_predictions.student_id > students.student_id [delete: cascade, update: cascade]
+Ref: ai_predictions.model_id > prediction_models.model_id [delete: restrict, update: cascade]
+Ref: analytics_dashboard_cards.user_id > users.user_id [delete: cascade]
+Ref: analytics_dashboard_cards.saved_query_id > saved_analytics_queries.saved_query_id [delete: cascade]
+Ref: announcement_targets.announcement_id > announcements.announcement_id [delete: cascade]
+Ref: announcement_targets.batch_id > batches.batch_id
+Ref: announcement_targets.program_id > programs.program_id
+Ref: announcement_targets.role_id > roles.role_id
+Ref: announcement_targets.section_id > sections.section_id
+Ref: announcement_targets.semester_id > semesters.semester_id
+Ref: announcement_targets.user_id > users.user_id
+Ref: announcements.posted_by > users.user_id [delete: cascade, update: cascade]
+Ref: assistant_conversations.user_id > users.user_id [delete: cascade]
+Ref: assistant_conversations.role_id > roles.role_id
+Ref: assistant_messages.conversation_id > assistant_conversations.conversation_id [delete: cascade]
+Ref: assistant_query_log.conversation_id > assistant_conversations.conversation_id [delete: set null]
+Ref: assistant_query_log.user_id > users.user_id
+Ref: attendance.student_id > students.student_id [delete: cascade, update: cascade]
+Ref: attendance.subject_id > subjects.subject_id [delete: cascade, update: cascade]
+Ref: attendance.timetable_id > timetables.timetable_id [delete: cascade, update: cascade]
+Ref: attendance.marked_by > teachers.teacher_id [delete: restrict, update: cascade]
+Ref: audit_logs.user_id > users.user_id [delete: cascade, update: cascade]
+Ref: batches.program_id > programs.program_id [delete: cascade, update: cascade]
+Ref: book_issues.book_id > books.book_id [delete: cascade, update: cascade]
+Ref: book_issues.borrower_user_id > users.user_id [delete: cascade, update: cascade]
+Ref: course_offerings.term_id > academic_terms.term_id [delete: restrict, update: cascade]
+Ref: course_offerings.section_id > sections.section_id [delete: cascade, update: cascade]
+Ref: course_offerings.subject_id > subjects.subject_id [delete: cascade, update: cascade]
+Ref: course_offerings.teacher_id > teachers.teacher_id [delete: set null, update: cascade]
+Ref: dashboard_widgets.role_id > roles.role_id [delete: cascade, update: cascade]
+Ref: departments.head_employee_id > employees.employee_id [delete: set null, update: cascade]
+Ref: employee_documents.employee_id > employees.employee_id [delete: cascade, update: cascade]
+Ref: employees.user_id > users.user_id [delete: cascade, update: cascade]
+Ref: employees.department_id > departments.department_id [delete: restrict, update: cascade]
+Ref: enrollments.student_id > students.student_id [delete: cascade, update: cascade]
+Ref: enrollments.subject_id > subjects.subject_id [delete: cascade, update: cascade]
+Ref: enrollments.semester_id > semesters.semester_id [delete: cascade, update: cascade]
+Ref: enrollments.term_id > academic_terms.term_id [delete: restrict, update: cascade]
+Ref: enrollments.term_id > academic_terms.term_id [delete: restrict, update: cascade]
+Ref: enrollments.offering_id > course_offerings.offering_id [delete: set null, update: cascade]
+Ref: enrollments.term_id > academic_terms.term_id [delete: restrict, update: cascade]
+Ref: exams.semester_id > semesters.semester_id [delete: cascade, update: cascade]
+Ref: exams.subject_id > subjects.subject_id [delete: cascade, update: cascade]
+Ref: exams.classroom_id > classrooms.classroom_id [delete: set null, update: cascade]
+Ref: exams.invigilator_id > teachers.teacher_id [delete: set null, update: cascade]
+Ref: fee_payments.fee_voucher_id > fee_vouchers.fee_voucher_id [delete: cascade, update: cascade]
+Ref: fee_payments.recorded_by > users.user_id [delete: set null, update: cascade]
+Ref: fee_payments.verified_by > users.user_id [delete: set null, update: cascade]
+Ref: fee_structures.program_id > programs.program_id [delete: cascade, update: cascade]
+Ref: fee_structures.semester_id > semesters.semester_id [delete: cascade, update: cascade]
+Ref: fee_vouchers.student_id > students.student_id [delete: restrict, update: cascade]
+Ref: fee_vouchers.fee_structure_id > fee_structures.fee_structure_id [delete: set null, update: cascade]
+Ref: fee_vouchers.semester_id > semesters.semester_id [delete: set null, update: cascade]
+Ref: gpa.semester_id > semesters.semester_id [delete: restrict, update: cascade]
+Ref: gpa.student_id > students.student_id [delete: restrict, update: cascade]
+Ref: leave_requests.user_id > users.user_id [delete: cascade, update: cascade]
+Ref: leave_requests.approved_by > users.user_id [delete: set null, update: cascade]
+Ref: marks.exam_id > exams.exam_id [delete: cascade, update: cascade]
+Ref: marks.student_id > students.student_id [delete: cascade, update: cascade]
+Ref: marks.entered_by > teachers.teacher_id [delete: restrict, update: cascade]
+Ref: marks.verified_by > teachers.teacher_id [delete: set null, update: cascade]
+Ref: meeting_requests.parent_id > parents.parent_id [delete: cascade, update: cascade]
+Ref: meeting_requests.teacher_id > teachers.teacher_id [delete: cascade, update: cascade]
+Ref: notifications.user_id > users.user_id [delete: cascade, update: cascade]
+Ref: parents.user_id > users.user_id [delete: cascade, update: cascade]
+Ref: payroll.employee_id > employees.employee_id [delete: cascade, update: cascade]
+Ref: performance_evaluations.employee_id > employees.employee_id [delete: cascade, update: cascade]
+Ref: performance_evaluations.evaluated_by > employees.employee_id [delete: restrict, update: cascade]
+Ref: prediction_history.prediction_id > ai_predictions.prediction_id [delete: cascade, update: cascade]
+Ref: prediction_history.student_id > students.student_id [delete: cascade, update: cascade]
+Ref: programs.department_id > departments.department_id [delete: restrict, update: cascade]
+Ref: reports.generated_by > users.user_id [delete: cascade, update: cascade]
+Ref: results.student_id > students.student_id [delete: cascade, update: cascade]
+Ref: results.semester_id > semesters.semester_id [delete: cascade, update: cascade]
+Ref: role_permissions.role_id > roles.role_id [delete: cascade, update: cascade]
+Ref: role_permissions.permission_id > permissions.permission_id [delete: cascade, update: cascade]
+Ref: saved_analytics_queries.user_id > users.user_id [delete: cascade]
+Ref: scholarships.student_id > students.student_id [delete: cascade, update: cascade]
+Ref: scholarships.semester_id > semesters.semester_id [delete: cascade, update: cascade]
+Ref: scholarships.approved_by > employees.employee_id [delete: restrict, update: cascade]
+Ref: sections.batch_id > batches.batch_id [delete: cascade, update: cascade]
+Ref: semesters.program_id > programs.program_id [delete: cascade, update: cascade]
+Ref: student_documents.student_id > students.student_id [delete: cascade, update: cascade]
+Ref: student_guardians.student_id > students.student_id [delete: cascade, update: cascade]
+Ref: student_guardians.parent_id > parents.parent_id [delete: cascade, update: cascade]
+Ref: students.current_semester_id > semesters.semester_id [delete: set null, update: cascade]
+Ref: students.user_id > users.user_id [delete: set null, update: cascade]
+Ref: students.program_id > programs.program_id [delete: restrict, update: cascade]
+Ref: students.batch_id > batches.batch_id [delete: restrict, update: cascade]
+Ref: students.section_id > sections.section_id [delete: set null, update: cascade]
+Ref: subjects.semester_id > semesters.semester_id [delete: cascade, update: cascade]
+Ref: subjects.prerequisite_subject_id > subjects.subject_id [delete: set null, update: cascade]
+Ref: teacher_assignments.batch_id > batches.batch_id [delete: restrict, update: cascade]
+Ref: teacher_assignments.subject_id > subjects.subject_id [delete: restrict, update: cascade]
+Ref: teacher_assignments.teacher_id > teachers.teacher_id [delete: restrict, update: cascade]
+Ref: teacher_attendance.employee_id > employees.employee_id [delete: cascade, update: cascade]
+Ref: teacher_profiles.teacher_id > teachers.teacher_id [delete: restrict, update: cascade]
+Ref: teacher_schedules.subject_id > subjects.subject_id [delete: restrict, update: cascade]
+Ref: teacher_schedules.teacher_id > teachers.teacher_id [delete: restrict, update: cascade]
+Ref: teacher_subjects.teacher_id > teachers.teacher_id [delete: cascade, update: cascade]
+Ref: teacher_subjects.subject_id > subjects.subject_id [delete: cascade, update: cascade]
+Ref: teachers.employee_id > employees.employee_id [delete: cascade, update: cascade]
+Ref: timetables.subject_id > subjects.subject_id [delete: cascade, update: cascade]
+Ref: timetables.section_id > sections.section_id [delete: cascade, update: cascade]
+Ref: timetables.teacher_id > teachers.teacher_id [delete: cascade, update: cascade]
+Ref: timetables.classroom_id > classrooms.classroom_id [delete: cascade, update: cascade]
+Ref: timetables.term_id > academic_terms.term_id [delete: restrict, update: cascade]
+Ref: timetables.offering_id > course_offerings.offering_id [delete: cascade, update: cascade]
+Ref: timetables.term_id > academic_terms.term_id [delete: restrict, update: cascade]
+Ref: user_preferences.user_id > users.user_id [delete: cascade, update: cascade]
+Ref: users.role_id > roles.role_id [delete: restrict, update: cascade]
+
+// ============================================================
+// Not shown above - DBML has no syntax for these.
+// See schema.sql for their full definitions.
+// ============================================================
+//
+// Views (21):
+//   vw_at_risk_students
+//   vw_attendance_daily
+//   vw_book_availability
+//   vw_class_performance_summary
+//   vw_exam_schedule_full
+//   vw_fee_collection_summary
+//   vw_fee_defaulters
+//   vw_leave_request_summary
+//   vw_overdue_book_issues
+//   vw_program_semester_catalog
+//   vw_semester_enrollment_summary
+//   vw_student_attendance_summary
+//   vw_student_fee_status
+//   vw_student_gpa_summary
+//   vw_student_profile_full
+//   vw_student_subject_marks
+//   vw_student_timetable
+//   vw_teacher_attendance_summary
+//   vw_teacher_class_roster
+//   vw_teacher_workload
+//   vw_upcoming_exams
+//
+// Stored routines (4):
+//   PROCEDURE sp_calculate_book_fines
+//   PROCEDURE sp_mark_overdue_fees
+//   PROCEDURE sp_publish_semester_results
+//   PROCEDURE sp_record_payment

@@ -1,0 +1,216 @@
+/*
+ * ═══════════════════════════════════════════════════════════════════════════
+ *  Skeletons — the loading language for the student and parent portals
+ * ═══════════════════════════════════════════════════════════════════════════
+ *
+ * WHAT THIS REPLACES
+ * ------------------
+ * Every route used to say it was busy with the same thing: a red ring spinning
+ * in the middle of an otherwise empty page, sometimes with the word "Loading".
+ * That has three problems, and they compound on a portal with as many screens
+ * as this one.
+ *
+ *   1. It tells you nothing about what is coming. A spinner over the timetable
+ *      and a spinner over the fee ledger look identical, so the page appears to
+ *      "become" something different each time rather than filling in.
+ *   2. It collapses the layout. The spinner is one small element, so the page
+ *      is a blank field until the data lands and then everything snaps into
+ *      place at once — the jump that makes a fast page feel slow.
+ *   3. It has no floor and no ceiling. A 120ms request flashes a spinner for
+ *      two frames, which reads as a glitch.
+ *
+ * A skeleton fixes all three: it is drawn at the SIZE AND SHAPE of the thing
+ * that is loading, so the page never jumps, and the shape itself tells you
+ * whether a table, a chart or a card grid is on its way.
+ *
+ * THE SHIMMER
+ * -----------
+ * One shared sweep (`aims-sk-shimmer`) rather than a per-component animation,
+ * so every placeholder on a screen moves in the same direction at the same
+ * rate. Mismatched shimmers are the thing that makes a skeleton screen look
+ * broken rather than deliberate.
+ *
+ * The sweep animates `background-position` on a gradient, NOT `left`/`width` of
+ * a child element. That keeps it off the layout path entirely — no reflow per
+ * frame, whatever the size of the block.
+ *
+ * REDUCED MOTION
+ * --------------
+ * The sweep is switched off, not the placeholder. Someone who has asked for
+ * less motion still needs to know the region is loading; they get the static
+ * grey block, which carries the same information without the movement.
+ */
+
+/* --------------------------------------------------------------- tokens */
+
+:root {
+  --aims-sk-base: #E9EDF3;
+  --aims-sk-sheen: #F6F8FB;
+  --aims-sk-radius: 8px;
+  --aims-sk-speed: 1.4s;
+}
+
+/* --------------------------------------------------------------- the block */
+
+.aims-sk {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--aims-sk-radius);
+  background-color: var(--aims-sk-base);
+
+  /*
+   * 200% wide so the highlight has somewhere to travel from and to. A 100%
+   * gradient would sit still and only change colour.
+   */
+  background-image: linear-gradient(
+    90deg,
+    var(--aims-sk-base) 0%,
+    var(--aims-sk-sheen) 45%,
+    var(--aims-sk-base) 90%
+  );
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: aims-sk-shimmer var(--aims-sk-speed) ease-in-out infinite;
+
+  /* A placeholder is decoration. Screen readers are told about the loading
+     state once, by the aria-busy region that wraps these. */
+  color: transparent;
+  user-select: none;
+}
+
+@keyframes aims-sk-shimmer {
+  from { background-position: 150% 0; }
+  to   { background-position: -50% 0; }
+}
+
+/* Shapes. Named for the thing they stand in for rather than for their
+   dimensions, so a caller picks by meaning. */
+.aims-sk--text   { height: 0.72rem; border-radius: 5px; }
+.aims-sk--title  { height: 1.05rem; border-radius: 6px; }
+.aims-sk--chip   { height: 1.55rem; border-radius: 999px; }
+.aims-sk--circle { border-radius: 50%; }
+.aims-sk--card   { border-radius: 16px; }
+
+/*
+ * The last line of a paragraph is never full width in real text, so a
+ * placeholder that is full width reads as a grey bar rather than as words.
+ */
+.aims-sk--last { width: 62%; }
+
+/* --------------------------------------------------------- entry & exit */
+
+/*
+ * Skeletons fade IN slightly delayed and content fades in when it arrives.
+ *
+ * The delay is the important half: a request that resolves in 120ms should
+ * show nothing at all, because a placeholder that appears and disappears
+ * inside a fifth of a second is perceived as a flicker, not as feedback. The
+ * opacity animation starts at 0 and holds there for 140ms, so anything faster
+ * than that is never seen.
+ */
+.aims-sk-region {
+  animation: aims-sk-appear 0.34s ease-out both;
+}
+
+@keyframes aims-sk-appear {
+  0%   { opacity: 0; }
+  40%  { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/*
+ * What replaces the skeleton. Real content rises a few pixels as it fades in,
+ * which is what makes the swap read as "it arrived" rather than as a repaint.
+ * Kept to 4px and 260ms — enough to notice, not enough to wait for.
+ */
+.aims-sk-enter {
+  animation: aims-sk-enter 0.26s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes aims-sk-enter {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/*
+ * Staggering, for lists and card grids.
+ *
+ * Rows arriving all at once is a single flash; rows arriving 35ms apart reads
+ * as the list filling. Capped at eight steps because beyond that the last row
+ * is waiting long enough to be noticed as a delay rather than as polish, and
+ * because a fifty-row table would otherwise take two seconds to finish
+ * appearing.
+ */
+.aims-stagger > * { animation: aims-sk-enter 0.26s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.aims-stagger > *:nth-child(1) { animation-delay: 0ms; }
+.aims-stagger > *:nth-child(2) { animation-delay: 35ms; }
+.aims-stagger > *:nth-child(3) { animation-delay: 70ms; }
+.aims-stagger > *:nth-child(4) { animation-delay: 105ms; }
+.aims-stagger > *:nth-child(5) { animation-delay: 140ms; }
+.aims-stagger > *:nth-child(6) { animation-delay: 175ms; }
+.aims-stagger > *:nth-child(7) { animation-delay: 210ms; }
+.aims-stagger > *:nth-child(n + 8) { animation-delay: 245ms; }
+
+/* ------------------------------------------------- shared dialog motion */
+
+/*
+ * Used by ChangePasswordDialog and the avatar picker. Defined here rather than
+ * in either component so the two cannot drift apart — a portal where one modal
+ * pops and another slides looks like two different products.
+ */
+@keyframes aimsFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes aimsPopIn {
+  from { opacity: 0; transform: scale(0.96) translateY(6px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* For a rejected input. Short and small: a validation error should catch the
+   eye, not shove the dialog around. */
+@keyframes aimsShake {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-4px); }
+  75%      { transform: translateX(4px); }
+}
+
+/* ------------------------------------------------------- reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .aims-sk {
+    animation: none;
+    /* Flat rather than mid-sweep, so a stopped animation does not leave a
+       highlight frozen across the block. */
+    background-image: none;
+  }
+
+  .aims-sk-region,
+  .aims-sk-enter,
+  .aims-stagger > * {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ------------------------------------------------------------- avatars */
+
+/*
+ * The initials -> photograph cross-fade in components/common/UserAvatar.jsx.
+ *
+ * The scale is 0.94 rather than 0 so the picture grows INTO the space the
+ * initials already occupied, instead of appearing from nothing beside them.
+ * On a directory where rows resolve a few milliseconds apart that is the
+ * difference between a list settling and a list flickering.
+ */
+@keyframes aims-avatar-in {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [style*="aims-avatar-in"] { animation: none !important; }
+}

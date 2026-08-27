@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+logs/
+src/logs/
+
+# Uploads
+uploads/
+
+# OS files
+.DS_Store
+Thumbs.db
+# duplicate env copy - contains live credentials
+"(2).env"
+
+(2).env

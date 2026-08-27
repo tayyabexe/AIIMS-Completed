@@ -1,0 +1,394 @@
+/*
+ * viewport.css — makes the portals fit the screen they are actually on, by
+ * scaling the interface rather than by trapping it in a fixed-height frame.
+ *
+ * THE PROBLEM
+ * -----------
+ * The portals were drawn at one size. Every type size, every card, every
+ * gutter and every piece of chrome is a fixed step — 14px here, 260px there,
+ * `padding: 24px 28px 40px` — chosen against a tall development window. On a
+ * 1080p screen at 100% zoom the browser leaves about 940px of usable page
+ * height, and a dashboard whose chrome alone spends ~200px of that puts the
+ * rest of itself below the fold. The interface was not too complex for the
+ * screen; it was drawn ~10% too large for it.
+ *
+ * Horizontally the same fixed sizing pushed content past the window: a fixed
+ * 260px sidebar plus a table sized for its widest column is wider than the
+ * space available, so the whole layout slid sideways under a scrollbar.
+ *
+ * THE APPROACH
+ * ------------
+ * Scale, do not clip. Two layers:
+ *
+ *   1. A fluid ROOT TYPE SIZE. Everything expressed in `rem` — which is most
+ *      of the type in this codebase, and everything Tailwind emits — resolves
+ *      against it, so one declaration moves the whole type scale in proportion.
+ *      It is driven by viewport HEIGHT, because height is the axis that ran
+ *      out; a 1920x1080 screen has width to spare.
+ *
+ *   2. FLUID COMPONENT SIZING for the parts that are hard px and therefore
+ *      cannot follow the root: sidebar widths, header and card padding, tile
+ *      heights, control sizes. Each becomes a `clamp()` whose ceiling is the
+ *      value that is there today, so a large monitor renders exactly as it
+ *      does now and only smaller viewports tighten.
+ *
+ * WHAT THIS DELIBERATELY DOES NOT DO
+ * ----------------------------------
+ * It does not force any screen into one viewport. Content that is genuinely
+ * longer than the screen — a register of forty students, a fee ledger, a long
+ * announcement — still scrolls, and should. The page keeps its ordinary
+ * document scrolling, so nothing can become unreachable.
+ *
+ * WHY THE CEILING IS THE CURRENT VALUE
+ * ------------------------------------
+ * Every clamp below is written `clamp(floor, fluid, TODAY)`. That makes this
+ * file incapable of making anything larger than it already is: the worst case
+ * on any screen big enough is a no-op. It is the property that lets it be
+ * applied across four portals at once without reviewing every screen.
+ *
+ * WHY SO MANY `!important`
+ * ------------------------
+ * Not preference. The rules being corrected are themselves `!important`
+ * (styles/faculty.css declares the entire faculty shell that way). Rules that
+ * only need to outrank an ordinary declaration do not use it.
+ *
+ * LOADED LAST from main.jsx, so it wins ties against the stylesheets it
+ * corrects.
+ */
+
+/* ═══════════════════════════════════════════════════════════════════
+   1. The scale
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  /*
+   * THE ROOT TYPE SIZE — the single control this whole file turns on.
+   *
+   * Read the middle term as a line: 0.75vh + 6.4px.
+   *
+   *   viewport height    root size    vs. the 16px default
+   *   ───────────────    ─────────    ───────────────────
+   *   768px  (small laptop)  12.5px   floor  (-22%)
+   *   900px                  13.2px          (-18%)
+   *   1080px (your screen)   14.5px          (-9%)
+   *   1280px                 16px     ceiling (unchanged)
+   *   1440px+                16px     ceiling (unchanged)
+   *
+   * At 1080p that -9% is the difference between a dashboard that ends just
+   * past the fold and one that ends just above it, because it compounds: type,
+   * line-height, rem padding and rem gaps all shrink together, so a ~1030px
+   * page becomes ~940px.
+   *
+   * The 12.5px floor is deliberate and is the reason this is not simply
+   * `1.4vh`. Unbounded viewport units keep shrinking, and body text below
+   * ~12px stops being comfortably readable — past that point the honest
+   * answer is that the screen is small and the page should scroll.
+   *
+   * HEIGHT, not width: a 1920x1080 monitor is not short of width, and scaling
+   * type down on a wide-but-short window because it is wide would be wrong.
+   */
+  --aims-root-size: clamp(12.5px, 0.75vh + 6.4px, 16px);
+
+  /*
+   * Chrome dimensions, as tokens so a component and the gutter it leaves
+   * behind cannot drift apart. AdminDashboard reads --aims-sidebar-w for its
+   * content offset for exactly that reason.
+   */
+  --aims-sidebar-w: clamp(200px, 15vw, 260px);
+  --aims-sidebar-w-collapsed: clamp(64px, 5vw, 76px);
+
+  /* Vertical rhythm for page chrome. Ceilings are the values in place today. */
+  --aims-header-py: clamp(0.5rem, 1.1vh, 0.875rem);
+  --aims-header-px: clamp(0.85rem, 1.6vw, 2rem);
+  --aims-page-py: clamp(0.75rem, 1.6vh, 1.5rem);
+  --aims-page-px: clamp(0.85rem, 1.6vw, 1.75rem);
+  --aims-card-p: clamp(0.75rem, 1.3vw, 1.25rem);
+  --aims-gap: clamp(0.6rem, 1.1vw, 1.25rem);
+}
+
+html {
+  font-size: var(--aims-root-size);
+}
+
+/*
+ * The existing density preference (PreferencesContext writes data-density on
+ * the root) is respected rather than overridden — someone who has asked for a
+ * compact interface is asking for the same thing this file does, so the two
+ * compose instead of fighting.
+ */
+:root[data-density='compact'] {
+  --aims-root-size: clamp(12px, 0.7vh + 5.8px, 15px);
+}
+
+:root[data-density='spacious'] {
+  --aims-root-size: clamp(13.5px, 0.8vh + 7.4px, 17px);
+}
+
+/*
+ * Form controls do not inherit the document's font by default — they use the
+ * OS widget font at its own fixed size, so without this the inputs would stay
+ * at browser-default size while everything around them scaled, and a form
+ * would look mismatched at every viewport but the ceiling.
+ */
+input,
+select,
+textarea,
+button {
+  font-size: inherit;
+  font-family: inherit;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   2. Root box and horizontal overflow
+   ═══════════════════════════════════════════════════════════════════ */
+
+body {
+  /*
+   * Was `min-height: 100vh`. `vh` is the viewport with a mobile browser's URL
+   * bar RETRACTED, so a 100vh floor is taller than the screen for as long as
+   * that bar shows — a guaranteed ~60-100px of scroll on every phone, on a
+   * page whose content fits. `dvh` tracks the bar. Identical on desktop.
+   */
+  min-height: 100dvh;
+
+  /*
+   * The horizontal half of the report.
+   *
+   * `clip`, not `hidden`: `hidden` on <body> turns it into a scroll container,
+   * which silently breaks every `position: sticky` descendant — the portal top
+   * bars and the sticky table headers would all stop sticking. `clip` cuts the
+   * overflow without creating that container.
+   *
+   * A backstop, not a licence: section 4 gives wide content its own scroller,
+   * so nothing here is actually cut off.
+   */
+  overflow-x: clip;
+}
+
+/*
+ * Replaced content carries its own intrinsic width and will happily be wider
+ * than the column holding it — a profile photo straight off a phone is ~3000px.
+ */
+img,
+svg,
+video,
+canvas,
+iframe {
+  max-width: 100%;
+}
+
+img,
+video {
+  height: auto;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   3. Shell chrome
+   ═══════════════════════════════════════════════════════════════════
+
+   The fixed-px parts of each portal frame, re-expressed as the tokens above.
+   None of these change the STRUCTURE of a shell — the page still scrolls as a
+   document. They only stop the chrome from taking a fixed bite out of a
+   viewport that cannot afford it.                                          */
+
+/* ---- Faculty (styles/faculty.css) ------------------------------- */
+
+.app-shell {
+  /* `vh` -> `dvh`, per the body note above. */
+  min-height: 100dvh !important;
+}
+
+.app-shell > .sidebar {
+  width: var(--aims-sidebar-w) !important;
+  min-width: var(--aims-sidebar-w) !important;
+  max-width: var(--aims-sidebar-w) !important;
+  height: 100dvh !important;
+
+  /* A nav list longer than the panel scrolls within it rather than stretching
+     the sidebar and, with it, the shell. */
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  overscroll-behavior: contain;
+}
+
+.app-shell > .main-area {
+  /*
+   * Was `width: 0 !important` beside `flex: 1 1 auto` — the old idiom for
+   * "allow me to shrink below my content". It works, but it fights the
+   * `min-width: 0` that says the same thing without zeroing the used width,
+   * and it left the area's resolved width dependent on flex ordering.
+   */
+  width: auto !important;
+  min-width: 0 !important;
+}
+
+.page-content {
+  /* Was a flat `24px 28px 40px` — 64px of vertical gutter on every screen
+     regardless of how much height there was to spend. */
+  padding: var(--aims-page-py) var(--aims-page-px)
+    calc(var(--aims-page-py) * 1.6);
+}
+
+@media (max-width: 860px) {
+  .app-shell > .sidebar {
+    /* The drawer keeps a comfortable fixed width; it is an overlay at this
+       size, so it is not competing with the content for room. */
+    width: 250px !important;
+    min-width: 250px !important;
+    max-width: 250px !important;
+    height: 100dvh !important;
+  }
+}
+
+/* ---- Student (pages/student/StudentDashboard.css) ---------------- */
+
+.dashboard-layout {
+  min-height: 100dvh;
+}
+
+.dashboard-layout > .sidebar {
+  width: var(--aims-sidebar-w);
+  height: 100dvh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+}
+
+.dashboard-layout > .sidebar.closed {
+  width: var(--aims-sidebar-w-collapsed);
+}
+
+.main-wrapper {
+  /* Must track the sidebar it is offset by, or a scaled sidebar leaves a gap
+     or overlaps the content. */
+  margin-left: var(--aims-sidebar-w);
+  min-height: 100dvh;
+  min-width: 0;
+}
+
+.sidebar.closed ~ .main-wrapper {
+  margin-left: var(--aims-sidebar-w-collapsed);
+}
+
+.main-wrapper > .top-header {
+  /* Was `padding: 14px 32px`. */
+  padding: var(--aims-header-py) var(--aims-header-px);
+}
+
+/* ---- Landing / portal chrome ------------------------------------ */
+
+.aiims-portal {
+  min-height: 100dvh;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   4. Wide content
+   ═══════════════════════════════════════════════════════════════════
+
+   A table wider than its column must scroll INSIDE its own box. Letting it
+   push the layout is what moved the entire interface sideways.             */
+
+.aims-table-wrap,
+.table-wrap,
+.table-container,
+.data-table-wrap,
+.table-scroll {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  max-width: 100%;
+}
+
+/*
+ * Long unbroken strings — a registration number, an email address, a file
+ * name, a URL pasted into an announcement — offer no wrap opportunity, so they
+ * set a minimum width for their column that no container sizing can defeat.
+ */
+td,
+th,
+.aims-wrap {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/*
+ * A grid track declared `minmax(220px, 1fr)` overflows the moment its
+ * container is narrower than 220px. `min(220px, 100%)` is the standard
+ * correction and is a no-op whenever there is room.
+ */
+.stat-grid,
+.card-grid,
+.aims-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   5. Overlays
+   ═══════════════════════════════════════════════════════════════════
+
+   A dialog is sized against the window, so it is the one place a hard
+   viewport limit is right: a form taller than the screen puts its own Save
+   button out of reach, which is not something the user can scroll past.    */
+
+.modal-panel,
+.modal-content,
+.aims-modal-panel {
+  max-height: min(88dvh, 900px);
+  max-width: min(96vw, 100%);
+}
+
+/* Where a dialog is built as header / body / footer, the body takes the
+   scrolling so the title and the Save button stay put. */
+.modal-body,
+.aims-modal-body {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   6. Zoom
+   ═══════════════════════════════════════════════════════════════════ */
+
+/*
+ * Browser zoom scales the CSS pixel, so at 125% the viewport reports fewer CSS
+ * pixels and every clamp above resolves lower on its curve — the interface
+ * tightens exactly as it would on a proportionally smaller screen, with no
+ * zoom-specific handling needed. That is the main reason the scale is
+ * expressed in viewport units rather than in a media-query staircase.
+ *
+ * Below ~600px of usable height — a 1080p screen at 175%, or a laptop with
+ * devtools docked — the clamps are already at their floors and the chrome is
+ * as small as it should go. Past that point the remaining padding is cut
+ * outright, because at that size the choice is between tight gutters and no
+ * content.
+ */
+@media (max-height: 600px) {
+  :root {
+    --aims-header-py: 0.35rem;
+    --aims-page-py: 0.5rem;
+    --aims-card-p: 0.6rem;
+  }
+}
+
+/*
+ * iOS zooms the page in when a control with a font-size under 16px takes
+ * focus, and does not zoom back out afterwards — leaving the user stranded at
+ * 130% with the layout off-screen. Every form here styles its inputs at
+ * 13-14px, and the scale in section 1 makes them smaller still.
+ *
+ * Only on touch-pointer devices: applying a 16px floor on the desktop would
+ * undo the scaling this file exists to apply.
+ */
+@media (pointer: coarse) {
+  input,
+  select,
+  textarea {
+    font-size: max(16px, 1rem);
+  }
+}

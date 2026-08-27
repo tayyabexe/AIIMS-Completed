@@ -1,0 +1,371 @@
+/*
+ * The stage — the dark, single-screen composition behind the landing page and
+ * the portal chooser.
+ *
+ * WHY DARK, WHEN THE REST OF THE ACCESS SURFACES ARE GLACIER-LIGHT
+ * Because the defect being fixed here is emptiness. The light version put two
+ * elements in 900px of viewport and left the rest white, and no amount of
+ * rearranging white fixes that — white *is* the emptiness. Ink gives the
+ * background somewhere to happen: a product reel, an aurora and a ruled field
+ * can all live at 6–30% opacity on ink and read as depth, where on white they
+ * would read as dirt. The ink is not a new colour either; it is the same pane
+ * the sign-in screen already stands its credential plate on, so walking
+ * / → /choose-portal → /sign-in/:portal is now one continuous room instead of
+ * two white pages and a dark one.
+ *
+ * WHY NO SCROLL
+ * Both screens are asking exactly one question. There is nothing below the
+ * fold to find, so a scrollbar is a promise of content that does not exist —
+ * which is precisely how the 260px aura-hang got noticed. Locked to the
+ * viewport, the composition has to earn its density instead of deferring it
+ * downward, and every layer here exists to pay that bill.
+ *
+ * THE LAYER STACK (back to front)
+ *   0  base      ink gradient, the ground
+ *   1  video     the generated ambient clip — optional, absent by default
+ *   2  grid      a ruled field, slowly drifting: institutional, not decorative
+ *   3  aurora    three blurred masses in the portal hues, on long offset drifts
+ *   4  scrim     the contrast guarantee — everything above it is legible
+ *   5  content   header / composition / bottom register
+ * Everything that moves does so on transform and opacity only, so the whole
+ * stack composites and nothing here can cause layout work per frame.
+ */
+
+/* ── Ink tokens ───────────────────────────────────────────────────────────
+   The four ink tiers invert; the plates re-declare the light set locally, so a
+   white card dropped on the stage still reasons in light-mode tokens and
+   nothing has to be restyled per-context. */
+
+.aims-auth .stage {
+  --ink-0: #04101f;
+  --ink-1: #071a30;
+  --ink-2: #0b2440;
+
+  --on-surface: #eef3fb;
+  --on-surface-variant: #b9c6da;
+  --on-surface-muted: #8b9bb4;
+  --on-surface-faint: #64748f;
+  --outline-variant: rgba(255, 255, 255, .14);
+
+  --hairline: rgba(255, 255, 255, .10);
+  --hairline-soft: rgba(255, 255, 255, .06);
+  --glass: rgba(255, 255, 255, .05);
+
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  overflow: clip;
+  color: var(--on-surface);
+  background: var(--ink-0);
+}
+
+/* White cards standing on ink reason in light-mode tokens again. */
+.aims-auth .stage .auth-plate {
+  --on-surface: #0b1c30;
+  --on-surface-variant: #434655;
+  --on-surface-muted: #737686;
+  --on-surface-faint: #9497a6;
+  --outline-variant: #c3c6d7;
+  /*
+   * Re-declaring the tokens is not enough. `color` is inherited as a *computed
+   * value*: .stage resolved var(--on-surface) to the light ink and handed that
+   * colour down, so changing the variable here left the plate's headings still
+   * painting the inherited light one. The plate has to re-apply colour from its
+   * own token for the light set to take effect.
+   */
+  color: var(--on-surface);
+}
+
+/* ── 0 · base ─────────────────────────────────────────────────────────── */
+
+.aims-auth .stage__base {
+  position: absolute;
+  inset: 0;
+  z-index: -6;
+  background:
+    radial-gradient(120% 90% at 8% -10%, #123a72 0%, rgba(18, 58, 114, 0) 58%),
+    radial-gradient(90% 80% at 100% 110%, #0a3c4e 0%, rgba(10, 60, 78, 0) 62%),
+    linear-gradient(160deg, var(--ink-1) 0%, var(--ink-0) 55%, #030b18 100%);
+}
+
+/* ── 1 · video ────────────────────────────────────────────────────────────
+   The generated clip, when there is one. It is atmosphere, not information —
+   held at 22% behind everything, desaturated so it cannot argue with the
+   Oxford blue, and slightly over-scaled so its edges never enter frame. If the
+   file is missing the element is simply not rendered and the aurora carries
+   the movement on its own; nothing below depends on it. */
+
+.aims-auth .stage__video {
+  position: absolute;
+  inset: 0;
+  z-index: -5;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .22;
+  /*
+   * Blurred on purpose, and not only for depth. The clip is generated, so the
+   * interface inside it carries model-invented lettering that is not any real
+   * word. Held soft it reads as what it is — panels of software floating in
+   * light — and never resolves far enough for anyone to try to read it. If it
+   * were sharp enough to read it would be sharp enough to be wrong.
+   */
+  filter: saturate(.6) contrast(1.04) blur(2px);
+  transform: scale(1.1);
+  pointer-events: none;
+}
+
+/* ── 2 · grid ─────────────────────────────────────────────────────────────
+   A registrar's ruled sheet, not a sci-fi grid: 1px lines, 64px pitch, 4%
+   white, faded out radially so it never reaches the type. It drifts one cell
+   over 24s, which is slow enough to read as "alive" and too slow to track. */
+
+.aims-auth .stage__grid {
+  position: absolute;
+  inset: -80px;
+  z-index: -4;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, .045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, .045) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(120% 90% at 50% 40%, #000 20%, transparent 78%);
+  mask-image: radial-gradient(120% 90% at 50% 40%, #000 20%, transparent 78%);
+  animation: grid-drift 24s linear infinite;
+  pointer-events: none;
+}
+@keyframes grid-drift {
+  to { transform: translate3d(64px, 64px, 0); }
+}
+
+/* ── 3 · aurora ───────────────────────────────────────────────────────────
+   Three masses in the portal hues. Different durations (19/23/29s) that share
+   no common factor, so the composition never visibly repeats — the loop point
+   is over 100 hours away. */
+
+.aims-auth .stage__aurora {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+  overflow: clip;
+}
+.aims-auth .stage__aurora i {
+  position: absolute;
+  display: block;
+  border-radius: var(--r-full);
+  filter: blur(110px);
+  will-change: transform;
+}
+.aims-auth .stage__aurora i:nth-child(1) {
+  width: 46vw; height: 46vw; min-width: 460px; min-height: 460px;
+  top: -18%; left: -10%;
+  background: rgba(0, 74, 198, .40);
+  animation: aurora-a 19s var(--ease-move) infinite alternate;
+}
+.aims-auth .stage__aurora i:nth-child(2) {
+  width: 38vw; height: 38vw; min-width: 380px; min-height: 380px;
+  bottom: -20%; right: -6%;
+  background: rgba(0, 102, 134, .34);
+  animation: aurora-b 23s var(--ease-move) infinite alternate;
+}
+.aims-auth .stage__aurora i:nth-child(3) {
+  width: 30vw; height: 30vw; min-width: 300px; min-height: 300px;
+  top: 34%; left: 46%;
+  background: var(--stage-accent, rgba(0, 105, 92, .26));
+  animation: aurora-c 29s var(--ease-move) infinite alternate;
+  transition: background 900ms var(--ease-out);
+}
+@keyframes aurora-a { to { transform: translate3d(14vw, 10vh, 0) scale(1.14); } }
+@keyframes aurora-b { to { transform: translate3d(-12vw, -8vh, 0) scale(1.2); } }
+@keyframes aurora-c { to { transform: translate3d(-9vw, 7vh, 0) scale(.86); } }
+
+/* ── 4 · scrim ────────────────────────────────────────────────────────────
+   The contrast guarantee. Two directional washes plus a vignette: whatever the
+   aurora does underneath, text on the stage stays above 7:1. */
+
+.aims-auth .stage__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    linear-gradient(100deg, rgba(3, 11, 24, .86) 0%, rgba(3, 11, 24, .58) 42%, rgba(3, 11, 24, .18) 72%),
+    linear-gradient(to top, rgba(3, 11, 24, .78) 0%, rgba(3, 11, 24, 0) 34%),
+    radial-gradient(130% 100% at 50% 50%, transparent 40%, rgba(2, 8, 18, .55) 100%);
+}
+
+/* ── 5 · chrome ───────────────────────────────────────────────────────── */
+
+.aims-auth .stage__bar {
+  position: relative;
+  z-index: 3;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-md);
+  padding: 14px clamp(20px, 4vw, 48px);
+  padding-top: max(14px, env(safe-area-inset-top));
+  border-bottom: 1px solid var(--hairline-soft);
+  background: rgba(4, 16, 31, .5);
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+}
+
+.aims-auth .stage .auth-mark__name { color: #fff; }
+.aims-auth .stage .auth-mark__sub  { color: var(--on-surface-muted); }
+.aims-auth .stage .auth-mark__seal {
+  background: linear-gradient(150deg, #1e63e8, #002f8a);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .14), 0 6px 20px rgba(0, 40, 120, .55);
+}
+
+.aims-auth .stage__main {
+  position: relative;
+  z-index: 2;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: clamp(16px, 3vh, 40px) clamp(20px, 4vw, 48px);
+}
+
+.aims-auth .stage__foot {
+  position: relative;
+  z-index: 3;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px var(--s-md);
+  padding: 12px clamp(20px, 4vw, 48px);
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--hairline-soft);
+  background: rgba(4, 16, 31, .45);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  color: var(--on-surface-faint);
+}
+
+/* Links and quiet buttons have to survive the inversion. */
+.aims-auth .stage .lnk { color: #8fb4ff; }
+.aims-auth .stage .lnk:hover { color: #b9d0ff; }
+.aims-auth .stage .btn--quiet {
+  color: var(--on-surface-variant);
+  border-color: var(--hairline);
+  background: var(--glass);
+}
+.aims-auth .stage .btn--quiet:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, .1);
+  border-color: rgba(255, 255, 255, .2);
+}
+
+/*
+ * The landing composition used to live here: a single-screen two-column hero,
+ * a raked thumbnail reel and a footer-rule figures strip. It moved to home.css
+ * when the landing page went back to scrolling sections, because the two
+ * layouts disagree about almost everything — the reel is full-width and nearly
+ * flat now rather than 40% wide at a 15 degree rake, and the figures are a
+ * band rather than a caption. Leaving both sets here would have meant two
+ * definitions of .reel__pane in one file resolved by import order, which is
+ * the kind of thing that works until someone reorders an import.
+ *
+ * What stays in this file is what both screens genuinely share: the backdrop
+ * layers, the ink tokens, the bar and foot chrome, and the chooser.
+ */
+
+/* ══ Chooser composition ═════════════════════════════════════════════════ */
+
+.aims-auth .pick {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 3.4vh, 40px);
+  width: 100%;
+}
+.aims-auth .pick__say { max-width: 46rem; }
+.aims-auth .pick__head {
+  font-family: 'Manrope', 'Inter', sans-serif;
+  font-size: clamp(1.625rem, 3.2vw, 2.5rem);
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #fff;
+  margin: 10px 0 0;
+  text-wrap: balance;
+}
+.aims-auth .pick__sub {
+  margin: 12px 0 0;
+  font-size: clamp(.875rem, 1.05vw, 1rem);
+  line-height: 1.55;
+  color: var(--on-surface-variant);
+  text-wrap: pretty;
+}
+.aims-auth .pick__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(12px, 1.4vw, 20px);
+  align-items: stretch;
+}
+@media (max-width: 1080px) {
+  .aims-auth .pick__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .aims-auth .pick__grid { grid-template-columns: 1fr; }
+}
+
+/* Plates on ink need a rim of their own — a shadow alone does nothing against
+   a dark ground, so the elevation is carried by a light hairline instead. */
+.aims-auth .stage .auth-plate {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, .1),
+    0 20px 44px -18px rgba(0, 0, 0, .9);
+}
+/*
+ * On the chooser the plates are the whole composition, so they are allowed to
+ * take the room. Tied to viewport height rather than fixed: on a 1080px screen
+ * they stand tall enough to hold the grid together, and on a 680px one they
+ * shrink instead of forcing a scrollbar back onto a page that just lost one.
+ */
+.aims-auth .pick__grid .auth-plate {
+  min-height: clamp(206px, 30vh, 286px);
+}
+
+.aims-auth .stage .auth-plate:hover {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, .2),
+    0 28px 60px -18px rgba(0, 0, 0, .95),
+    0 0 70px -22px var(--hue);
+}
+
+/* ── Narrow / short viewports ─────────────────────────────────────────────
+   Below the lock breakpoint the stage stops pretending to be one screen: it
+   stacks and scrolls normally, because four plates and a footer genuinely do
+   not fit on a phone and clipping them off the bottom would be strictly worse
+   than a scrollbar. */
+
+@media (max-width: 600px) {
+  .aims-auth .stage__foot { justify-content: flex-start; }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── Reduced motion ───────────────────────────────────────────────────────
+   The ambient layers hold still. Nothing here carries content, so unlike the
+   landing page's reel there is nothing to preserve — the aurora and the ruled
+   field simply stop where they are, and the clip is not shown at all. */
+
+@media (prefers-reduced-motion: reduce) {
+  .aims-auth .stage__grid,
+  .aims-auth .stage__aurora i {
+    animation: none !important;
+  }
+  .aims-auth .stage__video { display: none; }
+}

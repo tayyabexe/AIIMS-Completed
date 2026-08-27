@@ -1,0 +1,131 @@
+.students-table {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.parent-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.parent-cell strong {
+  font-size: 13px;
+}
+
+.parent-cell em {
+  font-style: normal;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.students-note {
+  margin-top: 14px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+
+.students-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.students-table thead th {
+  text-align: left;
+  font-size: 12.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.students-table tbody td {
+  padding: 13px 20px;
+  border-bottom: 1px solid var(--border-soft);
+  font-size: 14px;
+}
+
+.students-table tbody tr:last-child td { border-bottom: none; }
+
+.student-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ---------------------------------------------------------------------------
+   Summary tiles.
+
+   These were written with the dashboard's `.stat-grid` / `.stat-card` classes,
+   but those rules live in FacultyDashboard.css, which this page does not
+   import — so the tiles fell back to index.css's bare `.stat-card` (padding and
+   a border, no layout) and stacked one per row. They have their own class
+   names here rather than importing the dashboard sheet, which would also drag
+   in its hero, chart and insights rules.
+   --------------------------------------------------------------------------- */
+
+.students-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.students-stat-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.students-stat-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.students-stat-label {
+  color: var(--text-secondary);
+  font-size: 13.5px;
+  font-weight: 500;
+  /* "Avg Attendance" and "Below 75%" must not wrap the tile taller than its
+     neighbours, which is what makes a row of tiles read as one row. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.students-stat-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.students-stat-value {
+  font-size: 28px;
+  line-height: 1.1;
+  font-weight: 800;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 1100px) {
+  .students-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 560px) {
+  .students-stat-grid { grid-template-columns: 1fr; }
+}

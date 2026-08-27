@@ -1,0 +1,67 @@
+/* Shared loading / error blocks for the faculty portal. Sized to sit inside a
+   page body so the sidebar and header stay visible while data loads. */
+
+.data-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 320px;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.data-state-spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #2a63c9;
+  border-radius: 50%;
+  animation: dataStateSpin 0.7s linear infinite;
+}
+
+@keyframes dataStateSpin {
+  to { transform: rotate(360deg); }
+}
+
+.data-state-icon {
+  width: 40px;
+  height: 40px;
+  color: #d1495b;
+}
+
+.data-state-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #4b5563;
+}
+
+.data-state.error .data-state-title {
+  color: #b91c2c;
+}
+
+.data-state-text {
+  margin: 0;
+  font-size: 13px;
+  color: #6b7280;
+  max-width: 460px;
+}
+
+.data-state-retry {
+  margin-top: 6px;
+  padding: 8px 18px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+}
+
+.data-state-retry:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}

@@ -1,0 +1,45 @@
+{
+  "name": "aims-backend",
+  "version": "1.0.0",
+  "description": "AI-Based Institute Management System Backend",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "echo \"No tests yet\"",
+    "smoke:chatbot": "node src/testing/chatbot.smoke.js"
+  },
+  "keywords": [
+    "AIMS",
+    "Backend",
+    "NodeJS",
+    "Express",
+    "MySQL",
+    "Sequelize"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@qdrant/js-client-rest": "^1.19.0",
+    "@xenova/transformers": "^2.17.2",
+    "axios": "^1.19.0",
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "docx": "^9.7.1",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-validator": "^7.3.2",
+    "form-data": "^4.0.6",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "morgan": "^1.11.0",
+    "multer": "^2.2.0",
+    "mysql2": "^3.23.1",
+    "sequelize": "^6.37.8"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

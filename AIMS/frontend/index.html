@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AIIMS - AI-Based Institute Management System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!--
+      Inter is requested as a variable range (300..700) rather than as five
+      named weights. Two reasons, and the first is correctness: the dashboard
+      builds its hierarchy from weight — 450 for a supporting line, 550 for a
+      control, 650 for a figure — and against a set of static instances every
+      one of those snaps to the nearest of 400/500/600/700, collapsing three
+      distinct tiers into two. The second is that a variable range is ONE font
+      file instead of five, so this is also less to download.
+    -->
+    <!--
+      Instrument Serif is the pre-authentication display face and nothing else.
+      It ships one weight, 400, with an italic — which is the point rather than
+      a limitation: the editorial register this page borrows sets its display
+      type at regular weight in every size, so a serif that offers no bold
+      cannot be talked into looking like a heading from a dashboard. It is
+      loaded here and used only under `.aims-auth`; the dashboards never see it.
+    -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Instrument+Serif:ital@0;1&family=Manrope:wght@400..800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

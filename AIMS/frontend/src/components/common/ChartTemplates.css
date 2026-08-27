@@ -1,0 +1,108 @@
+/*
+ * The horizontal scroller behind the category charts.
+ *
+ * WHY A CHART SCROLLS AT ALL
+ * --------------------------
+ * Recharts fits whatever it is given into the width available, so twenty
+ * programmes on a 900px canvas is a 45px slot per bar and a row of category
+ * labels overlapping each other into an unreadable smear. Shrinking the font
+ * until they fit is the usual reflex and it only moves the problem: the labels
+ * become legible individually and illegible collectively.
+ *
+ * So the bar keeps a floor on its slot (MIN_BAR_SLOT in ChartTemplates.jsx)
+ * and the canvas grows past its container instead. The chart is then as wide
+ * as it needs to be and the container scrolls.
+ *
+ * WHY THE SCROLLBAR IS HIDDEN
+ * ---------------------------
+ * A horizontal scrollbar under a chart reads as chrome and, on a pinned
+ * dashboard card, eats vertical space the chart needs. It is hidden in every
+ * engine here rather than styled thin, because a half-height scrollbar is
+ * still a scrollbar.
+ *
+ * Hiding it does not remove the scrolling: wheel, trackpad, touch drag, and
+ * keyboard all still work, because this is a real overflow container and not a
+ * transform.
+ *
+ * WHY THERE IS A FADE
+ * -------------------
+ * A hidden scrollbar removes the only thing telling the reader that more bars
+ * exist. Without a hint, a chart cut off at "BSIT" looks like a chart whose
+ * last category is BSIT — the failure mode this whole area keeps producing,
+ * where an incomplete picture is indistinguishable from a complete one.
+ *
+ * The gradient appears only on an edge that actually has content beyond it,
+ * so a chart that fits shows nothing at all.
+ */
+
+.ct-scroll {
+  position: relative;
+}
+
+.ct-scrollx {
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  /* Firefox, then old Edge/IE, then WebKit below. */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  /* Momentum on touch, and a stop at each edge rather than scrolling the
+     page behind the card once the chart runs out. */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+.ct-scrollx::-webkit-scrollbar {
+  display: none;
+}
+
+/*
+ * The two edge fades.
+ *
+ * `--ct-fade` is the colour the chart sits on. It defaults to white and is
+ * meant to be overridden by whatever surface hosts the chart, so the gradient
+ * dissolves into the card rather than painting a grey bar over it.
+ */
+.ct-scroll::before,
+.ct-scroll::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2.25rem;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+  z-index: 2;
+}
+
+.ct-scroll::before {
+  left: 0;
+  background: linear-gradient(to right,
+    var(--ct-fade, #ffffff) 15%,
+    rgba(255, 255, 255, 0) 100%);
+}
+
+.ct-scroll::after {
+  right: 0;
+  background: linear-gradient(to left,
+    var(--ct-fade, #ffffff) 15%,
+    rgba(255, 255, 255, 0) 100%);
+}
+
+.ct-scroll[data-fade-left]::before,
+.ct-scroll[data-fade-right]::after {
+  opacity: 1;
+}
+
+/*
+ * Someone who has asked for less motion still needs the hint — it carries
+ * information — so the fade stays and only the crossfade is dropped.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .ct-scroll::before,
+  .ct-scroll::after {
+    transition: none;
+  }
+}

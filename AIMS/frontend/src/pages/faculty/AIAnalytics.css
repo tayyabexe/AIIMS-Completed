@@ -1,0 +1,200 @@
+/*
+ * The faculty Ask the Data page, around the shared canvas.
+ *
+ * WHAT THIS FILE IS FOR
+ * ---------------------
+ * The question box and the result belong to the shared canvas component and
+ * are themed by `aa--faculty` in pages/admin/AIAnalytics.css. This file styles
+ * the rest of the page — the pinned board underneath — and does one other job
+ * that is easy to miss and was actively breaking things:
+ *
+ * IT SUPPLIES THE --ad-* TOKENS.
+ *
+ * The pinned board reuses admin-portal components (CardGrid, SavedQueryCard,
+ * EditPanel) whose stylesheet is written against `--ad-canvas`, `--ad-card`,
+ * `--ad-ink` and friends. Those are declared on `.aims-dash`, which wraps the
+ * ADMIN portal and nothing else. Imported into the faculty portal they
+ * resolved to nothing: card backgrounds vanished, headings fell back to
+ * whatever colour they inherited, and the expanded-chart dialog opened as a
+ * transparent panel over a dimmed page.
+ *
+ * Declaring them on `.fa-ask` fixes that for this page without touching the
+ * admin portal, because a custom property set on an ancestor here is simply
+ * never consulted there.
+ *
+ * The values are the indigo-glass palette, so the borrowed admin components
+ * come out matching the canvas above them rather than looking like a
+ * transplant from another product.
+ */
+
+.fa-ask {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+
+  /*
+   * ONE measure for the whole page.
+   *
+   * The shared canvas centres itself inside a 1200px column; the pinned board
+   * below it filled the full 1313px of the content area. The two therefore
+   * started at different left edges -- 80px apart -- which read as the board
+   * being a separate, misaligned widget rather than the next section of the
+   * same page.
+   *
+   * The constraint is moved up here and the canvas is released from its own
+   * (see the override below), so both halves share one column and one edge.
+   */
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  /* ---- the borrowed admin tokens, in this page's palette ---- */
+  --ad-canvas: #f6f7fb;
+  --ad-card: #ffffff;
+  --ad-inset: #f2f3f9;
+  --ad-hover: #fafaff;
+
+  --ad-ink: #14162b;
+  --ad-ink-2: #33365a;
+  --ad-ink-3: #5b5f7b;
+  --ad-ink-4: #8589a6;
+
+  --ad-rule: #e4e6f0;
+  --ad-accent: #4338ca;
+  --ad-accent-soft: rgba(67, 56, 202, 0.08);
+}
+
+/*
+ * The canvas no longer centres itself here; `.fa-ask` above does it for the
+ * whole page. Its horizontal padding goes too, so its edge meets the board's.
+ * Vertical padding is dropped because the flex `gap` now owns that rhythm.
+ */
+.fa-ask .aa {
+  max-width: none;
+  padding: 0;
+}
+
+/* ========================================================= pinned board == */
+
+.fa-pinned {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.fa-pinned-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  /*
+   * A hairline above the section, so the board reads as a second region of
+   * the page rather than as more of the canvas. Cheaper than a card wrapper
+   * and it does not add another nested box around a grid that is already
+   * inside two.
+   */
+  padding-top: 20px;
+  border-top: 1px solid var(--ad-rule);
+}
+
+.fa-pinned-head h2 {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.012em;
+  color: var(--ad-ink);
+}
+
+.fa-pinned-head p {
+  margin: 5px 0 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--ad-ink-3);
+  max-width: 58ch;
+  text-wrap: pretty;
+}
+
+/*
+ * The icon sits in its own tinted tile rather than floating beside the words,
+ * which keeps the heading's baseline clean at any font size.
+ */
+.fa-pinned-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex: none;
+  color: var(--ad-accent);
+  background: var(--ad-accent-soft);
+  border-radius: 9px;
+}
+
+.fa-pinned-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 7px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ad-accent);
+  background: var(--ad-accent-soft);
+  border-radius: 999px;
+}
+
+/*
+ * The empty state.
+ *
+ * On this board "empty" is the STARTING condition, not the result of removing
+ * something — a teacher arriving for the first time has nothing here and no
+ * reason to guess how it fills. So it names the exact next action rather than
+ * reporting an absence, and it is given real height so the page does not end
+ * in a thin strip of nothing.
+ */
+.fa-ask .pin-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 190px;
+  padding: 32px 24px;
+  text-align: center;
+  color: var(--ad-ink-3);
+  background:
+    radial-gradient(
+      120% 100% at 50% 0%,
+      var(--ad-accent-soft) 0%,
+      transparent 62%
+    ),
+    var(--ad-card);
+  border: 1px dashed var(--ad-rule);
+  border-radius: 14px;
+}
+
+.fa-ask .pin-empty strong {
+  font-size: 0.95rem;
+  color: var(--ad-ink);
+}
+
+.fa-ask .pin-empty span {
+  max-width: 42ch;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+/* ------------------------------------------------------------- narrow --- */
+
+@media (max-width: 720px) {
+  .fa-ask { gap: 18px; }
+  .fa-pinned-head { padding-top: 14px; }
+}

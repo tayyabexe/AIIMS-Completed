@@ -1,0 +1,391 @@
+.marks-top-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.marks-heading h2 {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 2px;
+}
+
+.marks-heading p {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.marks-summary {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.marks-summary-item {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.marks-summary-item span {
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.marks-summary-item strong {
+  font-size: 22px;
+  font-family: var(--font-display);
+}
+
+.marks-subject-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.marks-subject-cell em {
+  font-style: normal;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* No top margin of its own: it now sits inside `.marks-footer`, which owns the
+   gap between the receipt, the invalid notice and this row. */
+.marks-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+@media (max-width: 900px) {
+  .marks-summary { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 560px) {
+  .marks-summary { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ===========================================================================
+   THE MARKS SHEET
+   ---------------------------------------------------------------------------
+   Every class below is defined here because this route loads only Marks.css
+   and the global faculty.css. The sheet previously borrowed `.student-cell`
+   from Students.css and `.btn-sm` from Users.css — both lazy routes whose CSS
+   this page never fetches — and `.marks-input` was defined in no stylesheet in
+   the repository at all, so the one control a teacher actually types into was
+   rendering as a bare browser number field.
+
+   The sheet is a data-entry surface, not a report. One column is editable and
+   everything else exists to tell the teacher whether the number they just
+   typed landed correctly, so the input is the only thing here allowed to look
+   interactive.
+   =========================================================================== */
+
+/* ------------------------------------------------------------- the person -- */
+
+.marks-student {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  line-height: 1.35;
+}
+
+.marks-student-name {
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--text-primary);
+}
+
+/* The roll number, demoted rather than dropped. It identifies the same person
+   as the name above it, so it does not need a column of its own — but it is
+   what a teacher cross-checks against a paper list, so it stays visible. */
+.marks-student-reg {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* -------------------------------------------------------------- the input -- */
+
+.marks-entry {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  justify-content: center;
+}
+
+/*
+ * The one control on this screen.
+ *
+ * Inset rather than raised — a slightly darker fill than the row it sits in,
+ * which is what says "type here" without a heavy border. Right-aligned because
+ * these are quantities and a column of numbers is read down its last digit.
+ */
+.marks-input {
+  width: 74px;
+  padding: 7px 9px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--page-bg);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  transition: border-color 0.15s cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow 0.15s cubic-bezier(0.23, 1, 0.32, 1),
+              background-color 0.15s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.marks-input:hover:not(:focus) {
+  border-color: var(--text-muted);
+}
+
+.marks-input:focus {
+  outline: none;
+  background: var(--card-bg);
+  border-color: var(--brand-red);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.08);
+}
+
+/*
+ * The spinners go.
+ *
+ * `step="0.5"` means the arrows move in half marks, so reaching 38 from 0 is
+ * seventy-six clicks — nobody uses them, and they eat a third of a field this
+ * narrow. Keyboard up/down still works, and `type="number"` still brings up
+ * the numeric keypad on a phone and still validates.
+ */
+.marks-input::-webkit-outer-spin-button,
+.marks-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.marks-input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
+
+/* The denominator. Deliberately quiet: it is the same on every row, and it is
+   context for the number beside it rather than a figure to be read. */
+.marks-entry-total {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.marks-readonly {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------- the result -- */
+
+/* Percentage and grade in one cell: two readings of the single number in the
+   column to their left, which is why they were not worth two columns. */
+.marks-result {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+.marks-result-pct {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+  min-width: 44px;
+  text-align: right;
+}
+
+.marks-muted {
+  color: var(--text-muted);
+  font-size: 12.5px;
+}
+
+/* ------------------------------------------------------- the row control --- */
+
+/*
+ * Was borrowed from Users.css, which this route never loads.
+ *
+ * The hit area is smaller than the 44px a standalone control should have:
+ * table rows are dense by nature, and a 44px button in every row would set the
+ * row height for the whole sheet. It sits alone at the end of its row with
+ * nothing adjacent to mis-tap.
+ */
+.btn-sm {
+  padding: 6px 11px;
+  font-size: 12.5px;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn:disabled:active { transform: none; }
+
+/* ===========================================================================
+   TELLING THE TEACHER WHAT HAPPENED
+   ---------------------------------------------------------------------------
+   Three things were invisible on this screen: that a mark was out of range,
+   that a save had landed, and how far through the sheet the class was. Each
+   gets a surface below, and all three are deliberately quiet until they have
+   something to say.
+   =========================================================================== */
+
+/* ------------------------------------------------ a mark that cannot exist -- */
+
+.marks-entry-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+/*
+ * The invalid state is carried by the border AND the message underneath, never
+ * by colour alone — a red ring means nothing to a teacher who cannot
+ * distinguish it from the ordinary focus ring, which on this screen is also
+ * red.
+ */
+.marks-input-invalid,
+.marks-input-invalid:hover:not(:focus) {
+  border-color: var(--danger-text, #dc2626);
+  background: rgba(220, 38, 38, 0.05);
+}
+
+.marks-input-invalid:focus {
+  border-color: var(--danger-text, #dc2626);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.16);
+}
+
+.marks-input-error {
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--danger-text, #dc2626);
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------- where the sheet stands -- */
+
+/*
+ * Deliberately NOT another row of the big number tiles above. Those describe
+ * the marks (average, highest, pass rate); this describes the sheet's progress
+ * through draft → submitted → released, so it reads as a legend with counts
+ * rather than as more statistics.
+ */
+.marks-progress {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.marks-progress-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 4px 10px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+}
+
+.marks-progress-item strong {
+  font-size: 20px;
+  font-family: var(--font-display);
+  justify-self: start;
+}
+
+/* The sentence spans both columns beneath the badge and the count, because it
+   explains the pair rather than either one. */
+.marks-progress-item em {
+  grid-column: 1 / -1;
+  font-style: normal;
+  font-size: 11.5px;
+  line-height: 1.35;
+  color: var(--text-muted);
+}
+
+/* ------------------------------------------------------------ the footer --- */
+
+.marks-footer {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/*
+ * The save receipt. It replaces nothing — the toast still fires — but it is
+ * the copy that is still there a minute later, which is when the question
+ * "did that save?" is actually asked.
+ */
+.marks-receipt {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 10px 13px;
+  border-radius: var(--radius-md);
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
+.marks-receipt svg { flex-shrink: 0; margin-top: 1px; }
+
+.marks-receipt strong { font-weight: 700; }
+
+/* Draft is a settled, unremarkable state — it gets the calm colour. */
+.marks-receipt-draft {
+  background: rgba(5, 150, 105, 0.08);
+  border: 1px solid rgba(5, 150, 105, 0.28);
+  color: #047857;
+}
+
+/* Submitted is not finished: it is waiting on somebody else, so it is amber
+   rather than green. Green here would read as "done", and the marks are not on
+   the students' screens yet. */
+.marks-receipt-submitted {
+  background: rgba(217, 119, 6, 0.09);
+  border: 1px solid rgba(217, 119, 6, 0.3);
+  color: #92400e;
+}
+
+.marks-invalid-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 10px 13px;
+  border-radius: var(--radius-md);
+  font-size: 12.5px;
+  line-height: 1.45;
+  background: rgba(220, 38, 38, 0.07);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  color: #b91c1c;
+}
+
+.marks-invalid-notice svg { flex-shrink: 0; margin-top: 1px; }
+
+@media (max-width: 900px) {
+  .marks-progress { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 560px) {
+  .marks-progress { grid-template-columns: 1fr; }
+  .marks-actions { flex-wrap: wrap; }
+}

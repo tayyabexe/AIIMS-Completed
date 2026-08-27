@@ -1,0 +1,299 @@
+.course-details-page {
+  padding: 24px 32px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.back-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  color: #b91c2c;
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+.back-link svg {
+  width: 15px;
+  height: 15px;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.not-found-box {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 30px;
+  text-align: center;
+  color: #6b7280;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Banner */
+.course-banner {
+  background: linear-gradient(120deg, #9c1a2b 0%, #4a0a11 100%);
+  border-radius: 16px;
+  padding: 26px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.banner-eyebrow {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.banner-title {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.banner-description {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 13px;
+  line-height: 1.6;
+  max-width: 640px;
+  margin-bottom: 16px;
+}
+
+.banner-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.banner-meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 12px;
+}
+
+.banner-meta svg {
+  width: 14px;
+  height: 14px;
+}
+
+.banner-grade {
+  background: #ffffff;
+  color: #059669;
+  font-size: 12px;
+  font-weight: 700;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Summary cards */
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.summary-card,
+.assessments-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 22px 24px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.summary-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.summary-icon {
+  width: 18px;
+  height: 18px;
+  color: #b91c2c;
+  display: flex;
+}
+
+.summary-icon.good {
+  color: #059669;
+}
+
+.summary-icon.warn {
+  color: #d97706;
+}
+
+.summary-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.summary-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #16181d;
+}
+
+.summary-big-value {
+  font-size: 30px;
+  font-weight: 700;
+  color: #16181d;
+  margin-bottom: 12px;
+}
+
+.summary-big-value.good {
+  color: #059669;
+}
+
+.summary-out-of {
+  font-size: 16px;
+  font-weight: 600;
+  color: #9ca3af;
+}
+
+.summary-card .progress-track {
+  width: 100%;
+  height: 7px;
+  background: #eceef2;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.summary-card .progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: #b91c2c;
+}
+
+.summary-card .progress-fill.good {
+  background: #16a34a;
+}
+
+.summary-footer-row {
+  display: flex;
+  gap: 24px;
+  font-size: 12.5px;
+  color: #6b7280;
+}
+
+.summary-footer-row strong {
+  color: #16181d;
+}
+
+/* Upcoming Assessments */
+.assessments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.assessment-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fdeeee;
+  border-left: 3px solid #b91c2c;
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #b91c2c;
+}
+
+.assessment-row svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.assessment-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #16181d;
+}
+
+.assessment-date {
+  font-size: 12.5px;
+  color: #6b7280;
+}
+
+@media (max-width: 900px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .banner-title {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .course-details-page {
+    padding: 14px;
+  }
+
+  .course-banner {
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  .banner-title {
+    font-size: 18px;
+  }
+
+  .banner-description {
+    font-size: 12px;
+  }
+
+  .banner-meta {
+    gap: 12px;
+  }
+
+  .banner-meta span {
+    font-size: 11px;
+  }
+
+  .summary-card,
+  .assessments-card {
+    padding: 16px;
+  }
+
+  .summary-big-value {
+    font-size: 24px;
+  }
+
+  .assessment-row {
+    padding: 10px 12px;
+  }
+
+  .assessment-title {
+    font-size: 12px;
+  }
+
+  .assessment-date {
+    font-size: 11px;
+  }
+}
+/* Empty state inside an assessments panel */
+.course-inline-empty {
+  margin: 0;
+  font-size: 12.5px;
+  color: #9ca3af;
+}
