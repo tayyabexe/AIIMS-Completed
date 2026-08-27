@@ -140,8 +140,7 @@ count the database returned.
 This exists because the earlier design did the opposite and confidently reported
 200 fee defaulters when there were 1,175.
 
-Detail: `AI_IMPLEMENTATION.md`, `AI_RUNBOOK.md`, and the **AIMS AI Pipelines**
-document.
+Detail: `AI_IMPLEMENTATION.md`, `AI_RUNBOOK.md`, and `AIMS AI Pipelines.pdf`.
 
 ---
 
@@ -277,3 +276,4 @@ Summarised here; the full treatment is in `GAPS_AND_LIMITATIONS.md`.
 | `TESTING_GUIDE.md` | Verifying the whole system by hand |
 | `GAPS_AND_LIMITATIONS.md` | What is missing, and what it would take |
 | `AIMS User Manual.pdf` | The end-user manual |
+| `AIMS AI Pipelines.pdf` | The AI features, illustrated |

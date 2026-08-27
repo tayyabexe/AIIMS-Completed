@@ -89,15 +89,17 @@ Thirteen files, all at `docs/`. Read them in roughly this order.
 | `TESTING_GUIDE.md` | Walking the whole system by hand, empty database to running term. |
 | `PROJECT_STRUCTURE.md` | **This file.** Every tracked file, one line each. |
 
-### 2.2 The user manual
+### 2.2 The two PDFs
 
 | File | What it contains |
 |---|---|
 | `AIMS User Manual.pdf` | The finished end-user manual — how to operate each portal, written for the people using AIMS rather than maintaining it. |
+| `AIMS AI Pipelines.pdf` | A visual explainer for the two AI features: what each does step by step, every tuned setting, the guards, and where the model is deliberately *not* used. The illustrated companion to `AI_IMPLEMENTATION.md`. |
 
-> **Its sources are gone.** The HTML fragments, screenshots and authoring
-> toolchain that produced this PDF were removed in the handover cleanup, so it
-> cannot be rebuilt from this repository. Treat the PDF as the artefact.
+> **Neither can be rebuilt from this repository.** The manual's HTML fragments,
+> screenshots and authoring toolchain were removed in the handover cleanup, and
+> the pipelines PDF was printed from a published page that does not live here.
+> Treat both as artefacts: to revise either, recover its source first.
 
 ---
 

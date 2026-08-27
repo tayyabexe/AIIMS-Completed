@@ -27,7 +27,7 @@ There is **no** `/api/assistant` route. It was replaced by these two. The folder
 service. This trips people up, so it is worth saying twice.
 
 > The full behavioural description — pipelines, guards, tuned numbers, failure
-> paths — is in the **AIMS AI Pipelines** document. This file is about *files
+> paths — is in **`AIMS AI Pipelines.pdf`**, beside this file. This one is about *files
 > and setup*, not about how the pipelines think.
 
 ### The one rule that shapes the code
@@ -374,6 +374,6 @@ re-check answer quality afterwards. Do it **before** tuning either number.
 
 | Document | Covers |
 |---|---|
-| **AIMS AI Pipelines** (artifact) | How the pipelines work, the guards, every tuned number |
+| `AIMS AI Pipelines.pdf` | How the pipelines work, the guards, every tuned number — illustrated |
 | `DATABASE_SETUP.md` | Building the database the AI reads |
 | `TESTING_GUIDE.md` | Testing the AI features by hand (§11.10, §18) |

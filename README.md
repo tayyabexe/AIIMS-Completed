@@ -22,15 +22,16 @@ AI features.
 | Know what it does **not** do | [docs/GAPS_AND_LIMITATIONS.md](docs/GAPS_AND_LIMITATIONS.md) |
 | Secure it | [docs/SECURITY.md](docs/SECURITY.md) |
 | Use it, as an end user | [docs/AIMS User Manual.pdf](docs/AIMS%20User%20Manual.pdf) |
+| Understand the AI features | [docs/AI_IMPLEMENTATION.md](docs/AI_IMPLEMENTATION.md) · [docs/AIMS AI Pipelines.pdf](docs/AIMS%20AI%20Pipelines.pdf) |
 
-Full index: **[docs/](docs/)** — thirteen documents, plus the user manual PDF.
+Full index: **[docs/](docs/)** — thirteen documents, plus two PDFs.
 
 ---
 
 ## Layout
 
 ```
-├── docs/           ALL documentation — thirteen documents + the user manual PDF
+├── docs/           ALL documentation — thirteen documents + two PDFs
 └── AIMS/           the product
     ├── backend/    Node.js + Express REST API          (port 5000)
     ├── frontend/   React 19 + Vite SPA — all four portals, one build

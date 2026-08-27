@@ -409,5 +409,5 @@ check outbound network access and any proxy.
 | Document | Covers |
 |---|---|
 | `AI_IMPLEMENTATION.md` | Every AI file, what it does, and how to change it |
-| **AIMS AI Pipelines** (artifact) | How the pipelines work, the guards, every tuned number |
+| `AIMS AI Pipelines.pdf` | How the pipelines work, the guards, every tuned number — illustrated |
 | `DATABASE_SETUP.md` | Building the database Ask the Data reads |

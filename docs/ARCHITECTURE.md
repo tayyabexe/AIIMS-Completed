@@ -317,7 +317,7 @@ Question
 ```
 
 **The model exits before the data arrives.** ✱ marks the only model call. See
-the **AIMS AI Pipelines** document.
+`AIMS AI Pipelines.pdf`.
 
 ### 7.4 Help Chatbot
 
