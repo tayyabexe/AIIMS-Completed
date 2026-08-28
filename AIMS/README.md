@@ -1,11 +1,5 @@
 # AI-Based Institute Management System (AIMS)
 
-## Team
-
-- Team Lead: Safoora
-- Project Manager: Touseef
-- QA: Abbas
-
 ## Tech Stack
 
 Frontend:
@@ -22,7 +16,3 @@ Database:
 
 - MySQL
 
-AI:
-
-- Python
-- Scikit-learn
